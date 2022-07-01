@@ -31,17 +31,14 @@ FEBS-Shiro是一款简单高效的后台权限管理系统，使用Spring Boot�
 
 账号 | 密码| 权限
 ---|---|---
-scott | 1234qwer | 注册账户，拥有查看，新增权限（新增用户除外）和导出Excel权限
+
 
 
 本地部署账号密码：
 
 账号 | 密码| 权限
 ---|---|---
-mrbird | 1234qwer |超级管理员，拥有所有增删改查权限
-scott | 1234qwer | 注册账户，拥有查看，新增权限（新增用户除外）和导出Excel权限
-micaela | 1234qwer |系统监测员，负责整个系统监控模块
-Jana   | 1234qwer  |跑批人员，负责任务调度跑批模块
+
 
 ### 更多版本
 当前分支为2.0版本，页面采用Layui全新构建，FEBS的其他版本：
@@ -171,13 +168,23 @@ FEBS-Vue | FEBS-Shiro前后端分离版本，前端架构采用Vue全家桶。 |
 
 ![qq](screenshot/QQ.jpg)
 
-### 特别赞助
-
-<a href="https://www.jetbrains.com/?from=FEBS Shiro">
-    <img src="screenshot/jetbrains.png" width="100px"></a>
-
 ### 支持作者
 如果该系统对您有帮助的话，请作者喝杯肥宅水吧🍺~
 
-![treatme](screenshot/treatme.jpg)
+---
+
+
+
+<div align="center">
+<img src="https://komarev.com/ghpvc/?username=SAH01&&style=flat-square" align="center" />
+</div><br>   
+<div align="center">
+            <a href="https://paypal.me/reliableyang" target="_blank" style="display: inline-block;">
+                <img
+                    src="https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square" 
+                    align="center"
+                />
+            </a></div>
+
+----
 
