@@ -1,0 +1,248 @@
+<div class="layui-fluid layui-anim febs-anim" id="febs-dept" lay-title="政策演变">
+    <div class="layui-row layui-col-space8 febs-container">
+        <div class="layui-col-md3 layui-col-sm3 layui-col-xs5">
+            <div class="layui-card">
+                <div class="layui-card-body febs-table-full" style="height:800px;overflow:auto;">
+                    <form class="layui-form layui-table-form" lay-filter="dept-table-form" id="dept-table-form">
+                        <div class="layui-row">
+                            <div class="layui-col-md8 layui-col-sm9 layui-col-xs9">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <div class="dept-tree" lay-filter="deptTree" style="margin-left: 1rem"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md6 layui-col-sm6 layui-col-xs12" style="width: 900px">
+
+            <div class="layui-card">
+                <div class="layui-card-footer">
+                    <button class="layui-btn layui-btn-normal" id="submit">政策演变</button>
+                </div>
+                <div class="layui-card-header">政策条数对比</div>
+                <div class="layui-card-body">
+                    <div id="basicColumnChart"></div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md6 layui-col-sm6 layui-col-xs12 febs-hide">
+            <div class="layui-card">
+
+
+                <div class="layui-card-body febs-table-full">
+                    <form class="layui-form layui-table-form" action="" lay-filter="dept-form">
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label febs-form-item-require">ID：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="typeId" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label">上级ID：</label>
+                            <div class="layui-input-block">
+                                <input type="text" value="" name="parentId" readonly autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label febs-form-item-require">类别名称：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="typeName" autocomplete="off" class="layui-input"
+                                       minlength="2" maxlength="10" lay-verify="range">
+                            </div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label">类别排序：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="orderNum" autocomplete="off" class="layui-input"
+                                       lay-verify="number">
+                            </div>
+                        </div>
+
+                        <button class="layui-btn febs-hide" lay-submit="" lay-filter="dept-form-submit"
+                                id="submit-form"></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    /*
+     *  window.alert()  把小括号里的内容，以弹窗的方式显示出来
+     * window是BOM对象，指的是整个浏览器，可以省略不写
+     * '我是李康达，我为GDP代言'
+     * 我们需要输出的内容，这些内容需要用一对单引号或一对双引号引用起来
+     * ;(分号)表示一行代码结束
+     * 如果一行只写一行的代码可以省略分号，但是不建议
+     *
+     */
+
+</script>
+<script data-th-inline="javascript" type="text/javascript">
+    layui.use(['dropdown', 'jquery', 'validate', 'layer','febs', 'form', 'eleTree','element','table','apexcharts', 'jquery', 'util', 'echarts4', 'dataTool', 'echarts_gl'], function () {
+        var $ = layui.jquery,
+            febs = layui.febs,
+            element = layui.element,
+            form = layui.form,
+            table=layui.table,
+            $viewa = $('#febs-index'),
+            echarts = layui.echarts4,
+            validate = layui.validate,
+            eleTree = layui.eleTree,
+            dropdown = layui.dropdown,
+            $view = $('#febs-dept'),
+            $query = $view.find('#query'),
+            $reset = $view.find('#reset'),
+            $submit = $view.find('#submit'),
+            $header = $view.find('#form-header'),
+            $searchForm = $view.find('#dept-table-form'),
+            _currentDeptData,
+            _deptTree;
+
+        form.verify(validate);
+        form.render();
+        renderDeptTree();
+        zhuinit();
+        function zhuinit()
+        {
+            febs.get(ctx + 'performance/getEvolution/' +0 , null, function (json) {
+                zhuzhuang(json);
+            });
+        }
+        function zhuzhuang(json) {
+            var basicColumnChartOptions = {
+                chart: {
+                    height: 320,
+                    type: 'bar',
+                    toolbar: {
+                        show: false
+                    }
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '65%'
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    show: true,
+                    width: 10,
+                    colors: ['transparent']
+                },
+                series: json.data.data,
+                xaxis: {
+                    categories: json.data.type
+                    // categories: ["1995","1997","1998","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019"]
+                },
+                fill: {
+                    opacity: 1
+
+                },
+                tooltip: {
+                    y: {
+                        formatter: function (val) {
+                            return val + " 条"
+                        }
+                    }
+                },
+                grid: {
+                    row: {
+                        colors: ['transparent', 'transparent'],
+                        opacity: 0.2
+                    },
+                    borderColor: '#f1f3fa'
+                }
+            };
+
+            new ApexCharts(
+                document.querySelector("#basicColumnChart"),
+                basicColumnChartOptions
+            ).render();
+        }
+
+
+
+        //树形图
+        eleTree.on("nodeClick(deptTree)", function (d) {
+
+            var data = d.data.currentData.data;
+            var name=data.typeName;
+            var typeid=data.typeId;
+
+
+            $header.text(name);
+            $submit.text(name);
+            $("#basicColumnChart").empty();
+            febs.get(ctx + 'performance/getEvolution/' +typeid , null, function (json) {
+                zhuzhuang(json);
+            });
+
+            _currentDeptData = data;
+            form.val("dept-form", {
+                "typeName": data.typeName,
+                "orderNum": data.orderNum,
+                "createTime": data.createTime,
+                "parentId": data.parentId,
+                "typeId": data.typeId
+            });
+        });
+
+
+
+        $view.on('click', '#submit', function () {
+            $view.find('#submit-form').trigger('click');
+        });
+
+
+
+        function renderDeptTree() {
+            _deptTree = eleTree.render({
+                elem: '.dept-tree',
+                url: ctx + 'Name/tree',
+                accordion: true,
+                highlightCurrent: true,
+                showCheckbox: false,
+                checkStrictly: true,
+                renderAfterExpand: false,
+                // where: {
+                //     "deptName": $deptName.val().trim(),
+                //     "invalidate_ie_cache": new Date()
+                // },
+                request: {
+                    name: 'name',
+                    key: "id",
+                    checked: "checked",
+                    data: 'data'
+                },
+                response: {
+                    statusName: "code",
+                    statusCode: 200,
+                    dataName: "data"
+                }
+            });
+            return _deptTree;
+        }
+
+
+        form.on('submit(dept-form-submit)', function (data) {
+
+            febs.modal.view('政策对比', 'policy/typ/' + data.field.typeName, {
+                area: $(window).width() <= 850 ? '95%' : '85%'
+            });
+
+            return false;
+
+        });
+
+    });
+</script>

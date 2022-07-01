@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.policy.mapper.PolicyNeo4jMapper">
+    <select id="getPolicyNeo4j" parameterType="String" resultType="PolicyNeo4j">
+        SELECT
+        p.id,
+        p.policyname,
+        p.text,
+        p.theme,
+        p.dept,
+        p.year,
+        p.keyword,
+        p.province,
+        p.highpolicy,
+        p.lowpolicy,
+        p.similarpolicy
+        FROM
+        namelist p
+        WHERE p.policyname = #{policyname}
+    </select>
+    <select id="getPolicyNeo4jList"  resultType="PolicyNeo4j">
+        SELECT
+        p.id,
+        p.policyname,
+        p.text,
+        p.theme,
+        p.dept
+        FROM
+        namelist p
+    </select>
+</mapper>

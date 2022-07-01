@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.policy.mapper.PolicySimilarityMapper">
+    <select id="getPolicySimilarityListBystartid" parameterType="int" resultType="PolicySimilarity">
+        SELECT
+        p.startid,
+        p.endid,
+        p.category,
+        p.startname,
+        p.endname,
+        p.form,
+        p.startrank,
+        p.endrank
+        FROM
+        policy_similarity p
+        WHERE p.startid = #{startid}
+    </select>
+    <select id="getPolicySimilarityByNameGroup" parameterType="String" resultType="PolicySimilarity">
+        SELECT
+        count(DISTINCT p.startid) allsum,
+        p.form
+        FROM
+        policy_similarity p
+        where p.startname like CONCAT('%',#{startname},'%')
+        group by p.form
+    </select>
+    <select id="getPolicySimilarityByName" parameterType="String" resultType="PolicySimilarity">
+        SELECT
+        p.startid,
+        p.endid,
+        p.category,
+        p.startname,
+        p.endname,
+        p.form,
+        p.startrank,
+        p.endrank
+        FROM
+        policy_similarity p
+        where p.startname like CONCAT('%',#{startname},'%')
+        group by p.startid
+        order by p.form
+    </select>
+</mapper>

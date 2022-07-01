@@ -1,0 +1,550 @@
+<div class="layui-fluid" id="VIEW-policyRegionCom" lay-title="政策绩效映射和多地域比较">
+
+    <div class="layui-card">
+        <div class="layui-card-body febs-table-full">
+            <form class="layui-form layui-table-form" lay-filter="user-table-form">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label layui-form-label-sm">发布时间</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="createTime" id="createTime" class="layui-input">
+                        </div>
+                    </div>
+                    <div style="width: 500px;" class="layui-inline">
+                        <label class="layui-form-label layui-form-label-sm">地域</label>
+                        <div class="layui-input-block">
+                            <select name="regionId"
+                                    lay-verify="required"
+                                    xm-select-direction="down"
+                                    xm-select="region-tree-select"
+                                    xm-select-skin="default">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <span id="hintMessage" class="febs-alert-base febs-alert-warn">提示：选择下方科技政策分类，快速开始</span>
+        </div>
+    </div>
+    <div class="layui-row layui-col-space8 febs-container">
+        <div class="layui-col-md3 layui-col-sm3 layui-col-xs5">
+            <div class="layui-card">
+                <div class="layui-card-header">科技政策分类</div>
+                <div class="layui-card-body febs-table-full my-text-class" style="height:800px;overflow:auto;">
+                    <div class="analysisFormula-tree-map" lay-filter="formulaTree" style="margin-left: 1rem;"></div>
+                </div>
+            </div>
+        </div>
+        <div style="float: right" class="layui-col-md4 layui-col-sm4 layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-header">科技政策效果评估指标</div>
+                <div class="layui-card-body febs-table-full my-text-class" style="height:800px;overflow:auto;">
+                    <div class="entityIndex-tree" lay-filter="entityIndexTree" style="margin-left: 1rem;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md5 layui-col-sm5 layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-header">各地区相关政策数量</div>
+                <div class="layui-card-body">
+                    <div id="container" style="height:280px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md5 layui-col-sm5 layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-header">相关政策文件</div>
+                <div class="layui-card-body febs-table-full" style="height:400px;overflow:auto;">
+                    <div id="policyNamesCard" class="my-text-class-title"></div>
+                    <div class="about4">
+                        <div class="about4_main">
+                            <div class="line"></div>
+                            <div id="policyTimeLine">
+                                <ul>
+                                    <li>
+                                        提示：点击左侧政策分类，快速开始
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="analyzeChart">
+
+        </div>
+    </div>
+
+</div>
+<!--<script src="http://echarts.baidu.com/resource/echarts-gl-latest/dist/echarts-gl.min.js"></script>-->
+<!--<script src="lay/extends/jquery.easyui.min.js"></script>-->
+<script data-th-inline="none" type="text/javascript">
+    layui.use(['febs', 'echarts4', 'dropdown', 'laydate', 'form', 'formSelects', 'treeSelect', 'table', 'jQuery', 'eleTree', 'apexcharts'], function () {
+        var $ = layui.jQuery,
+            echarts = layui.echarts4,
+            laydate = layui.laydate,
+            febs = layui.febs,
+            form = layui.form,
+            formSelects_map = layui.formSelects,
+            eleTree = layui.eleTree,
+            treeSelect = layui.treeSelect,
+            dropdown = layui.dropdown,
+            $view = $('#VIEW-policyRegionCom'),
+            $searchForm = $view.find('form'),
+            $analyzeChart = $view.find('#analyzeChart'),
+            $policyTimeLine = $view.find('#policyTimeLine'),
+            $policyNamesCardHeader = $view.find('#policyNamesCard'),
+            $hintMessage = $view.find('#hintMessage'),
+            _currentFormulaData_TextMining,
+            _formulaTree_TextMining,
+            _entityIndexTree_TextMining,
+            _policyProportionChart;
+        form.render();
+        formSelects_map.render();
+        _formulaTree_TextMining = renderFormulaTree();
+        _entityIndexTree_TextMining = renderEntityIndexTree();
+        var presetData = {
+            series: [{
+                "data": [],
+                "name": "天津市"
+            }, {
+                "data": [],
+                "name": "北京市"
+            }, {"data": [], "name": "河北省"}],
+            categories: [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]
+        };
+        var formulaKeywords;
+        var policyYearRegionNameList = [];
+        var params = getQueryParams();
+        initPolicyProportionChart();
+        laydate.render({
+            elem: '#createTime',
+            range: true,
+            trigger: 'click'
+        });
+
+        treeSelect.render({
+            elem: $view.find('#analysisFormula'),
+            type: 'get',
+            data: ctx + 'analysisFormula/select/tree',
+            placeholder: '请选择',
+            search: false
+        });
+
+        $(document).ready(function (e) {
+            var h = $(".about4_main ul li:first-child").height() / 2;<!--第一个li高度的一半-->
+            var h1 = $(".about4_main ul li:last-child").height() / 2;<!--最后一个li高度的一半-->
+            $(".line").css("top", h);
+            $(".line").height($(".about4_main").height() - h1 - h);
+        });
+        formSelects_map.config('region-tree-select', {
+            searchUrl: ctx + 'region/tree',
+            response: {
+                statusCode: 200
+            },
+            beforeSuccess: function (id, url, searchVal, result) {
+                var data = result.data;
+                var tranData = [];
+                for (var i = 0; i < data.length; i++) {
+
+                    if (data[i].children != null) {
+                        var children = [];
+                        for (var j = 0; j < data[i].children.length; j++) {
+                            children.push({
+                                name: data[i].children[j].title,
+                                value: data[i].children[j].id
+                            })
+                        }
+                        tranData.push({
+                            name: data[i].title,
+                            value: data[i].id,
+                            children: children
+                        })
+                    } else {
+                        tranData.push({
+                            name: data[i].title,
+                            value: data[i].id
+                        })
+                    }
+                }
+                result.data = tranData;
+                return result;
+            },
+            success: function () {
+                formSelects_map.value('region-tree-select', [110000, 120000, 130000]);
+            },
+            error: function (id, url, searchVal, err) {
+                // console.error(err);
+                febs.alert.error('获取角色列表失败');
+            }
+        });
+        dropdown.render({
+            elem: $view.find('.action-more'),
+            click: function (name, elem, event) {
+                if (name === 'add') {
+                    febs.view.tab.change("/policy/policyAnalysisFormula");
+                    // febs.view.tab.change("/index");
+                    // febs.view.tab.change("/system/user");
+                }
+            },
+            options: [{
+                name: 'add',
+                title: '新增公式',
+                perms: 'analysisFormula:add'
+            }]
+        });
+
+        /**
+         * 加载政策公式树形结构
+         * @returns {*}
+         */
+        function renderFormulaTree() {
+            _formulaTree_TextMining = eleTree.render({
+                elem: '.analysisFormula-tree-map',
+                url: ctx + 'analysisFormula/tree',
+                accordion: false,
+                highlightCurrent: true,
+                showCheckbox: false,
+                checkStrictly: true,
+                renderAfterExpand: false,
+                defaultExpandAll: true,
+                defaultExpandedKeys: [11],
+                request: {
+                    name: 'name',
+                    key: "id",
+                    checked: "checked",
+                    data: 'formulaData'
+                },
+                response: {
+                    statusName: "code",
+                    statusCode: 200,
+                    dataName: "data"
+                }
+            });
+            return _formulaTree_TextMining;
+        }
+
+        sentenceDetail = function (policyYearRegionName) {
+            params.formulaContent = _currentFormulaData_TextMining.formulaContent;
+            febs.modal.open('政策详情', 'policy/sentenceDetail', {
+                //传递参数，弹出的页面可以使用 POPUP_DATA.username 获取值
+                area: '90%',
+                data: {
+                    policyYearRegionName: policyYearRegionName,
+                    params: params,
+                    formulaKeywords: formulaKeywords
+                }
+            });
+        };
+
+        // 科技政策分类节点点击事件
+        eleTree.on("nodeClick(formulaTree)", function (obj) {
+            var data = obj.data.currentData.formulaData;
+            // console.log(obj);
+            /*var isLeaf = (obj.data.currentData.children.length)===0;
+            console.log(isLeaf);*/
+
+            _currentFormulaData_TextMining = data;
+            if (data.entityIndexIds) {
+                _entityIndexTree_TextMining.setChecked(data.entityIndexIds.split(','), true);
+            } else {
+                _entityIndexTree_TextMining.setChecked([], true);
+            }
+            $hintMessage.attr("style","display:none;");
+            params = getQueryParams();
+            params.formulaContent = _currentFormulaData_TextMining.formulaContent;
+            // console.log(params);
+            //请求和重新渲染图表
+            febs.get(ctx + 'analyze/policyNum', params, function (json) {
+                //alert(json)
+                presetData.categories = json.data.categories;
+                presetData.series = json.data.series;
+                if(json.data.series){
+                    _policyProportionChart.updateOptions({
+                        xaxis: {
+                            categories: json.data.categories
+                        },
+                        series: json.data.series
+                    });
+                }
+
+            });
+
+            // 加载政策演变时间轴
+            febs.get(ctx + 'analyze/policyYearRegionName', params, function (json) {
+                // console.log(json);
+                formulaKeywords = json.data.formulaKeywords;
+                if(formulaKeywords){
+                    $policyNamesCardHeader.html('共分析了<span class="keyword">7711</span>篇科技政策，其中涉及到<span class="keyword">' + data.formulaName + '</span>调整的科技政策有<span class="keyword">' + json.data.total + '</span>篇。');
+                    updatePolicyFileCard(json.data);
+                }
+
+            });
+            //年鉴数据库的数据作为支撑
+            febs.get(ctx + 'analyze/entityIndexNum', params, function (json) {
+                var result = json.data;
+                $analyzeChart.empty();
+                for (var i = 0; i < result.length; i++) {
+                    var appendHtml = '<div class="layui-col-md6 layui-col-sm6 layui-col-xs12">\n' +
+                        '            <div class="layui-card">\n' +
+                        '                <div class="layui-card-header">科技实体指标对比 </div>\n' +
+                        '                <div class="layui-card-body">\n' +
+                        '                    <div id="container' + i + '"></div>\n' +
+                        '                </div>\n' +
+                        '            </div>\n' +
+                        '        </div>';
+
+                    $analyzeChart.append(appendHtml);
+                    initEntityProportionChart('#container' + i, result[i]);
+                }
+            });
+        });
+
+        function updatePolicyFileCard(json) {
+            var regions = json.regions;
+            $policyTimeLine.empty();
+            var appendHtml = '';
+            for (var i = 0; i < regions.length; i++) {
+                // console.log(regions[i]);
+                var oneRegionValues = json.regionValues[regions[i]];
+                // console.log(oneRegionValues);
+                appendHtml += '<ul><li class="li-title">' + regions[i] + '&nbsp;&nbsp;&nbsp;&nbsp;' + oneRegionValues.length + '篇</li><ul>';
+                for (var j = 0; j < oneRegionValues.length; j++) {
+                    var info = JSON.stringify(oneRegionValues[j]);
+                    appendHtml += '<li class="policyLine">' + (j + 1) + '.&nbsp;<a href="javascript:void(0);" onclick="sentenceDetail(' + info.replace(/"/g, '&quot;') + ')">' + oneRegionValues[j].name + '</a>&nbsp;&nbsp;' + oneRegionValues[j].year + '&nbsp;&nbsp;' + oneRegionValues[j].region + '</li>';
+                }
+                appendHtml += '</ul></ul>';
+            }
+            $policyTimeLine.append(appendHtml);
+           // $("#policyTimeLine ul li").next("ul").hide();
+            $("#policyTimeLine ul li").click(function () {
+                $(this).next("ul").toggle();
+            });
+        }
+
+        /**
+         * 科技实体数据树形结构
+         * @returns {*}
+         */
+        function renderEntityIndexTree() {
+            _entityIndexTree_TextMining = eleTree.render({
+                elem: '.entityIndex-tree',
+                url: ctx + 'entityIndex/tree',
+                showCheckbox: true,
+                where: {
+                    "invalidate_ie_cache": new Date()
+                },
+                accordion: false,
+                checkStrictly: true,
+                renderAfterExpand: false,
+                expandOnClickNode: true,
+                defaultExpandAll: true,
+                defaultExpandedKeys: [11, 16],
+                request: {
+                    name: 'name',
+                    key: "id",
+                    checked: "checked",
+                    data: 'entityIndexData'
+                },
+                response: {
+                    statusName: "code",
+                    statusCode: 200,
+                    dataName: "data"
+                }
+            });
+            return _entityIndexTree_TextMining;
+        }
+
+        function getQueryParams() {
+            var createTimeFrom,
+                createTimeTo,
+                createTime = $searchForm.find('input[name="createTime"]').val();
+            if (createTime) {
+                createTimeFrom = createTime.split(' - ')[0];
+                createTimeTo = createTime.split(' - ')[1];
+            }
+            // 获取选中的节点，接收两个 boolean 类型的参数，1. 是否只是叶子节点，默认值为 false 2. 是否包含半选节点，默认值为 false
+            var entityIndexIds = '';
+            var leaves = _entityIndexTree_TextMining.getChecked(true, false);
+            if (leaves) {
+                for (var i = 0; i < leaves.length; i++) {
+                    entityIndexIds += leaves[i].id + ',';
+                }
+            }
+            return {
+                createTimeFrom: createTimeFrom,
+                createTimeTo: createTimeTo,
+                regionIds: $searchForm.find("input[name='regionId']").val(),
+                entityIndexIds: entityIndexIds,
+                invalidate_ie_cache: new Date()
+            };
+        }
+
+        //政策占比图
+        function initPolicyProportionChart() {
+            var lineChartDatalabelsOptions = {
+                chart: {
+                    height: 320,
+                    type: 'line',
+                    zoom: {
+                        enabled: false
+                    },
+                    toolbar: {
+                        show: false
+                    },
+                    events: {
+                        dataPointSelection: function (event, chartContext, config) {
+                            // The last parameter config contains additional information like `seriesIndex` and `dataPointIndex` for cartesian charts
+                            $policyNamesCardHeader.html('<span class="keyword">' + presetData.categories[config.dataPointIndex] + '</span>年<span class="keyword">' + presetData.series[config.seriesIndex].name + '</span>出台了<span class="keyword">' + presetData.series[config.seriesIndex].data[config.dataPointIndex] + '</span>篇相关的科技政策');
+                            params = getQueryParams();
+                            params.regionName = presetData.series[config.seriesIndex].name;
+                            params.yearData = presetData.categories[config.dataPointIndex];
+                            params.formulaContent = _currentFormulaData_TextMining.formulaContent;
+                            febs.get(ctx + 'analyze/policyYearRegionName', params, function (json) {
+                                updatePolicyFileCard(json.data);
+                            });
+                        }
+                    }
+                },
+                colors: ['#727cf5', '#0acf97', '#cf1513', '#ffcd50', '#3e7b89', '#28fff2'],
+                dataLabels: {
+                    enabled: true
+                },
+                stroke: {
+                    width: [3, 3],
+                    curve: 'smooth'
+                },
+                series: presetData.series,
+                title: {
+                    text: '每年各地区政策数量',
+                    align: 'left'
+                },
+                grid: {
+                    row: {
+                        colors: ['transparent', 'transparent', 'transparent'],
+                        opacity: 0.2
+                    },
+                    borderColor: '#f1f3fa'
+                },
+                markers: {
+                    style: 'inverted',
+                    size: 5,
+                    hover: {
+                        size: 6
+                    }
+                },
+                xaxis: {
+                    categories: presetData.categories
+                },
+                yaxis: {
+                    title: {
+                        text: '篇'
+                    }
+                },
+                tooltip: {
+                    intersect: true,
+                    shared: false
+                },
+                legend: {
+                    position: 'top',
+                    horizontalAlign: 'right',
+                    floating: true,
+                    offsetY: -25,
+                    offsetX: -5
+                },
+                responsive: [{
+                    breakpoint: 600,
+                    options: {
+                        chart: {
+                            toolbar: {
+                                show: false
+                            }
+                        },
+                        legend: {
+                            show: false
+                        }
+                    }
+                }]
+            };
+
+            _policyProportionChart = new ApexCharts(document.querySelector("#container"), lineChartDatalabelsOptions);
+            _policyProportionChart.render();
+        }
+
+        //实体展示图
+        function initEntityProportionChart(container, data) {
+            var lineChartDatalabelsOptions = {
+                chart: {
+                    height: 320,
+                    type: 'line',
+                    zoom: {
+                        enabled: false
+                    },
+                    toolbar: {
+                        show: false
+                    }
+                },
+                colors: ['#727cf5', '#0acf97', '#cf1513', '#ffcd50', '#3e7b89', '#28fff2'],
+                dataLabels: {
+                    enabled: true
+                },
+                stroke: {
+                    width: [3, 3],
+                    curve: 'smooth'
+                },
+                series: data.series,
+                title: {
+                    text: data.chartName,
+                    align: 'left'
+                },
+                grid: {
+                    row: {
+                        colors: ['transparent', 'transparent', 'transparent'],
+                        opacity: 0.2
+                    },
+                    borderColor: '#f1f3fa'
+                },
+                markers: {
+                    style: 'inverted',
+                    size: 5,
+                    hover: {
+                        size: 6
+                    }
+                },
+                xaxis: {
+                    categories: data.categories
+                },
+                yaxis: {
+                    title: {
+                        text: data.unit_c
+                    },
+                    min: 0
+                },
+                legend: {
+                    position: 'top',
+                    horizontalAlign: 'right',
+                    floating: true,
+                    offsetY: -25,
+                    offsetX: -5
+                },
+                responsive: [{
+                    breakpoint: 600,
+                    options: {
+                        chart: {
+                            toolbar: {
+                                show: false
+                            }
+                        },
+                        legend: {
+                            show: false
+                        }
+                    }
+                }]
+            };
+            new ApexCharts(document.querySelector(container), lineChartDatalabelsOptions).render();
+        }
+    });
+</script>

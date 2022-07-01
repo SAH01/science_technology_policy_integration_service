@@ -1,0 +1,304 @@
+<style>
+    span.keyword{
+        color: #f5222d;
+    }
+</style>
+<div class="layui-fluid layui-anim febs-anim" id="febs-scienceTechnologyEntityIndex" lay-title="科技政策效果评估指标体系">
+    <div class="layui-row layui-col-space8 febs-container">
+        <div class="layui-card">
+            <div class="layui-card-header" >科技政策效果评估指标体系构建规范</div>
+            <div class="layui-card-body febs-table-full">
+                <p>1.科技政策效果评估指标是用来对一个省市科技政策绩效进行<span class="keyword">量化</span>的一个评估体系。</p>
+                <p>2.指标内容由《中国科技统计年鉴》、《河北经济年鉴》、《河北科技统计年鉴》、《中国统计年鉴》等数据库中的具体指标构成，对这些指标进行了人为的分类。</p>
+                <p>3.在某一目录下添加指标时建议先输入指标内容，系统会进行<span class="keyword">模糊推荐并自动补全</span>需要填写的数据，用户稍作修改即可，权重默认是0.1。</p>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row layui-col-space8 febs-container">
+        <div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-body febs-table-full">
+                    <form class="layui-form layui-table-form" lay-filter="scienceTechnologyEntityIndex-table-form" id="scienceTechnologyEntityIndex-table-form">
+                        <div class="layui-row">
+                            <div class="layui-col-md8 layui-col-sm9 layui-col-xs9">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">名称</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="entityIndexName" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md4 layui-col-sm12 layui-col-xs12 table-action-area">
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="query">
+                                    <i class="layui-icon">&#xe848;</i>
+                                </div>
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="reset">
+                                    <i class="layui-icon">&#xe79b;</i>
+                                </div>
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action action-more"
+                                     shiro:hasAnyPermissions="scienceTechnologyEntityIndex:add,scienceTechnologyEntityIndex:delete,scienceTechnologyEntityIndex:export">
+                                    <i class="layui-icon">&#xe875;</i>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="scienceTechnologyEntityIndex-tree" lay-filter="entityIndexTree" style="margin-left: 1rem"></div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-header" id="form-header">新增科技实体指标</div>
+                <div class="layui-card-body febs-table-full">
+                    <form class="layui-form layui-table-form" action="" lay-filter="scienceTechnologyEntityIndex-form">
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label febs-form-item-require">ID：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="entityIndexId" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">上级ID：</label>
+                            <div class="layui-input-block">
+                                <input type="text" value="" name="parentId" readonly autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label febs-form-item-require">科技实体指标名称：</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="entityIndexName" name="entityIndexName" autocomplete="off" class="layui-input"
+                                       minlength="2" maxlength="20" lay-verify="range">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label febs-form-item-require">科技实体指标内容：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="entityIndexContent" id="entityIndexContent" autocomplete="off" class="layui-input" placeholder="科技本体指标名称">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">权重：</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="standardValue" name="standardValue" autocomplete="off" class="layui-input" placeholder="0.1"
+                                       maxlength="4" lay-verify="weight">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">科技实体指标排序：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="orderNum" autocomplete="off" class="layui-input"
+                                       lay-verify="number">
+                            </div>
+                        </div>
+                        <button type="reset" class="layui-btn febs-hide" id="reset-form"></button>
+                        <button class="layui-btn febs-hide" lay-submit="" lay-filter="scienceTechnologyEntityIndex-form-submit"
+                                id="submit-form"></button>
+                    </form>
+                </div>
+                <div class="layui-card-footer">
+                    <button class="layui-btn layui-btn-normal" id="submit">保存</button>
+                    <button class="layui-btn layui-btn-success" id="rebuildMapData-confirm">重新生成评价体系</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script data-th-inline="javascript" type="text/javascript">
+    layui.use(['dropdown', 'jquery', 'validate', 'febs', 'form', 'eleTree','autocomplete'], function () {
+        var $ = layui.jquery,
+            febs = layui.febs,
+            form = layui.form,
+            validate = layui.validate,
+            eleTree = layui.eleTree,
+            dropdown = layui.dropdown,
+            $view = $('#febs-scienceTechnologyEntityIndex'),
+            $query = $view.find('#query'),
+            $reset = $view.find('#reset'),
+            $submit = $view.find('#submit'),
+            $header = $view.find('#form-header'),
+            $searchForm = $view.find('#scienceTechnologyEntityIndex-table-form'),
+            $entityIndexName = $searchForm.find('input[name="entityIndexName"]'),
+            _currentFormulaData,
+            _entityIndexTree,
+            autocomplete = layui.autocomplete;
+        form.verify(validate);
+        form.render();
+        renderEntityIndexTree();
+        autocomplete.render({
+            elem: $('#entityIndexContent'),
+            url: 'data/entityIndexName.json',
+            cache: true,
+            template_val: '{{d.name}}',
+            template_txt: '{{d.name}} <span class=\'layui-badge layui-bg-gray\'>{{d.quantity}}</span>',
+            onselect: function (resp) {
+                if($('#entityIndexName').val()==null||$('#entityIndexName').val()===''){
+                    $('#entityIndexName').val(resp.name.substring(0,8))
+                }
+            }
+        });
+        eleTree.on("nodeClick(entityIndexTree)", function (d) {
+            $header.text('修改科技实体指标');
+            var data = d.data.currentData.entityIndexData;
+            _currentFormulaData = data;
+            form.val("scienceTechnologyEntityIndex-form", {
+                "entityIndexName": data.entityIndexName,
+                "entityIndexContent": data.entityIndexContent,
+                "standardValue":data.standardValue,
+                "orderNum": data.orderNum,
+                "createTime": data.createTime,
+                "parentId": data.parentId,
+                "entityIndexId": data.entityIndexId
+            });
+        });
+
+        dropdown.render({
+            elem: $view.find('.action-more'),
+            click: function (name, elem, event) {
+                if (name === 'add') {
+                    reset();
+                    var selected = _entityIndexTree.getChecked(false, true);
+                    if (selected.length > 1) {
+                        febs.alert.warn('只能选择一个节点作为父级！');
+                        return;
+                    }
+                    form.val("scienceTechnologyEntityIndex-form", {
+                        "parentId": selected[0] ? selected[0].id : ''
+                    });
+                }
+                if (name === 'delete') {
+                    var checked = _entityIndexTree.getChecked(false, true);
+                    if (checked.length < 1) {
+                        febs.alert.warn('请勾选需要删除的科技实体指标');
+                        return;
+                    }
+                    var entityIndexIds = [];
+                    layui.each(checked, function (key, item) {
+                        entityIndexIds.push(item.id)
+                    });
+                    febs.modal.confirm('提示', '当您点击确定按钮后，这些记录将会被彻底删除，如果其包含子记录，也将一并删除！', function () {
+                        febs.get(ctx + 'entityIndex/delete/' + entityIndexIds.join(','), null, function () {
+                            febs.alert.success('删除成功！');
+                            reloadFormulaTree();
+                            reset();
+                        })
+                    });
+                }
+                if (name === 'export') {
+                    febs.download(ctx + 'entityIndex/excel', getQueryParams(), '科技实体指标信息表.xlsx');
+                }
+            },
+            options: [{
+                name: 'add',
+                title: '新增科技实体指标',
+                perms: 'scienceTechnologyEntityIndex:add'
+            }, {
+                name: 'delete',
+                title: '删除科技实体指标',
+                perms: 'scienceTechnologyEntityIndex:delete'
+            }, {
+                name: 'export',
+                title: '导出Excel',
+                perms: 'scienceTechnologyEntityIndex:export'
+            }]
+        });
+
+        $view.on('click', '#submit', function () {
+            $view.find('#submit-form').trigger('click');
+        });
+
+        $reset.on('click', function () {
+            $entityIndexName.val('');
+            reloadFormulaTree();
+            reset();
+        });
+
+        $query.on('click', function () {
+            reloadFormulaTree();
+        });
+        // 监听点击重新生成指标的按钮
+        $view.find('#rebuildMapData-confirm').on('click', function () {
+            febs.modal.confirm('是否重新生成评价体系', '重新生成评估体系是指当科技政策绩效评估体系发生重大变化时，重新利用当前的评估体系对不同地区的科技政策绩效进行计算和统计，这个过程大约需要20分钟，时间长短和评估指标的内容多少有关。', function () {
+                febs.alert.info("开始进行重新统计！请耐心等待大约20分钟左右。");
+                febs.view.loadBar.start();
+                febs.get(ctx + 'performance/updateMapData', null, function (json) {
+                    console.log(json);
+                    if(json.code===200){
+                        febs.view.loadBar.finish();
+                        febs.alert.info("更新成功！");
+                    }else {
+                        febs.view.loadBar.error();
+                        febs.alert.info("发生了一些意外，请稍后重试！");
+                    }
+                });
+            }, function () {
+                febs.alert.info("取消更新！");
+            });
+        });
+        function getQueryParams() {
+            return {
+                "entityIndexName": $entityIndexName.val().trim()
+            }
+        }
+
+        function reset() {
+            $header.text('新增科技实体指标');
+            $view.find('#reset-form').trigger('click');
+        }
+
+        function renderEntityIndexTree() {
+            _entityIndexTree = eleTree.render({
+                elem: '.scienceTechnologyEntityIndex-tree',
+                url: ctx + 'entityIndex/tree',
+                accordion: true,
+                highlightCurrent: true,
+                showCheckbox: true,
+                checkStrictly: true,
+                renderAfterExpand: false,
+                where: {
+                    "entityIndexName": $entityIndexName.val().trim(),
+                    "invalidate_ie_cache": new Date()
+                },
+                request: {
+                    name: 'name',
+                    key: "id",
+                    checked: "checked",
+                    data: 'entityIndexData'
+                },
+                response: {
+                    statusName: "code",
+                    statusCode: 200,
+                    dataName: "data"
+                }
+            });
+            return _entityIndexTree;
+        }
+
+        function reloadFormulaTree() {
+            _entityIndexTree = renderEntityIndexTree();
+        }
+
+        form.on('submit(scienceTechnologyEntityIndex-form-submit)', function (data) {
+            if (data.field.entityIndexId && $header.text().indexOf('修改') !== -1) {
+                if (febs.nativeEqual(data.field, _currentFormulaData)) {
+                    febs.alert.warn('数据未作任何修改！');
+                    return false;
+                }
+                febs.post(ctx + 'entityIndex/update', data.field, function () {
+                    febs.alert.success('修改成功');
+                    reloadFormulaTree();
+                    reset();
+                })
+            } else {
+                febs.post(ctx + 'entityIndex', data.field, function () {
+                    febs.alert.success('新增成功');
+                    reloadFormulaTree();
+                    reset();
+                })
+            }
+            return false;
+        });
+    });
+</script>

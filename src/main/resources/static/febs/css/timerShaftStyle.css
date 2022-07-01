@@ -1,0 +1,135 @@
+@charset "utf-8";
+/* CSS Document */
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, p, th, td{margin:0;padding:0;font-family:Arial,"微软雅黑";}
+body{font-size:12px;color: #000000;font-family:Arial,"微软雅黑";background:#fff;}
+fieldset, img{border:0;}  /*在ie6下面，只要给插入图片加了链接，就会出现小边框*/
+
+ol, ul{list-style:none;}
+h1, h2, h3, h4, h5, h6{ font-size:100%;}
+em{font-style:normal;}
+input, button, select, textarea{outline:none;}
+
+.about4_ch{font-size:18px;color:#d80017;margin-bottom:30px;}
+.about4_main{position:relative;padding-left:20px;overflow:hidden;}
+.line{width:1px;height:100%;background-color:#999;position:absolute;left:26px;z-index:-1;}
+.about4_main ul li{padding-left:20px;font-size:14px;color:#333333;line-height:30px;margin-bottom:20px;background:url(./images/about4_icon.png) left center no-repeat;}
+.about4_main ul li:last-child{margin-bottom:0px;}
+.relationSentence {
+    /*font-family: "Microsoft YaHei", 微软雅黑, "MicrosoftJhengHei", 华文细黑, STHeiti, MingLiu,serif;*/
+    font-size: 13px;
+    color: #000000;
+    display:none;
+}
+
+.sentencePolicyName {
+    color: #000000;
+}
+
+.sentencePolicyName a {
+    font-size: 13px;
+    font-weight: 700;
+    padding: 4px 6px;
+    color: rgba(175, 31, 9, 0.65);
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+}
+
+.sentencePolicyName a:hover {
+    font-size: 13px;
+    font-weight: 700;
+    color: #40a9ff;
+    border-color: #40a9ff;
+}
+
+.keySentence {
+    color: white;
+    background: red;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.keywordInSentence {
+    font-size: 13px;
+    font-weight: 600;
+    color: #11a4c5;
+}
+
+.policyName {
+    margin: 20px 0 20px 0;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000000;
+}
+
+.text {
+    color: #000000;
+    font-size: 13px;
+    margin: 0 15px 15px 0;
+    line-height: 20px;
+}
+
+.explain {
+    color: #000000;
+    font-size: 10px;
+}
+#nowPolicySentence li{
+    font-size: 14px;
+    font-weight: 600;
+    color: #000000;
+}
+.policyLine a {
+    font-size: 13px;
+    font-weight: 700;
+    /*padding: 4px 6px;*/
+    color: rgba(175, 31, 9, 0.65);
+    border-radius: 2px;
+}
+span.keyword {
+    color: #0acf97;
+    font-size: .9rem;
+    font-weight: bold;
+}
+
+.my-text-class {
+    margin: 5px 10px;
+    color: rgb(0, 0, 0);
+}
+
+.my-text-class-title {
+    margin: 5px 10px;
+    font-size: .9rem;
+    font-weight: 800;
+    color: rgb(0, 0, 0);
+}
+
+.li-title {
+    /*margin: 15px 10px 30px 5px;*/
+    font-size: 15px;
+    font-weight: 800;
+    color: rgb(0, 0, 0);
+}
+
+.policyLine {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 10px;
+    margin-left: 30px;
+    /*margin: 5px 5px 5px 30px;*/
+    /*padding: 4px 6px;*/
+    color: rgb(0, 0, 0);
+    border-radius: 2px;
+}
+
+.policyLine a {
+    font-size: 13px;
+    font-weight: 700;
+    /*padding: 4px 6px;*/
+    color: rgba(175, 31, 9, 0.65);
+    border-radius: 2px;
+}
+
+.policyLine a:hover {
+    font-size: 13px;
+    font-weight: 700;
+    color: #40a9ff;
+}

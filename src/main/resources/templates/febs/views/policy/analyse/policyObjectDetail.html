@@ -1,0 +1,494 @@
+<style>
+    #policyFile-list #user-img img {
+        width: 7rem;
+        margin: 10px 10px 0 20px;
+        border-radius: 50%;
+        cursor: pointer;
+        color: rgb(0, 0, 0);
+    }
+
+    #policyFile-list .user-info div {
+        margin: 10px 15px;
+        color: rgb(0, 0, 0);
+    }
+
+    .sentencePolicyName a {
+        font-size: 13px;
+        font-weight: 700;
+        padding: 4px 6px;
+        color: rgba(175, 31, 9, 0.65);
+        border: 1px solid #d9d9d9;
+        border-radius: 2px;
+    }
+
+    .sentencePolicyName a:hover {
+        font-size: 13px;
+        font-weight: 700;
+        color: #40a9ff;
+        border-color: #40a9ff;
+    }
+
+    .content-title {
+        color: #000000;
+        font-size: 15px;
+        font-weight: 600;
+        padding: 4px 6px;
+    }
+
+    .content-title-keyword {
+        color: #0acf97;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 4px 6px;
+    }
+
+    .table-title {
+        color: #000000;
+        font-size: 15px;
+        font-weight: 700;
+        padding: 4px 6px;
+    }
+
+    table tr td {
+        text-align: center;
+        padding: 4px 6px;
+    }
+
+    span.high {
+        color: #cf150a;
+        font-size: .9rem;
+        font-weight: bold;
+    }
+
+    span.mid {
+        color: #ff9e1e;
+        font-size: .9rem;
+        font-weight: bold;
+    }
+
+    span.low {
+        color: #0acf97;
+        font-size: .9rem;
+        font-weight: bold;
+    }
+
+    .normalA {
+        padding: 4px 6px;
+        color: rgba(0, 0, 0, 0.65);
+        border-radius: 2px;
+    }
+
+    .normal-tr {
+        background-color: white;
+    }
+
+    .mark-tr {
+        background-color: #fdff0f;
+    }
+</style>
+
+<div class="layui-fluid" id="policyObject-detail" style="height:100%;" lay-title="相关政策">
+    <div class="layui-row layui-col-space8 febs-container" style="height:100%;">
+        <div class="layui-col-md8 layui-col-sm8 layui-col-xs8">
+            <div class="layui-card">
+                <div class="layui-card-header" id="policyContentHead">政策内容</div>
+                <div class="layui-card-body">
+                    <div class="content-title">地方对国家政策响应度:<span id="conflictText"></span></div>
+                    <div id="relationSentence" class="layui-card-body">
+                        <table id="" border=1 cellspacing=0 cellpadding=0 style="width: 100%;">
+                            <tr>
+                                <td rowspan=2>
+                                    <p><span>&nbsp;</span></p>
+                                </td>
+                                <td colspan=2>
+                                    <p><span class="table-title">支撑企业创新</span></p>
+                                </td>
+                                <td colspan=2>
+                                    <p><span class="table-title">服务人才创业</span></p>
+                                </td>
+                                <td colspan=2>
+                                    <p><span class="table-title">激发院所激情</span></p>
+                                </td>
+                                <td colspan=2>
+                                    <p><span class="table-title">调整优化机制</span></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p><span>政策数量</span></p>
+                                </td>
+                                <td>
+                                    <p><span>内部占比</span></p>
+                                </td>
+                                <td>
+                                    <p><span>政策数量</span></p>
+                                </td>
+                                <td>
+                                    <p><span>内部占比</span></p>
+                                </td>
+                                <td>
+                                    <p><span>政策数量</span></p>
+                                </td>
+                                <td>
+                                    <p><span>内部占比</span></p>
+                                </td>
+                                <td>
+                                    <p><span>政策数量</span></p>
+                                </td>
+                                <td>
+                                    <p><span>内部占比</span></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p><span id="countryNameFromJson">&nbsp;</span></p>
+                                </td>
+                                <td width="80px">
+                                    <p><span id="cs0">&nbsp;</span></p>
+                                </td>
+                                <td>
+                                    <p><span id="cp0">&nbsp;</span></p>
+                                </td>
+                                <td>
+                                    <p><span id="cs1">&nbsp;</span></p>
+                                </td>
+                                <td>
+                                    <p><span id="cp1">&nbsp;</span></p>
+                                </td>
+                                <td>
+                                    <p><span id="cs2">&nbsp;</span></p>
+                                </td>
+                                <td>
+                                    <p><span id="cp2">&nbsp;</span></p>
+                                </td>
+                                <td>
+                                    <p><span id="cs3">&nbsp;</span></p>
+                                </td>
+                                <td>
+                                    <p><span id="cp3">&nbsp;</span></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="80px">
+                                    <p><span id="regionNameFromJson">&nbsp;</span></p>
+                                </td>
+                                <td>
+                                    <p><span id="rs0">&nbsp;</span></p>
+                                </td>
+                                <td>
+                                    <p><span id="rp0">&nbsp;</span></p>
+                                </td>
+                                <td>
+                                    <p><span id="rs1">&nbsp;</span></p>
+                                </td>
+                                <td>
+                                    <p><span id="rp1">&nbsp;</span></p>
+                                </td>
+                                <td>
+                                    <p><span id="rs2">&nbsp;</span></p>
+                                </td>
+                                <td>
+                                    <p><span id="rp2">&nbsp;</span></p>
+                                </td>
+                                <td>
+                                    <p><span id="rs3">&nbsp;</span></p>
+                                </td>
+                                <td>
+                                    <p><span id="rp3">&nbsp;</span></p>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="content-title" id="policyTitle-title">2016年河北省出台了3篇支撑企业创新相关的科技政策</div>
+                    <div id="policyListView" class="about4">
+                        <div class="about4_main" style="height:500px;overflow:auto;">
+                            <div><ul id="policyFile-list"></ul></div>
+                        </div>
+                    </div>
+                    <div id="policyContentView" class="layui-card" style="display:none;">
+                        <div class="layui-card-header">政策内容
+                            <div style="float: right;"><span id='return-button' class="layui-icon layui-icon-arrowleft">返回政策列表</span></div>
+                        </div>
+                        <div style="height:800px;overflow:auto;">
+                            <div class="user-info">
+                                <div id="policyName" class="policyName" align="center"></div>
+                                <div align="center" class="explain">
+                                    <span class="layui-icon layui-icon-time-circle"></span> 发布年份：<span id="year"></span>
+                                    <span class="layui-icon layui-icon-home"></span> 发布部门：<span id="region"></span>
+                                </div>
+                                <div id="sentence" class="text"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="float: right;" class="layui-col-md4 layui-col-sm4 layui-col-xs12">
+            <div class="layui-card">
+                <div id="compareWithLastYearChart" style="width: 100%;height: 400px;top: 10px;"></div>
+                <div class="table">
+                    <div class="content-title">近两年各类型政策数量</div>
+                    <table border=1 cellspacing=0 cellpadding=0 style="width: 100%;">
+                        <thead>
+                        <tr class="normal-tr">
+                            <td class="table-title">政策对用对象</td>
+                            <td class="table-title" id="lastYear">2018年</td>
+                            <td class="table-title" id="nowYear">2019年</td>
+                        </tr>
+                        </thead>
+                        <tbody id="policyTwoYearSum">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['febs', 'echarts4'], function () {
+        var $ = layui.jquery,
+            febs = layui.febs,
+            echarts = layui.echarts4,
+            $view = $('#policyObject-detail'),
+            $lastYear = $view.find('#lastYear'),
+            $nowYear = $view.find('#nowYear'),
+            $policyContentHead = $view.find('#policyContentHead'),
+            $policyCardTitle = $view.find('#policyTitle-title'),
+            $policyFileList = $view.find('#policyFile-list'),
+            $policyTwoYearSum = $view.find('#policyTwoYearSum'),
+            $policyContent = $view.find('#policyContent'),
+            $policyName = $view.find('#policyName'),
+            $year = $view.find('#year'),
+            $region = $view.find('#region'),
+            $content = $view.find('#sentence'),
+            $policyListView = $view.find('#policyListView'),
+            $policyContentView = $view.find('#policyContentView');
+
+        var compareWithLastYearChart = echarts.init(document.getElementById("compareWithLastYearChart"));
+        if (!POPUP_DATA.params) {
+            return;
+        }
+        compareWithLastYearChart.showLoading();
+        var params = POPUP_DATA.params;
+        var regionId = params.regionId,
+            year = params.yearData,
+            category = params.category,
+            num = params.num,
+            checked = params.checked,
+            regionName = '';
+        $lastYear.text(year - 1 + '年');
+        $nowYear.text(year + '年');
+        var policyFileList;
+        showPolicy = function (index) {
+            $policyListView.attr("style", "display:none;");
+            $policyContentView.attr("style", "display:block;");
+            initPolicyContent(policyFileList[index]);
+        };
+        policyList = function (regionId, category, num) {
+            if (regionId === 1) {
+                $policyCardTitle.html(year + '年国家' + '<span class="content-title-keyword">' + category + '</span>的科技政策有<span class="content-title-keyword">' + num + '</span>篇');
+            } else {
+                $policyCardTitle.html(year + '年' + regionName + '<span class="content-title-keyword">' + category + '</span>的科技政策有<span class="content-title-keyword">' + num + '</span>篇');
+            }
+            febs.get(ctx + 'analyze/getOneYearOneRegionOneCategoryPolicy', {
+                regionId: regionId,
+                categoryId: category,
+                yearData: year,
+                checked: checked
+            }, function (json) {
+                console.log(json);
+                policyFileList = json.data.policyList;
+                $policyFileList.empty();
+                var appendHtml = '';
+                for (var i = 0; i < policyFileList.length; i++) {
+                    appendHtml += '<li class="policyLine">' + (i + 1) + '.&nbsp;<a href="javascript:void(0);" onclick="showPolicy(' + i + ')">' + policyFileList[i].name + '</a>&nbsp;&nbsp;' + policyFileList[i].pubdata.substring(0, 10) + '&nbsp;&nbsp;' + policyFileList[i].organ;
+                }
+                $policyFileList.append(appendHtml);
+            });
+        };
+        policyList(regionId, category, num);
+        checked = 0;
+        /*params.yearData;
+        params.num;
+        params.category;*/
+
+        febs.get(ctx + 'analyze/getOneYearOneRegionCategoryNum', params, function (json) {
+            regionName = json.data.regionName;
+            $policyContentHead.text(year + '年' + regionName + '相关政策内容构成');
+            // $policyCardTitle.html();
+            $('#regionNameFromJson').text(regionName);
+            $('#countryNameFromJson').text("国家");
+            var categories = json.data.categories;
+            var regionNumList = json.data.regionNumList;
+            var regionProportionList = json.data.regionProportionList;
+            var countryNumList = json.data.countryNumList;
+            var countryProportionList = json.data.countryProportionList;
+            var cha = [];
+
+
+            for (var i = 0; i < 4; i++) {
+                cha.push(Math.abs(countryProportionList[i] - regionProportionList[i]));
+                if (Math.abs(countryProportionList[i] - regionProportionList[i]) > 0.3) {
+                    if (Math.abs(countryProportionList[i] - regionProportionList[i]) > 0.5) {
+                        $('#rp' + i).html('<span class="high">' + (regionProportionList[i] * 100).toFixed(2) + '%</span>');
+                        $('#cp' + i).html('<span class="high">' + (countryProportionList[i] * 100).toFixed(2) + '%</span>');
+                    } else {
+                        $('#rp' + i).html('<span class="mid">' + (regionProportionList[i] * 100).toFixed(2) + '%</span>');
+                        $('#cp' + i).html('<span class="mid">' + (countryProportionList[i] * 100).toFixed(2) + '%</span>');
+                    }
+                } else {
+                    $('#rp' + i).text((regionProportionList[i] * 100).toFixed(2) + '%');
+                    $('#cp' + i).text((countryProportionList[i] * 100).toFixed(2) + '%');
+                }
+                $('#rs' + i).html('<a class="normalA" href="javascript:void(0);" onclick="policyList(' + regionId + ',\'' + categories[i] + '\',' + regionNumList[i] + ')">' + regionNumList[i] + '</a>');
+                $('#cs' + i).html('<a class="normalA" href="javascript:void(0);" onclick="policyList(' + 1 + ',\'' + categories[i] + '\',' + countryNumList[i] + ')">' + countryNumList[i] + '</a>');
+            }
+            var maxCha = 0.0;
+            for (var j = 0; j < cha.length; j++) {
+                if (maxCha < cha[j]) {
+                    maxCha = cha[j];
+                }
+            }
+            if (maxCha > 0.4) {
+                if (maxCha > 0.6) {
+                    $('#conflictText').html('<span class="high">较差</span>');
+                } else {
+                    $('#conflictText').html('<span class="mid">一般</span>');
+                }
+            } else if(maxCha<=0.4&&maxCha>0){
+                $('#conflictText').html('<span class="low">良好</span>');
+            }
+            else {
+                $('#conflictText').html('<span class="low">无</span>');
+            }
+
+        });
+
+        febs.get(ctx + 'analyze/getOneYearCategoryNum', {regionId: regionId, yearData: year}, function (json) {
+            initChart(json.data);
+            var categories = json.data.categories;
+            var appendHtm = '';
+            for (var i = 0; i < json.data.nowYearNumList.length; i++) {
+                appendHtm += '<tr class="normal-tr"><td>' + categories[i] + '</td><td>' + json.data.lastYearNumList[i] + '</td><td>' + json.data.nowYearNumList[i] + '</td></tr>';
+            }
+            $policyTwoYearSum.append(appendHtm);
+        });
+
+        // 返回按钮
+        $('#return-button').on('click', function () {
+
+            $policyListView.attr("style", "display:block;");
+            $policyContentView.attr("style", "display:none;");
+
+        });
+
+        //显示政策
+        function initChart(json) {
+            var increaseList = [];
+            var categories = [];
+            for (var i = 0; i < json.categories.length; i++) {
+                increaseList.unshift(json.increaseList[i]);
+                categories.unshift(json.categories[i]);
+            }
+            option = {
+                title: {
+                    text: '较上年相比各类型政策增长幅度'
+                    // subtext: 'From ExcelHome',
+                    // sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                grid: {
+                    top: 80,
+                    bottom: 30
+                },
+                xAxis: {
+                    type: 'value',
+                    position: 'top',
+                    splitLine: {lineStyle: {type: 'dashed'}}
+                },
+                yAxis: {
+                    type: 'category',
+                    axisLine: {show: false},
+                    axisLabel: {show: false},
+                    axisTick: {show: false},
+                    splitLine: {show: false},
+                    data: categories
+                },
+                series: [
+                    {
+                        name: '作用对象',
+                        type: 'bar',
+                        stack: '总量',
+                        label: {
+                            normal: {
+                                show: true,
+                                formatter: '{b}'
+                            }
+                        },
+                        data: increaseList
+                    }
+                ]
+            };
+            // 使用刚指定的配置项和数据显示图表
+            compareWithLastYearChart.hideLoading();
+            compareWithLastYearChart.setOption(option);
+
+            compareWithLastYearChart.on('mouseover', function (pointData) {
+                // console.log(pointData.name);
+                var i = 0;
+                var index = getIndex(pointData.name, json.categories);
+                // console.log(index);
+                $("#policyTwoYearSum > tr").each(function () {
+                    if (i++ == index) {
+                        // console.log(i);
+                        $(this).attr("class", "mark-tr");
+                    }
+                });
+            });
+            compareWithLastYearChart.on('mouseout', function (pointData) {
+                // console.log(pointData.name);
+                var i = 0;
+                var index = getIndex(pointData.name, json.categories);
+                $("#policyTwoYearSum > tr").each(function () {
+                    if (i++ == index) {
+                        $(this).attr("class", "normal-tr");
+                    }
+                });
+            });
+
+
+        }
+
+        //获取字符串在集合中的下标
+        function getIndex(relation, categories) {
+            for (var i = 0; i < categories.length; i++) {
+                if (relation === categories[i]) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        function initPolicyContent(data) {
+            // console.log(data);
+            $policyName.empty();
+            $region.empty();
+            $year.empty();
+            $content.empty();
+            $policyName.append(data.name);
+            $region.append(data.organ);
+            $year.append(data.pubdata.substring(0, 10));
+            var splitedText = data.text.split('\n');
+            // console.log(splitedText);
+            for (var part in splitedText) {
+                $content.append('<p>' + splitedText[part] + '</p>')
+            }
+        }
+    });
+</script>

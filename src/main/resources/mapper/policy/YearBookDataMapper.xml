@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.policy.mapper.YearBookDataMapper">
+              <!--"com.example.demo.policestation.mapper.YearBookDataMapper"-->
+    <select id="selectListBySQL" resultType="cc.mrbird.febs.policy.entity.YearBookData">
+        ${SQL}
+    </select>
+
+    <select id="getEntityNum" resultType="YearBookData">
+        SELECT
+        DISTINCT
+        NAME,
+        REGION,
+        VALUE,
+        UNIT_C,
+        YEARS
+        From annual_cell
+        <where>
+            <foreach collection="searchValues" separator=" or " item="searchValue" open="(" close=")">
+                NAME = #{searchValue}
+            </foreach>
+            AND
+            <foreach collection="regionIds" separator=" or " item="regionId" open="(" close=")">
+                REGION_ID = #{regionId}
+            </foreach>
+            <if test="intermediate.createTimeFrom != null and intermediate.createTimeFrom !=''">
+                And YEARS &gt;= #{intermediate.createTimeFrom}
+            </if>
+            <if test="intermediate.createTimeTo!= null and intermediate.createTimeTo !=''">
+                And YEARS &lt;= #{intermediate.createTimeTo}
+            </if>
+        </where>
+        ORDER BY NAME,REGION,YEARS
+    </select>
+    <select id="getCorporateTechnologyActivities" resultType="YearBookData">
+        select DISTINCT NAME, REGION, VALUE, UNIT_C, YEARS
+        FROM annual_cell
+        WHERE (NAME = '规模以上工业企业新产品开发经费支出' or NAME = '科技活动人员数' or NAME = 'R&amp;D人员' or NAME = '规模以上工业企业R&amp;D经费外部支出' or NAME = '规模以上工业企业R&amp;D经费内部支出')
+        and YEARS &gt; '2004'
+        and REGION_ID = #{regionId}
+        ORDER BY name, REGION, YEARS;
+    </select>
+    <select id="getUndertakeProject" resultType="YearBookData">
+        select DISTINCT NAME, REGION, VALUE, UNIT_C, YEARS
+        FROM annual_cell
+        WHERE (NAME = '研究与开发机构R&amp;D课题数' or NAME = '高等学校R&amp;D课题数' or NAME = '研究与开发机构R&amp;D课题投入人员' or NAME = '高等学校R&amp;D课题投入人员' or NAME = '研究与开发机构R&amp;D课题投入经费' or NAME = '高等学校R&amp;D课题投入经费')
+        and YEARS &gt; '2004'
+        and REGION_ID = #{regionId}
+        ORDER BY name, REGION, YEARS;
+    </select>
+    <select id="getEnterpriseDevelopment" resultType="YearBookData">
+        select DISTINCT NAME, REGION, VALUE, UNIT_C, YEARS
+        FROM annual_cell
+        WHERE (NAME = '国家高新技术产业开发区总产值' or NAME = '开发区高新技术企业数' or NAME = '国家高新技术产业开发区实交税金')
+        and YEARS &gt; '2004'
+        and REGION_ID = #{regionId}
+        ORDER BY name, REGION, YEARS;
+    </select>
+</mapper>

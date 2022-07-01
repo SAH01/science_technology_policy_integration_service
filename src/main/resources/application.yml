@@ -1,0 +1,30 @@
+server:
+  port: 8008
+  tomcat:
+    uri-encoding: utf-8
+
+spring:
+  profiles:
+    active: dev #连校园网开启dev，否则prod
+#    active: prod
+
+  thymeleaf:
+    cache: false
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+  aop:
+    proxy-target-class: true
+
+mybatis-plus:
+  # 实体类扫描路径
+  type-aliases-package: cc.mrbird.febs.system.entity,cc.mrbird.febs.generator.entity,cc.mrbird.febs.job.entity,cc.mrbird.febs.policy.entity
+  # xml 扫描路径
+  mapper-locations: classpath:mapper/*/*.xml
+  configuration:
+    jdbc-type-for-null: null
+  global-config:
+    # 关闭 mybatis-plus的 banner
+    banner: false

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.policy.mapper.TPolicyKind2Mapper">
+    <select id="getTPolicyKindList" parameterType="int" resultType="TPolicyKind2">
+        SELECT
+        p.KIND_ID,
+        p.PARENT_ID,
+        p.KIND_NAME,
+        p.ORDER_NUM,
+        p.BRANCH_ID,
+        p.CITY_LIST
+        FROM
+        t_policy_kind2 p
+        WHERE p.PARENT_ID = #{PARENT_ID}
+    </select>
+    <select id="getTPolicyKindListByParentId" parameterType="int" resultType="TPolicyKind2">
+        SELECT
+        p.KIND_ID,
+        p.PARENT_ID,
+        p.KIND_NAME,
+        p.ORDER_NUM,
+        p.BRANCH_ID,
+        p.CITY_LIST
+        FROM
+        t_policy_kind2 p
+        WHERE p.PARENT_ID = #{PARENT_ID}
+    </select>
+    <select id="getTPolicyKindListByKindoneId" parameterType="int" resultType="TPolicyKind2">
+        SELECT
+        p.KIND_ID,
+        p.PARENT_ID,
+        p.KIND_NAME,
+        p.ORDER_NUM,
+        p.BRANCH_ID,
+        p.CITY_LIST,
+        p.KINDONE_ID
+        FROM
+        t_policy_kind2 p
+        WHERE p.KINDONE_ID = #{KINDONE_ID}
+    </select>
+    <select id="getTPolicyKindByKindoneId" parameterType="int" resultType="TPolicyKind2">
+        SELECT
+        p.KIND_ID,
+        p.PARENT_ID,
+        p.KIND_NAME,
+        p.ORDER_NUM,
+        p.BRANCH_ID,
+        p.CITY_LIST,
+        p.KINDONE_ID
+        FROM
+        t_policy_kind2 p
+        group by p.KINDONE_ID
+    </select>
+</mapper>

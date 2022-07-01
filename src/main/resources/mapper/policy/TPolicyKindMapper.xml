@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.policy.mapper.TPolicyKindMapper">
+    <select id="getTPolicyKindList" parameterType="int" resultType="TPolicyKind">
+        SELECT
+        p.KIND_ID,
+        p.PARENT_ID,
+        p.KIND_NAME,
+        p.ORDER_NUM,
+        p.BRANCH_ID,
+        p.CITY_LIST,
+        p.PARENT_NAME
+        FROM
+        t_policy_kind p
+        WHERE p.KIND_ID = #{KIND_ID}
+    </select>
+    <select id="getPTPolicyKindList" parameterType="int" resultType="TPolicyKind">
+        SELECT
+        p.KIND_ID,
+        p.PARENT_ID,
+        p.KIND_NAME,
+        p.ORDER_NUM,
+        p.BRANCH_ID,
+        p.CITY_LIST,
+        P.PARENT_NAME
+        FROM
+        t_policy_kind p
+        WHERE p.PARENT_ID = #{PARENT_ID}
+    </select>
+    <select id="getList" resultType="TPolicyKind">
+        SELECT
+        p.KIND_ID,
+        p.PARENT_ID,
+        p.KIND_NAME,
+        p.ORDER_NUM,
+        p.BRANCH_ID,
+        P.PARENT_NAME
+        FROM
+        t_policy_kind p
+    </select>
+</mapper>

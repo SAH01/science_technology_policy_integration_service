@@ -1,0 +1,554 @@
+<html xmlns:th="http://www.thymeleaf.org" >
+<html xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<style>
+    input::-webkit-input-placeholder {
+        color: #bd5332;
+        font-size: 15px;
+    }
+    /*input {*/
+    /*border: 1px solid red;*/
+    /*}*/
+</style>
+<div class="layui-fluid layui-anim febs-anim" id="febs-dept" lay-title="标引管理">
+    <div class="layui-row">
+        <div class="layui-col-md10">
+            <div class="layui-form-item" align="left">
+                <div class="layui-inline" style="margin-top: 10px;">
+                    <label class="layui-form-label layui-form-label-sm" style="margin-top: auto;">政策名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="policyName" name="policyName"  class="layui-input" placeholder="请输入政策名称" value="">
+                    </div>
+                </div>
+                <div class="layui-inline" style="margin-top: 10px;">
+                    <label class="layui-form-label layui-form-label-sm" style="margin-top: auto;" >发文字号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="policyId" name="policyId" class="layui-input" placeholder="请输入发文字号" value="">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label layui-form-label-sm">发文机构</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="policyOrgan" id="policyOrgan" class="layui-input" value="">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label layui-form-label-sm">录入日期</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="policyTime" id="policyTime" class="layui-input">
+                    </div>
+                </div>
+                <script>
+                    layui.use('laydate', function(){
+                        var laydate = layui.laydate;
+                        //日期范围
+                        laydate.render({
+                            elem: '#policyTime'
+                            ,range: false
+                            ,format:'yyyy.MM.dd'
+                        });
+                    });
+                </script>
+                <div class="layui-inline">
+                    <label class="layui-form-label layui-form-label-sm">标引状态</label>
+                    <div class="layui-input-inline">
+                        <select tabindex="4" class='layui-input'  name='policyType' id='policyType'>
+                            <option  disabled   style="display: none" selected value>请选择</option>
+                            <option value="">取消选择</option>
+                            <option value="待标引">待标引</option>
+                            <option value="已标引">已标引</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!--<div class="layui-inline">-->
+                <!--<label class="layui-form-label layui-form-label-sm">发布人</label>-->
+                <!--<div class="layui-input-inline">-->
+                <!--<input type="text" name="policyPublisher" id="policyPublisher" class="layui-input" value="">-->
+                <!--</div>-->
+                <!--</div>-->
+
+                <submit class="layui-btn layui-btn-normal" id="query">搜索</submit>
+                <submit class="layui-btn layui-btn-normal" id="reset">重置</submit>
+                <!--suppress XmlDuplicatedId -->
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md12 layui-col-sm12 layui-col-xs12" >
+        <div class="layui-card">
+            <table id="policylist" name="policylist" lay-filter="policyTable" lay-data="{id: 'policyTable'}"></table>
+        </div>
+    </div>
+</div>
+<style>
+    .left {
+        float: left;
+        width: 60%;
+        height: auto;
+        /*background-color: blue;*/
+    }
+    .right {
+        float: right;
+        width: 40%;
+        height: auto;
+        /*background-color: yellow;*/
+    }
+</style>
+<script type="text/javascript" th:src="@{layui/jquery-1.11.3.min.js}"></script>
+<script src="/layui/jquery-1.11.3.min.js"></script><script type="text/html" id="user-option">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="indexing-detail">查看</button>
+        <button class="layui-btn layui-btn-sm" lay-event="indexing-update">编辑</button>
+        <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="indexing-delete">删除</button>
+    </div>
+    <p id="uname" style="display: none"> {{ currentUser.username }} </p>
+
+</script>
+<script data-th-inline="javascript" type="text/javascript">
+    let name = $("#uname").text().trim();
+    layui.use([ 'dropdown', 'jquery', 'validate', 'layer','febs', 'form', 'eleTree','element','table','apexcharts', 'jquery', 'util','layedit', 'echarts4', 'dataTool', 'echarts_gl'], function () {
+        var $ = layui.jquery,
+            febs = layui.febs,
+            element = layui.element,
+            layedit = layui.layedit,
+            form = layui.form,
+            table=layui.table,
+            $viewa = $('#febs-index'),
+            echarts = layui.echarts4,
+            eleTree = layui.eleTree,
+            dropdown = layui.dropdown,
+            validate = layui.validate,
+            $view = $('#febs-dept'),
+            $query = $view.find('#query'),
+            $reset = $view.find('#reset'),
+            tableIns;
+        //-----------------------------
+        // 初始化表格
+        function initTable(policyName,policyId,policyOrgan,policyTime,policyType,policyPublisher) {
+            // $('#policylist').empty();
+            tableIns = table.render({
+                elem: "#policylist",
+                url: ctx + 'indexing/getListById/?policyName='+policyName+'&policyId='+policyId+
+                    '&policyOrgan='+policyOrgan+'&policyTime='+policyTime+'&policyType='+policyType+
+                    '&policyPublisher='+policyPublisher,
+                parseData:function (res){
+                    console.log(res);
+                    return{
+                        "code":0,
+                        "msg":"查询成功！",
+                        "count":res.data.total,
+                        "data":res.data.rows
+                    }
+                },
+                request: {
+                    pageName: 'pageNum' //页码的参数名称，默认：page
+                    ,limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                },
+                skin: 'line',
+                page: true,
+                even:true,
+                cols: [
+                    [
+                        {field: 'name', title: '政策名称', minWidth: 400,align:"center"},
+                        {field: 'documentId', title: '发文字号'},
+                        {field: 'organ', title: '发文机构', width: 180},
+                        // {field: 'publisher', title: '发布人', width: 120},
+                        {field: 'publishDate', title: '录入日期',sort: true, width: 120},
+                        {field: 'indexState', title: '标引状态',sort: true, width: 120,align:"center"},
+                        {title: '操作', toolbar: '#user-option'}
+                    ]
+                ]
+            })
+        }
+        // initTable('')
+        // 查询点击方法
+        $("#query").on('click', function () {
+            var policyName = document.getElementById("policyName").value.trim()
+            var policyId = document.getElementById("policyId").value.trim()
+            var policyOrgan = document.getElementById("policyOrgan").value.trim()
+            var policyTime = document.getElementById("policyTime").value.trim()
+            var policyType = document.getElementById("policyType").value.trim()
+            var policyPublisher = ""
+
+            // alert("输入的待查询值为：" + policyName)
+            // alert("输入的待查询值为：" + policyId)
+            // alert("输入的待查询值为：" + policyOrgan)
+            // alert("输入的待查询值为：" + policyTime)
+            // alert("输入的待查询值为：" + policyType)
+            initTable(policyName,policyId,policyOrgan,policyTime,policyType,policyPublisher);
+        })
+        // 初始化表格
+        febs.get(ctx + 'indexing/getFlag' , null, function (json) {
+            var information=json.data.information;
+            if(information!=0){window.alert(information);}
+            initTable('','','','','','');
+        });
+        // // 重置搜索文本框内容并刷新表格
+        $reset.on('click', function () {
+            // alert("点击了重置按钮！");
+            initTable('','','','','','');    // 刷新表格
+            document.getElementById("policyId").value = "";
+        })
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        table.on('tool(policyTable)', function (obj) {
+            var data = obj.data,
+                layEvent = obj.event;
+            if (layEvent === 'indexing-detail') {
+                febs.modal.view('政策信息', 'policy/detailCrawling/' + data.id, {
+                    area: $(window).width() <= 850 ? '95%' : '80%'
+                });
+            }else if(layEvent === 'indexing-delete'){
+                layer.confirm('确认要删除吗？', {
+                    btn : [ '确定', '取消' ]//按钮
+                }, function(index) {
+                    layer.close(index);
+                    febs.get(ctx + 'indexing/deleteP?id=' + data.id , null, function (json) {
+                        var information=json.data.information;
+                        window.alert(information);
+                        tableIns.reload('LAY-user-table');
+                    });
+                });
+
+            }else if(layEvent === 'indexing-update'){
+                febs.get(ctx + 'indexing/findById?id='+data.id , null, function (json) {
+                    var policy=json.data;
+                    let htmlStr = "<form action='indexing/update' method='post' id='form' onsubmit='return check()'>"
+                        +"<input type='text' name='id' style='display: none' value='"+policy.id+"'>"
+                        +"<div style='margin-top: 20px;margin-right: 30px'>"
+
+                        +"<div id='right' class='right'>" +
+                        "<div class='layui-form-item'>"
+                        +"<label class='layui-form-label'>发布人</label>"
+                        +"<div class='layui-input-block'>"
+                        +"<input class='layui-input' type='text'  name='publisher' id='publisher' value='"+policy.publisher+"' readonly></div></div>"
+
+                        +"<div class='layui-form-item'>"
+                        +"<label class='layui-form-label'>政策名称</label>"
+                        +"<div class='layui-input-block'>"
+                        +"<input class='layui-input' type='text' name='name' id='name' value='"+policy.name+"'></div></div>"
+
+                        +"<div class='layui-form-item'>"
+                        +"<label class='layui-form-label'>发文字号</label>"
+                        +"<div class='layui-input-block'>"
+                        +"<input class='layui-input' type='text' name='documentId' id='documentId' value='"+policy.documentId+"'> </div></div>"
+
+                        +"<div class='layui-form-item'>"
+                        +"<label class='layui-form-label'>政策分类</label>"
+                        +"<div class='layui-input-block'>"
+                        +"<select tabindex=\"4\"  class=\"layui-input\"  name='documentType' id='documentType'>" +
+                        "<option disabled   style=\"display: none\" selected>请选择</option>" +
+                        "<option value=\"综合\">综合</option>\n" +
+                        "<option value=\"科研机构改革\">科研机构改革</option>\n" +
+                        "<option value=\"科技计划管理\">科技计划管理</option>\n" +
+                        "<option value=\"科技经费与财务\">科技经费与财务</option>\n" +
+                        "<option value=\"基础研究与科研基地\">基础研究与科研基地</option>\n" +
+                        "<optgroup label=\"基础研究与科研基地（细分）\">\n" +
+                        "<option value=\"基础研究\">基础研究</option>\n" +
+                        "<option value=\"平台基地\">平台基地</option>\n" +
+                        "</optgroup>\n" +
+                        "<optgroup label=\"\">\n" +
+                        "</optgroup>\n" +
+                        "<option value=\"企业技术进步与高新技术产业化\">企业技术进步与高新技术产业化</option>\n" +
+                        "<optgroup label=\"企业技术进步与高新技术产业化（细分）\">\n" +
+                        "<option value=\"企业\">企业</option>\n" +
+                        "<option value=\"产业\">产业</option>\n" +
+                        "<option value=\"创新载体\">创新载体</option>\n" +
+                        "</optgroup>\n" +
+                        "<optgroup label=\"\">\n" +
+                        "</optgroup>\n" +
+                        "<option value=\"农村科技与社会发展\">农村科技与社会发展</option>\n" +
+                        "<option value=\"科技人才\">科技人才</option>\n" +
+                        "<option value=\"科技中介服务\">科技中介服务</option>\n" +
+                        "<option value=\"科技条件与标准\">科技条件与标准</option>\n" +
+                        "<option value=\"科技金融与税收\">科技金融与税收</option>\n" +
+                        "<option value=\"科技成果与知识产权\">科技成果与知识产权</option>\n" +
+                        "<option value=\"科技奖励\">科技奖励</option>\n" +
+                        "<option value=\"科学技术普及\">科学技术普及</option>\n" +
+                        "<option value=\"国际科技合作\">国际科技合作</option>\n" +
+                        "</select>" +
+                        "</div></div>"
+
+                        +"<div class='layui-form-item'>"
+                        +"<label class='layui-form-label'>施行范围</label>"
+                        +"<div class='layui-input-block'>"
+                        +"<select name=\"documentArea\" id=\"documentArea\" tabindex=\"4\"  class=\"layui-input\">\n" +
+                        "    <option value=\"全国（000000 QG）\">全国</option>\n" +
+                        "    <optgroup label=\"地方（各省、市、自治区）\">\n" +
+                        "        <option value=\"北京市（110000 BJ）\">北京市</option>\n" +
+                        "        <option value=\"天津市（120000 TJ）\">天津市</option>\n" +
+                        "        <option value=\"河北省（130000 HE）\">河北省</option>\n" +
+                        "        <option value=\"山西省（140000 SX）\">山西省</option>\n" +
+                        "        <option value=\"内蒙古自治区（150000 NM）\">内蒙古自治区</option>\n" +
+                        "        <option value=\"辽宁省（210000 LN）\">辽宁省</option>\n" +
+                        "        <option value=\"吉林省（220000 JL）\">吉林省</option>\n" +
+                        "        <option value=\"黑龙江省（230000 HL）\">黑龙江省</option>\n" +
+                        "        <option value=\"上海市（310000 SH）\">上海市</option>\n" +
+                        "        <option value=\"江苏省（320000 JS）\">江苏省</option>\n" +
+                        "        <option value=\"浙江省（330000 ZJ）\">浙江省</option>\n" +
+                        "        <option value=\"安徽省（340000 AH）\">安徽省</option>\n" +
+                        "        <option value=\"福建省（350000 FJ）\">福建省</option>\n" +
+                        "        <option value=\"江西省（360000 JX）\">江西省</option>\n" +
+                        "        <option value=\"山东省（370000 SD）\">山东省</option>\n" +
+                        "        <option value=\"河南省（410000 HA）\">河南省</option>\n" +
+                        "        <option value=\"湖北省（420000 HB）\">湖北省</option>\n" +
+                        "        <option value=\"湖南省（430000 HN）\">湖南省</option>\n" +
+                        "        <option value=\"广东省（440000 GD）\">广东省</option>\n" +
+                        "        <option value=\"广西壮族自治区（450000 GX）\">广西壮族自治区</option>\n" +
+                        "        <option value=\"海南省（460000 HI）\">海南省</option>\n" +
+                        "        <option value=\"重庆市（500000 CQ）\">重庆市</option>\n" +
+                        "        <option value=\"四川省（510000 SC）\">四川省</option>\n" +
+                        "        <option value=\"贵州省（520000 GZ）\">贵州省</option>\n" +
+                        "        <option value=\"云南省（530000 YN）\">云南省</option>\n" +
+                        "        <option value=\"西藏自治区（540000 XZ）\">西藏自治区</option>\n" +
+                        "        <option value=\"陕西省（610000 SN）\">陕西省</option>\n" +
+                        "        <option value=\"甘肃省（620000 GS）\">甘肃省</option>\n" +
+                        "        <option value=\"青海省（630000 QH）\">青海省</option>\n" +
+                        "        <option value=\"宁夏回族自治区（640000 NX）\">宁夏回族自治区</option>\n" +
+                        "        <option value=\"新疆维吾尔自治区（650000 XJ）\">新疆维吾尔自治区</option>\n" +
+                        "        <option value=\"台湾省（710000 Tw）\">台湾省</option>\n" +
+                        "        <option value=\"香港特别行政区（810000 HK）\">香港特别行政区</option>\n" +
+                        "        <option value=\"澳门特别行政区（820000 MO）\">澳门特别行政区</option>\n" +
+                        "    </optgroup>\n" +
+                        "</select></div></div>"
+
+
+                        +"<div class='layui-form-item' style=\"display: none\">"
+                        +"<label class='layui-form-label'>颁布形式</label>"
+                        +"<div class='layui-input-block'>"
+                        +"<select class='layui-input'  name='publishType' id='publishType'>" +
+                        "<option  disabled   style=\"display: none\" selected value>请选择</option>" +
+                        "<option value=\"国家主席令（法律）\">国家主席令（法律）</option>\n" +
+                        "<option value=\"国务院令（行政法规）\">国务院令（行政法规）</option>\n" +
+                        "<option value=\"地方人民代表大会主席团或者常务委员会公告（地方性法规）\">地方人民代表大会主席团或者常务委员会公告（地方性法规）</option>\n" +
+                        "<option value=\"部门首长令（部门规章）\">部门首长令（部门规章）</option>\n" +
+                        "<option value=\"地方首长令（地方政府规章）\">地方首长令（地方政府规章）</option>\n" +
+                        "<option value=\"下发文件（非立法性文件）\">下发文件（非立法性文件）</option>\n" +
+                        "</select>" +
+                        "</div></div>"
+
+                        +"<div class='layui-form-item'>"
+                        +"<label class='layui-form-label'>发文机构</label>"
+                        +"<div class='layui-input-block'>"
+                        +"<input class='layui-input' type='text' name='organ' id='organ' value='"+policy.organ+"'></div></div>"
+
+                        +"<div class='layui-form-item'>"
+                        +"<label class='layui-form-label'>发文日期</label>"
+                        +"<div class='layui-input-block'>"
+                        +"<input class='layui-input' type='text' name='passDate' id='passDate' value='"+policy.passDate+"'></div></div>"
+                        +"<script>"
+                        +"layui.use('laydate', function(){\n" +
+                        "                        var laydate = layui.laydate;\n" +
+                        "                        //日期范围\n" +
+                        "                        laydate.render({\n" +
+                        "                            elem: '#passDate'\n" +
+                        "                            ,range: false\n" +
+                        "                            ,format:'yyyy.MM.dd'\n" +
+                        "                        });\n" +
+                        "                    });"
+                        +"</"+"script>"
+
+                        +"<div class='layui-form-item'>"
+                        +"<label class='layui-form-label'>录入日期</label>"
+                        +"<div class='layui-input-block'>"
+                        +"<input class='layui-input' type='text' name='publishDate' id='publishDate' value='"+policy.publishDate+"'></div></div>"
+                        +"<script>"
+                        +"layui.use('laydate', function(){\n" +
+                        "                        var laydate = layui.laydate;\n" +
+                        "                        //日期范围\n" +
+                        "                        laydate.render({\n" +
+                        "                            elem: '#publishDate'\n" +
+                        "                            ,range: false\n" +
+                        "                            ,format:'yyyy.MM.dd'\n" +
+                        "                        });\n" +
+                        "                    });"
+                        +"</"+"script>"
+
+                        +"<div class='layui-form-item'>"
+                        +"<label class='layui-form-label'>施行日期</label>"
+                        +"<div class='layui-input-block'>"
+                        +"<input class='layui-input' type='text' name='exeDate' id='exeDate' value='"+policy.exeDate+"'></div></div>"
+                        +"<script>"
+                        +"layui.use('laydate', function(){\n" +
+                        "                        var laydate = layui.laydate;\n" +
+                        "                        //日期范围\n" +
+                        "                        laydate.render({\n" +
+                        "                            elem: '#exeDate'\n" +
+                        "                            ,range: false\n" +
+                        "                            ,format:'yyyy.MM.dd'\n" +
+                        "                        });\n" +
+                        "                    });"
+                        +"</"+"script>"
+
+
+                        +"<div class='layui-form-item' style=\"display: none\">"
+                        +"<label class='layui-form-label'>调整领域</label>"
+                        +"<div class='layui-input-block'>"
+                        +"<select class='layui-input'  name='documentTarget' id='documentTarget'>" +
+                        "<option  disabled   style=\"display: none\" selected value>请选择</option>" +
+                        "<option value=\"科技投入\">科技投入</option>\n" +
+                        "<option value=\"税收激励\">税收激励</option>\n" +
+                        "<option value=\"金融支持\">金融支持</option>\n" +
+                        "<option value=\"政府采购\">政府采购</option>\n" +
+                        "<option value=\"引进消化吸收再创新\">引进消化吸收再创新</option>\n" +
+                        "<option value=\"人才队伍\">人才队伍</option>\n" +
+                        "<option value=\"教育与科普\">教育与科普</option>\n" +
+                        "<option value=\"科技创新基地与平台\">科技创新基地与平台</option>\n" +
+                        "<option value=\"加强统筹协调\">加强统筹协调</option>\n" +
+                        "<option value=\"其他\">其他</option>\n" +
+                        "</select>" +
+                        "</div></div>"
+
+                        +"<div class='layui-form-item'>"
+                        +"<label class='layui-form-label'>主题词</label>"
+                        +"<div class='layui-input-block'>"
+                        +"<input placeholder='3 ~ 5 个（请使用中文逗号间隔）' class='layui-input' type='text' name='themeWords' id='themeWords' value='"+policy.themeWords+"'></div></div>"
+
+                        +"<div class='layui-form-item'>"
+                        +"<label class='layui-form-label'>关键词</label>"
+                        +"<div class='layui-input-block'>"
+                        +"<input placeholder='5 ~ 10 个（请使用中文逗号间隔）' class='layui-input' type='text' name='keyWords' id='keyWords' value='"+policy.keyWords+"'></div></div>"
+
+                        +"<div class='layui-form-item'>"
+                        +"<label class='layui-form-label'>上位政策</label>"
+                        +"<div class='layui-input-block'>"
+                        +"<input  class='layui-input' type='text' name='upDocument' id='upDocument' value='"+policy.upDocument+"'></div></div>"
+
+                        +"<div class='layui-form-item'>"
+                        +"<label class='layui-form-label'>前驱政策</label>"
+                        +"<div class='layui-input-block'>"
+                        +"<input class='layui-input' type='text' name='preDocument' id='preDocument' value='"+policy.preDocument+"' ></div></div>"
+
+                        +"<div class='layui-form-item'>"
+                        +"<label class='layui-form-label'>后继政策</label>"
+                        +"<div class='layui-input-block'>"
+                        +"<input class='layui-input' type='text' name='postDocument' id='postDocument' value='"+policy.postDocument+"'></div></div>"
+
+                        +"<div class=\"layui-form-item\">"
+                        +"<label class=\"layui-form-label\">时效状态</label>"
+                        +"<div class=\"layui-input-block\" style='font-size: 14px'>"
+                        +"<input type=\"radio\" name=\"documentState\" id=\"documentState\" value=\"有效\" title=\"有效\">有效<br>"
+                        +"<input type=\"radio\" name=\"documentState\" id=\"documentState\" value=\"失效\" title=\"失效\">失效"
+                        +"</div></div>"
+
+                        +"<div class='layui-form-item' style=\"display: none\">"
+                        +"<label class='layui-form-label'>冗余字段</label>"
+                        +"<div class='layui-input-block'>"
+                        +"<input class='layui-input' type='text' name='surField' id='surField' value='"+policy.surField+"'></div></div>"
+                        +"</div>"
+
+                        +"<div class='left'>"
+                        +"<div class='layui-form-item'>"
+                        +"<label class='layui-form-label'>政策内容</label>"
+                        +"<div class='layui-input-block'>"
+                        +"<textarea style=\"display: none;\" name='text' id='text'>"+policy.text+"</textarea></div></div></div>"
+
+                        +"<div style=\"display: none\" class='layui-form-item'>"
+                        +"<label class='layui-form-label'>标引状态</label>"
+                        +"<div class='layui-input-block'>"
+                        +"<input class='layui-input' type='text' name='indexState' id='indexState' value='已标引'></div></div>"
+
+                        +"<div class='layui-form-item'>"
+                        +"<div class='layui-input-block'>"
+                        +"<input class='layui-input layui-btn layui-btn-sm' type='submit' value='提交' ></div></div>"
+
+                        +"<script>"
+                        +"layui.use('layedit', function(){\n" +
+                        "    var layedit = layui.layedit;\n" +
+
+                        "    layedit.set({\n" +
+                        "        //暴露layupload参数设置接口 --详细查看layupload参数说明\n" +
+                        "        uploadImage: {\n" +
+                        "            url: ''    //上传接口url\n" +
+                        "            ,type: 'post' //默认post\n" +
+                        "        }\n" +
+                        "        , devmode: true\n" +
+                        "        //插入代码设置\n" +
+                        "        , codeConfig: {\n" +
+                        "            hide: true,  //是否显示编码语言选择框\n" +
+                        "            default: 'javascript' //hide为true时的默认语言格式\n" +
+                        "        }\n" +
+                        "        , tool: [\n" +
+                        "            'html', 'code', 'strong',  'underline', 'del', 'addhr', '|', 'fontFomatt', 'colorpicker', 'face'\n" +
+                        "            , '|', 'left', 'center', 'right', '|', 'link', 'unlink','images', 'image_alt',\n" +
+                        "            , '|', 'fullScreen'\n" +
+                        "        ]\n" +
+                        "        ,height: 800, //设置编辑器高度\n" +
+                        "    });\n" +
+                        "    layedit.build('text');   //建立编辑器\n" +
+                        "});"
+                        +"</"+"script>"
+                        +"</div></form>"
+
+                        +"<script>"
+                        +"function check() {"
+                        +"let name = document.getElementById('name').value.trim();if(name.length==0){alert('政策名称不能为空！');return false;}"
+                        +"let doc = document.getElementById('documentId').value.trim();if(doc.length==0){alert('发文字号不能为空！');return false;}"
+                        +"let organ = document.getElementById('organ').value.trim();if(organ.length==0){alert('发文机构不能为空！');return false;}"
+                        +"let publish_date = document.getElementById('publishDate').value.trim();if(publish_date.length==0){alert('录入日期不能为空！');return false;}"
+                        +"let key_words = document.getElementById('keyWords').value.trim();"
+                        +"if(key_words.length==0){alert('关键词不能为空！');return false;}" +
+                        "var keys1 = key_words.split('，');" +
+                        " if((keys1.length<5)||(keys1.length>10))" +
+                        "{alert('关键词的个数需>=5个,且<=10个(使用中文逗号分隔)！');return false;}"
+
+                        +"let theme_words = document.getElementById('themeWords').value.trim();"
+                        +"if(theme_words.length==0){alert('主题词不能为空！');return false;}" +
+                        "var themes1 = theme_words.split('，'); " +
+                        "if((themes1.length<3)||(themes1.length>5))" +
+                        "{alert('主题词的个数需>=3个,且<=5个(使用中文逗号分隔)！');return false;}"
+                        +"}"
+                        +"</"+"script>"
+
+                    addform = layer.open({
+                        type: 1,
+                        title:"修改政策",
+                        area:['90%','95%'],
+                        content: htmlStr,
+                        yes:function(index,layero){
+
+                        }
+                    });
+
+                    var documentTypeNum = document.getElementById("documentType").options;
+                    for(var i=0;i<documentTypeNum.length;i++){//给select赋值
+                        if(documentTypeNum[i].value==policy.documentType){
+                            documentTypeNum[i].selected=true
+                        }
+                    }
+                    var publishTypeNum = document.getElementById("publishType").options;
+                    for(var i=0;i<publishTypeNum.length;i++){//给select赋值
+                        //alert(t[i].value);
+                        if(publishTypeNum[i].value==policy.publishType){
+                            publishTypeNum[i].selected=true
+                        }
+                    }
+
+                    var documentTargetNum=document.getElementById("documentTarget").options;
+
+                    for(var i=0;i<documentTargetNum.length;i++){//给select赋值
+                        //alert(t[i].value);
+                        if(documentTargetNum[i].value==policy.documentTarget){
+                            documentTargetNum[i].selected=true
+                        }
+                    }
+
+                    var documentAreaNum=document.getElementById("documentArea").options;
+
+                    for(var i=0;i<documentAreaNum.length;i++){//给select赋值
+                        //alert(t[i].value);
+                        if(documentAreaNum[i].value==policy.documentArea){
+                            documentAreaNum[i].selected=true
+                        }
+                    }
+                    var state = document.getElementsByName('documentState')
+                    for (var i =0 ;i<state.length;i++)
+                    {
+                        if(state[i].value==policy.documentState){
+                            state[i].checked=true
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+

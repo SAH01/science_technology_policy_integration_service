@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.policy.mapper.PolicyRankMapper">
+    <select id="getPolicyRankListBystartid" parameterType="int" resultType="PolicyRank">
+        SELECT
+        p.startid,
+        p.endid,
+        p.category,
+        p.startname,
+        p.endname,
+        p.form,
+        p.startrank,
+        p.endrank
+        FROM
+        policy_rank p
+        WHERE p.startid = #{startid}
+    </select>
+    <select id="getPolicyRankByNameGroup" parameterType="String" resultType="PolicyRank">
+        SELECT
+        count(DISTINCT p.startid) allsum,
+        p.form
+        FROM
+        policy_rank p
+        where p.startname like CONCAT('%',#{startname},'%')
+        group by p.form
+    </select>
+    <select id="getPolicyRankByName" parameterType="String" resultType="PolicyRank">
+        SELECT
+        p.startid,
+        p.endid,
+        p.category,
+        p.startname,
+        p.endname,
+        p.form,
+        p.startrank,
+        p.endrank
+        FROM
+        policy_rank p
+        where p.startname like CONCAT('%',#{startname},'%')
+        group by p.startid
+        order by p.form
+    </select>
+</mapper>

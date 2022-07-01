@@ -1,0 +1,297 @@
+<style>
+    .title {
+        color: #0C0C0C;
+        font-size: 14px;
+    }
+     span.keyword{
+         color: #f5222d;
+     }
+</style>
+<div class="layui-fluid" id="VIEW-chart-index" lay-title="科技政策导向分析">
+    <div class="layui-row layui-col-space8 febs-container">
+        <div class="layui-card">
+            <div class="layui-card-header">科技政策导向分析说明</div>
+            <div class="layui-card-body febs-table-full">
+                <p>1.科技政策导向分析从科技政策的不同维度建立了<span class="keyword">三维空间模型</span>，对科技政策的关键词分类并实现散点分布，可以查看不同维度的科技政策占比以及发展趋势。</p>
+                <p>2.支持选择时间区间或低于来对<span class="keyword">不同历史阶段、不同地区</span>的科技政策进行分析。</p>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row febs-container">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body febs-table-full">
+                    <form class="layui-form layui-table-form" lay-filter="user-table-form">
+                        <div class="layui-row">
+                            <div class="layui-col-md10">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">发布时间</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="createTime" id="createTime" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">地域</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="regionProvince" id="regionProvince"
+                                                   lay-filter="regionProvince"
+                                                   class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md2 layui-col-sm12 layui-col-xs12 table-action-area">
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="query">
+                                    <i class="layui-icon">&#xe848;</i>
+                                </div>
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="reset">
+                                    <i class="layui-icon">&#xe79b;</i>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="layui-tab layui-tab-brief" lay-filter="chart-index-echartBar">
+                        <div class="layui-tab-content nepadmin-pad0">
+
+                            <div class="layui-tab-item layui-show">
+
+                                <div class="layui-row">
+                                    <div id="3Dcontainer" style="width: 100%;height:500px;"></div>
+                                </div>
+                                <div class="layui-row">
+                                    <p class="title">科技政策导向分析</p>
+                                    <p>从政策工具、三大产业和科技活动类型三个维度对科技政策的关键词进行建模，在三维空间中构建了科技政策的分析框架。</p>
+                                    <p class="title">1.X维度：基本政策工具维度</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;数值0-4分别代表供给型中的教育培训、科技信息支持、科技基础设施建设、科技资金投入和公共服务。</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;数值5-9分别代表环境型中的目标规划、目标规划、金融支持、税收优惠、知识产权保护、法规管制。</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;数值10-13分别代表需求型中的公共技术采购、外包、贸易管制海、外机构管理。</p>
+                                    <p class="title">2.Y维度：科技活动领域维度</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;科技活动领域维度及三大产业</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;① 第一产业为第二三产业奠定基础；</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;② 第二产业是三大产业的核心，对第一产业有带动作用；</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;③ 第一二产业为第三产业创造条件，第三产业发展促进第一二产业的进步。</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;数值0-4分别代表供给型中的教育培训、科技信息支持、科技基础设施建设、科技资金投入和公共服务。</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;数值5-14分别代表环境型中的目标规划、目标规划、金融支持、税收优惠、知识产权保护、法规管制。</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;数值15-41分别代表需求型中的公共技术采购、外包、贸易管制海、外机构管理。</p>
+                                    <p class="title">3.Z维度：科技活动类型维度</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;①基础研究&nbsp;&nbsp;指不直接考虑用途，以揭示客观事物的本质、运动规律，获得新发现、新学说为目的或对已有的规律、发现、学说作系统性的补充而进行的理论研究或实验。其成果以科学论文、科学著作为主要形式。</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;②研究开发&nbsp;&nbsp;指利用基础研究、应用研究及实际经验所获得的知识，为生产新的材料、产品和装置，建立新的工艺、系统和服务，对已生产和建立的上述各项进行实质性的改进而从事的系统性工作。其成果为一种具有新产品或新技术基本特点的原型，可达到设计定型的新产品或新工艺、实验报告等。</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;③产业化&nbsp;&nbsp;指为解决研究与发展活动阶段产生的新产品、新装置、新工艺、新技术、新方法、新系统和服务等能投入生产或在实际中运用所存在的技术问题而进行的系统性活动，它不具有创新成分。此类活动包括为达到生产顺利进行以及为形成生产规模和应用领域而进行的适应性试验、小批量试生产等。活动成果最终形式多是可供生产和实际使用的带有技术、工艺参数规范的图纸、技术标准和操作规范等。</p>
+                                    <hr/>
+                                    <p>结果分析</p>
+                                    <p>对比发现科技服务业的政策比较多。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<script src="http://echarts.baidu.com/resource/echarts-gl-latest/dist/echarts-gl.min.js"></script>-->
+<script>
+    layui.use(['febs', 'echarts4', 'dataTool', 'dropdown', 'laydate', 'form', 'treeSelect', 'echarts_gl'], function () {
+        var $ = layui.jquery,
+            echarts = layui.echarts4,
+            echarts_gl = layui.echarts_gl,
+            dataTool = layui.dataTool,
+            laydate = layui.laydate,
+            febs = layui.febs,
+            form = layui.form,
+            treeSelect = layui.treeSelect,
+            dropdown = layui.dropdown,
+            $view = $('#VIEW-chart-index'),
+            $query = $view.find('#query'),
+            $reset = $view.find('#reset'),
+            $searchForm = $view.find('form');
+        var params = getQueryParams();
+        var dom_policySteering = document.getElementById("3Dcontainer");
+        var myChart_policySteering = echarts.init(dom_policySteering);
+        form.render();
+
+        febs.get(ctx + 'helpers/getPolicySteeringData', params, function (json) {
+            init3DChart(json.data);
+        });
+
+        laydate.render({
+            elem: '#createTime',
+            range: true,
+            trigger: 'click'
+        });
+
+        treeSelect.render({
+            elem: $view.find('#regionProvince'),
+            type: 'get',
+            data: ctx + 'region/provinceWithCountry',
+            placeholder: '国家各部门',
+            search: false
+        });
+
+        $query.on('click', function () {
+            febs.view.loadBar.start();
+            myChart_policySteering.showLoading();
+            params = getQueryParams();
+            febs.get(ctx + 'helpers/updatePolicySteeringData', params, function (json) {
+                febs.view.loadBar.finish();
+                // alert(json.data);
+                init3DChart(json.data);
+            });
+        });
+
+        $reset.on('click', function () {
+            $searchForm[0].reset();
+            treeSelect.revokeNode('regionProvince');
+        });
+
+        function getQueryParams() {
+            var createTimeFrom,
+                createTimeTo,
+                createTime = $searchForm.find('input[name="createTime"]').val();
+            if (createTime) {
+                createTimeFrom = createTime.split(' - ')[0];
+                createTimeTo = createTime.split(' - ')[1];
+            } else {
+                createTimeFrom = '2009-01-01';
+                createTimeTo = '';
+            }
+            var regionId = $searchForm.find("input[name='regionProvince']").val().trim() == "" ? "1" : $searchForm.find("input[name='regionProvince']").val().trim();
+            return {
+                createTimeFrom: createTimeFrom,
+                createTimeTo: createTimeTo,
+                regionId: regionId,
+                invalidate_ie_cache: new Date()
+            };
+        }
+
+        function init3DChart(json) {
+            var app = {};
+            option = null;
+            app.title = '政策工具运用统计表';
+            var sizeValue = '57%';
+            var symbolSize = 2.5;
+
+            option = {
+                tooltip: {},
+                grid3D: {
+                    width: '50%'
+                },
+                xAxis3D: {
+                    // type: 'value',
+                    name: "X（政策工具）",
+                    type: 'value'
+//                min: 'dataMin',//获取数据中的最值
+//                max: 'dataMax'
+                },
+                yAxis3D: {
+                    name: "Y（三大产业）",
+                    type: 'value',
+//                min: 'dataMin',
+//                max: 'dataMax'
+                },
+                zAxis3D: {
+                    name: "z（科技活动类型）",
+                    type: 'category',
+//                min: 'dataMin',
+//                max: 'dataMax',
+                },
+                grid: [
+                    {left: '50%', width: '20%', bottom: sizeValue},
+                    {left: '75%', width: '20%', bottom: sizeValue},
+                    {left: '50%', width: '20%', top: sizeValue},
+                    {left: '75%', width: '20%', top: sizeValue}
+                ],
+                xAxis: [
+                    {type: 'value', gridIndex: 0, name: '政策工具', axisLabel: {rotate: 50, interval: 0}},
+                    {
+                        type: 'category',
+                        gridIndex: 1,
+                        name: '发布时间',
+                        boundaryGap: false,
+                        axisLabel: {rotate: 50, interval: 0}
+                    },
+                    {type: 'value', gridIndex: 2, name: '政策工具', axisLabel: {rotate: 50, interval: 0}},
+                    {type: 'value', gridIndex: 3, name: '三大产业', axisLabel: {rotate: 50, interval: 0}}
+                ],
+                yAxis: [
+                    {type: 'value', gridIndex: 0, name: '三大产业'},
+                    {type: 'value', gridIndex: 1, name: '政策工具'},
+                    {type: 'category', gridIndex: 2, name: '科技活动类型'},
+                    {type: 'category', gridIndex: 3, name: '科技活动类型'}
+                ],
+                dataset: {
+                    dimensions: [
+                        {name: '发布时间', type: 'ordinal'},
+                        '发布部门',
+                        '政策工具',
+                        '三大产业',
+                        '科技活动类型',
+                        '关键词'
+                    ],
+                    source: json.data
+                },
+                series: [
+                    {
+                        type: 'scatter3D',
+                        symbolSize: 3,
+                        encode: {
+                            x: '政策工具',
+                            y: '三大产业',
+                            z: '科技活动类型',
+                            tooltip: [0, 1, 2, 3, 4, 5]
+                        }
+                    },
+
+                    {
+                        type: 'scatter',
+                        symbolSize: symbolSize,
+                        xAxisIndex: 0,
+                        yAxisIndex: 0,
+                        encode: {
+                            x: '政策工具',
+                            y: '三大产业',
+                            tooltip: [0, 1, 2, 3, 4, 5]
+                        }
+                    },
+                    {
+                        type: 'scatter',
+                        symbolSize: symbolSize,
+                        xAxisIndex: 1,
+                        yAxisIndex: 1,
+                        encode: {
+                            x: '发布时间',
+                            y: '政策工具',
+                            tooltip: [0, 1, 2, 3, 4]
+                        }
+                    },
+                    {
+                        type: 'scatter',
+                        symbolSize: symbolSize,
+                        xAxisIndex: 2,
+                        yAxisIndex: 2,
+                        encode: {
+                            x: '政策工具',
+                            y: '科技活动类型',
+                            tooltip: [0, 1, 2, 3, 4, 5]
+                        }
+                    },
+                    {
+                        type: 'scatter',
+                        symbolSize: symbolSize,
+                        xAxisIndex: 3,
+                        yAxisIndex: 3,
+                        encode: {
+                            x: '三大产业',
+                            y: '科技活动类型',
+                            tooltip: [0, 1, 2, 3, 4, 5]
+                        }
+                    }
+                ]
+            };
+            myChart_policySteering.hideLoading();
+            myChart_policySteering.setOption(option);
+        }
+
+    });
+</script>

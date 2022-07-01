@@ -1,0 +1,282 @@
+<style>
+    span.keyword{
+        color: #f5222d;
+    }
+</style>
+<div class="layui-fluid" id="VIEW-showKeywords" lay-title="科技政策语义网络图">
+    <div class="layui-row layui-col-space8 febs-container">
+        <div class="layui-card">
+            <div class="layui-card-header">科技政策语义网络图说明</div>
+            <div class="layui-card-body febs-table-full">
+                <p>1.科技政策语义网络图对科技政策中的<span class="keyword">关键词以及关键词之间的关联关系</span>做了可视化。</p>
+                <p>2.支持对科技政策的<span class="keyword">多条件筛选</span>，包括从发布时间、政策作用对象以及政策作用和影响地域方面来做细分。</p>
+                <p>3.系统会<span class="keyword">保留本次分析结果</span>直至下一次分析。</p>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row febs-container">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body febs-table-full">
+                    <form class="layui-form layui-table-form" lay-filter="user-table-form">
+                        <div class="layui-row">
+                            <div class="layui-col-md10">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label layui-form-label-sm">发布时间</label>
+                                    <div style="width: 230px;" class="layui-input-inline">
+                                        <input type="text" name="createTime" id="createTime" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label layui-form-label-sm">作用对象</label>
+                                    <div style="width: 230px;" class="layui-input-inline">
+                                        <select name="category" id="category">
+                                            <option value=""></option>
+                                            <option value="26">调整优化机制</option>
+                                            <option value="27">支撑企业创新</option>
+                                            <option value="28">服务人才创业</option>
+                                            <option value="29">激发院所激情</option>
+                                        </select>
+                                        <!--<input type="text" name="category" id="category" lay-filter="category"-->
+                                               <!--class="layui-input">-->
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;域</label>
+                                        <div style="width: 550px;" class="layui-input-inline">
+                                            <select name="regionId"
+                                                    lay-verify="required"
+                                                    xm-select-direction="down"
+                                                    xm-select="region-tree-select-keywords"
+                                                    xm-select-skin="default">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="layui-col-md2 layui-col-sm12 layui-col-xs12 table-action-area">
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="query">
+                                    <i class="layui-icon">&#xe848;</i>
+                                </div>
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="reset">
+                                    <i class="layui-icon">&#xe79b;</i>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="layui-tab layui-tab-brief" lay-filter="chart-index-echartBar">
+                        <div class="layui-tab-content nepadmin-pad0">
+                            <div class="layui-tab-item layui-show">
+                                <div class="layui-row">
+                                    <div id="chart-index-echartRelationship" style="width: 100%;height:600px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['febs', 'echarts4', 'dataTool','dropdown','laydate', 'form','treeSelect','formSelects'], function () {
+        var $ = layui.jquery,
+            echarts = layui.echarts4,
+            formSelects_map_keyword = layui.formSelects,
+            laydate = layui.laydate,
+            febs = layui.febs,
+            form = layui.form,
+            table = layui.table,
+            treeSelect = layui.treeSelect,
+            dropdown = layui.dropdown,
+            $view = $('#VIEW-showKeywords'),
+            $query = $view.find('#query'),
+            $reset = $view.find('#reset'),
+            $searchForm = $view.find('form');
+        var myChart_r = echarts.init(document.getElementById('chart-index-echartRelationship'));
+
+        form.render();
+
+        /*这是一个过时的版本
+        $.getJSON('data/policy_national.json', function (json) {
+            initChart(json);
+        }, 'json');*/
+        //myChart_r.showLoading();
+        Relation();
+        function Relation()
+        {
+            myChart_r.showLoading();
+            var params = getQueryParams();
+            febs.get(ctx + 'policy/RelationData', params, function (json) {
+                // alert(json.data);
+                initChart(json.data);
+            });
+        }
+        // febs.get(ctx + 'helpers/getKeywords', null, function (json) {
+        //     initChart(json.data);
+        // });
+        laydate.render({
+            elem: '#createTime',
+            range: true,
+            trigger: 'click'
+        });
+
+        // treeSelect.render({
+        //     elem: $view.find('#category'),
+        //     type: 'get',
+        //     data: ctx + 'classify/select/category',
+        //     placeholder: '请选择',
+        //     search: false
+        // });
+        formSelects_map_keyword.config('region-tree-select-keywords', {
+            searchUrl: ctx + 'region/tree',
+            response: {
+                statusCode: 200
+            },
+            beforeSuccess: function (id, url, searchVal, result) {
+                var data = result.data;
+                var tranData = [];
+                for (var i = 0; i < data.length; i++) {
+
+                    if (data[i].children != null) {
+                        var children = [];
+                        for (var j = 0; j < data[i].children.length; j++) {
+                            children.push({
+                                name: data[i].children[j].title,
+                                value: data[i].children[j].id
+                            })
+                        }
+                        tranData.push({
+                            name: data[i].title,
+                            value: data[i].id,
+                            children: children
+                        })
+                    } else {
+                        tranData.push({
+                            name: data[i].title,
+                            value: data[i].id
+                        })
+                    }
+                }
+                result.data = tranData;
+                return result;
+            },
+            success: function () {
+                formSelects_map_keyword.value('region-tree-select-keywords', [110000, 120000, 130000]);
+            },
+            error: function (id, url, searchVal, err) {
+                console.error(err);
+                febs.alert.error('获取地域失败');
+            }
+        });
+        $query.on('click', function () {
+            myChart_r.showLoading();
+            var params = getQueryParams();
+            febs.get(ctx + 'policy/echartsData', params, function (json) {
+                // alert(json.data);
+                initChart(json.data);
+            });
+        });
+
+        $reset.on('click', function () {
+            $searchForm[0].reset();
+            treeSelect.revokeNode('category');
+        });
+
+        function getQueryParams() {
+            var createTimeFrom,
+                createTimeTo,
+                createTime = $searchForm.find('input[name="createTime"]').val();
+            if (createTime) {
+                createTimeFrom = createTime.split(' - ')[0];
+                createTimeTo = createTime.split(' - ')[1];
+            }
+            return {
+                createTimeFrom: createTimeFrom,
+                createTimeTo: createTimeTo,
+                regionIds: $searchForm.find("input[name='regionId']").val(),
+                //categoryId: $searchForm.find("input[name='category']").val().trim(),
+                categoryId:$searchForm.find("select[name='category']").val(),
+                invalidate_ie_cache: new Date()
+            };
+        }
+        function initChart(json) {
+            //关系图
+            option_r = null;
+            var graph = json;
+            var categories = [{name: '服务领域'}, {name: '政策对象'}, {name: '企业发展'}, {name: '政策措施'}];
+            var all_divide = graph.nodes[0].symbolSize/80;
+            graph.nodes.forEach(function (node) {
+                node.itemStyle = null;
+                node.value = node.symbolSize;
+                node.symbolSize /= all_divide;
+                node.category = node.attributes.modularity_class;
+                node.label = {
+                    emphasis: {//高亮状态
+                        show: node.symbolSize > 10
+                    }
+                };
+            });
+            option_r = {
+                title: {
+                    text: '科技政策语义网络图',
+                    subtext: 'Default layout',
+                    y: 'bottom',
+                    x: 'right'
+                },
+                tooltip: {},
+                legend: [{
+                    // selectedMode: 'single',
+                    data: categories.map(function (a) {
+                        return a.name;
+                    })
+                }],
+                animationDuration: 1500,
+                animationEasingUpdate: 'quinticInOut',
+                series: [
+                    {
+                        name: '关键词',
+                        type: 'graph',
+                        layout: "none",            // 图的布局。[ default: 'none' ]
+                        data: graph.nodes,
+                        links: graph.links,
+                        categories: categories,
+                        roam: true,
+                        focusNodeAdjacency: true,   // 是否在鼠标移到节点上的时候突出显示节点以及节点的边和邻接节点。[ default: false ]
+                        label: { //=============图形上的文本标签
+                            normal: {
+                                show: false,//是否显示标签。
+                            },
+                            emphasis: {//高亮状态
+                                color: '#000', //字体颜色
+                                position: 'right',//标签的位置。['50%', '50%'] [x,y]
+                                formatter: '{b}'
+                            }
+                        },
+                        lineStyle: {
+                            normal: {
+                                color: '#F5F5F5',          // 线的颜色[ default: '#aaa' ]
+                                width: 0.1,               // 线宽[ default: 1 ]
+                                type: 'solid',          // 线的类型[ default: solid ]   'dashed'    'dotted'
+                                opacity: 0.1,           // 图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。[ default: 0.5 ]
+                                curveness: 0.3
+                            },
+                            emphasis: {//高亮状态
+                                show:false,
+                                color: '#000',          // 线的颜色[ default: '#aaa' ]
+                                width: 0.1,               // 线宽[ default: 1 ]
+                                opacity: 0.8           // 图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。[ default: 0.5 ]
+                            }
+                        }
+                    }
+                ]
+            };
+
+            myChart_r.hideLoading();
+            myChart_r.setOption(option_r);
+        };
+
+    });
+</script>

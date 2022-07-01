@@ -1,0 +1,341 @@
+<style>
+    span.keyword{
+        color: #f5222d;
+    }
+</style>
+<div class="layui-fluid layui-anim febs-anim" id="febs-analysisFormula" lay-title="科技政策挖掘公式">
+    <div class="layui-row layui-col-space8 febs-container">
+        <div class="layui-card">
+            <div class="layui-card-header" >政策挖掘公式定义规范</div>
+            <div class="layui-card-body febs-table-full">
+                <p>1.公式分为前后两部分，<span class="keyword">科技主语</span>和<span class="keyword">政策调控关键词</span>。两部分中间使用"-"分隔，多个主语和关键词之间使用"、"分隔。</p>
+                <p>2.如果没有科技主语，即非"政策对某科技主语如何调控"的逻辑关系，<span class="keyword">可以直接用政策调控关键词作为公式</span>。</p>
+                <p>3.例如：高新技术企业研究与实验经费公式可以定义为：高新技术企业-研究与实验经费、R&D经费。（研究与实验经费和R&D经费都有可能是政策中的表达。）</p>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row layui-col-space8 febs-container">
+        <div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-body febs-table-full">
+                    <form class="layui-form layui-table-form" lay-filter="analysisFormula-table-form" id="analysisFormula-table-form">
+                        <div class="layui-row">
+                            <div class="layui-col-md8 layui-col-sm9 layui-col-xs9">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">名称</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="formulaName" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md4 layui-col-sm12 layui-col-xs12 table-action-area">
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="query">
+                                    <i class="layui-icon">&#xe848;</i>
+                                </div>
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="reset">
+                                    <i class="layui-icon">&#xe79b;</i>
+                                </div>
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action action-more"
+                                     shiro:hasAnyPermissions="analysisFormula:add,analysisFormula:delete,analysisFormula:export">
+                                    <i class="layui-icon">&#xe875;</i>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="analysisFormula-tree-edit" lay-filter="formulaTree_edit" style="margin-left: 1rem"></div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-header" id="form-header">新增公式</div>
+                <div class="layui-card-body febs-table-full">
+                    <form class="layui-form layui-table-form" action="" lay-filter="analysisFormula-form">
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label febs-form-item-require">ID：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="formulaId" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">上级ID：</label>
+                            <div class="layui-input-block">
+                                <input type="text" value="" name="parentId" readonly autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label febs-form-item-require">公式名称：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="formulaName" autocomplete="off" class="layui-input"
+                                       minlength="2" maxlength="20" lay-verify="range">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label febs-form-item-require">公式内容：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="formulaContent" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">科技实体对应指标：</label>
+                            <div class="layui-input-block">
+                                <select name="entityIndexIds"
+                                        xm-select-direction="down"
+                                        xm-select="formula-tree-select"
+                                        xm-select-skin="default">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">公式权重：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="weight" autocomplete="off" class="layui-input"
+                                       maxlength="4" lay-verify="weight">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">公式排序：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="orderNum" autocomplete="off" class="layui-input"
+                                       lay-verify="number">
+                            </div>
+                        </div>
+                        <button type="reset" class="layui-btn febs-hide" id="reset-form"></button>
+                        <button class="layui-btn febs-hide" lay-submit="" lay-filter="analysisFormula-form-submit"
+                                id="submit-form"></button>
+                    </form>
+                </div>
+                <div class="layui-card-footer">
+                    <button class="layui-btn layui-btn-normal" id="submit">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script data-th-inline="javascript" type="text/javascript">
+    layui.use(['dropdown', 'jquery', 'validate', 'febs', 'form','formSelects', 'eleTree'], function () {
+        var $ = layui.jquery,
+            febs = layui.febs,
+            form = layui.form,
+            validate = layui.validate,
+            eleTree = layui.eleTree,
+            formSelects = layui.formSelects,
+            dropdown = layui.dropdown,
+            $view = $('#febs-analysisFormula'),
+            $query = $view.find('#query'),
+            $reset = $view.find('#reset'),
+            $submit = $view.find('#submit'),
+            $header = $view.find('#form-header'),
+            $searchForm = $view.find('#analysisFormula-table-form'),
+            $formulaName = $searchForm.find('input[name="formulaName"]'),
+            _currentFormulaData,
+            _formulaTree_conf;
+
+        form.verify(validate);
+        form.render();
+        formSelects.render();
+        renderFormulaTree_edit();
+        formSelects.config('formula-tree-select', {
+            searchUrl: ctx + 'entityIndex/tree',
+            response: {
+                statusCode: 200
+            },
+            beforeSuccess: function (id, url, searchVal, result) {
+                var data = result.data;
+                var tranData = [];
+                for (var i = 0; i < data.length; i++) {
+
+                    if(data[i].children!=null){
+                        var children = [];
+                        for (var j = 0; j < data[i].children.length; j++) {
+                            if(data[i].children[j].children){
+                                var children_children = [];
+                                for (var k = 0; k < data[i].children[j].children.length; k++) {
+                                    children_children.push({
+                                        name: data[i].children[j].children[k].name,
+                                        value: data[i].children[j].children[k].id
+                                    })
+                                }
+                            }
+                            children.push({
+                                name: data[i].children[j].name,
+                                value: data[i].children[j].id,
+                                children:children_children
+                            })
+                        }
+                        tranData.push({
+                            name: data[i].name,
+                            value: data[i].id,
+                            children: children
+                        })
+                    }else{
+                        tranData.push({
+                            name: data[i].name,
+                            value: data[i].id
+                        })
+                    }
+                }
+                result.data = tranData;
+                return result;
+            },
+            success: function () {
+                formSelects.value('formula-tree-select');
+            },
+            error: function (id, url, searchVal, err) {
+                console.error(err);
+                febs.alert.error('获取角色列表失败');
+            }
+        });
+        eleTree.on("nodeClick(formulaTree_edit)", function (d) {
+            $header.text('修改公式');
+            var data = d.data.currentData.formulaData;
+            _currentFormulaData = data;
+            form.val("analysisFormula-form", {
+                "formulaName": data.formulaName,
+                "formulaContent": data.formulaContent,
+                "orderNum": data.orderNum,
+                "createTime": data.createTime,
+                "parentId": data.parentId,
+                "formulaId": data.formulaId,
+                "weight":data.weight
+            });
+            if(data.entityIndexIds!=null){
+                formSelects.value('formula-tree-select', data.entityIndexIds.split(','));
+            }else{
+                formSelects.value('formula-tree-select', []);
+            }
+        });
+
+        dropdown.render({
+            elem: $view.find('.action-more'),
+            click: function (name, elem, event) {
+                if (name === 'add') {
+                    reset();
+                    var selected = _formulaTree_conf.getChecked(false, true);
+                    if (selected.length > 1) {
+                        febs.alert.warn('只能选择一个节点作为父级！');
+                        return;
+                    }
+                    form.val("analysisFormula-form", {
+                        "parentId": selected[0] ? selected[0].id : ''
+                    });
+                }
+                if (name === 'delete') {
+                    var checked = _formulaTree_conf.getChecked(false, true);
+                    if (checked.length < 1) {
+                        febs.alert.warn('请勾选需要删除的公式');
+                        return;
+                    }
+                    var formulaIds = [];
+                    layui.each(checked, function (key, item) {
+                        formulaIds.push(item.id)
+                    });
+                    febs.modal.confirm('提示', '当您点击确定按钮后，这些记录将会被彻底删除，如果其包含子记录，也将一并删除！', function () {
+                        febs.get(ctx + 'analysisFormula/delete/' + formulaIds.join(','), null, function () {
+                            febs.alert.success('删除成功！');
+                            reloadFormulaTree_edit();
+                            reset();
+                        })
+                    });
+                }
+                if (name === 'export') {
+                    febs.download(ctx + 'analysisFormula/excel', getQueryParams(), '公式信息表.xlsx');
+                }
+            },
+            options: [{
+                name: 'add',
+                title: '新增公式',
+                perms: 'analysisFormula:add'
+            }, {
+                name: 'delete',
+                title: '删除公式',
+                perms: 'analysisFormula:delete'
+            }, {
+                name: 'export',
+                title: '导出Excel',
+                perms: 'analysisFormula:export'
+            }]
+        });
+
+        $view.on('click', '#submit', function () {
+            $view.find('#submit-form').trigger('click');
+        });
+
+        $reset.on('click', function () {
+            $formulaName.val('');
+            reloadFormulaTree_edit();
+            reset();
+        });
+
+        $query.on('click', function () {
+            reloadFormulaTree_edit();
+        });
+
+        function getQueryParams() {
+            return {
+                "formulaName": $formulaName.val().trim()
+            }
+        }
+
+        function reset() {
+            $header.text('新增公式');
+            $view.find('#reset-form').trigger('click');
+        }
+
+        function renderFormulaTree_edit() {
+            _formulaTree_conf = eleTree.render({
+                elem: '.analysisFormula-tree-edit',
+                url: ctx + 'analysisFormula/tree',
+                accordion: true,
+                highlightCurrent: true,
+                showCheckbox: true,
+                checkStrictly: true,
+                renderAfterExpand: false,
+                where: {
+                    "formulaName": $formulaName.val().trim(),
+                    "invalidate_ie_cache": new Date()
+                },
+                request: {
+                    name: 'name',
+                    key: "id",
+                    checked: "checked",
+                    data: 'formulaData'
+                },
+                response: {
+                    statusName: "code",
+                    statusCode: 200,
+                    dataName: "data"
+                }
+            });
+            return _formulaTree_conf;
+        }
+
+        function reloadFormulaTree_edit() {
+            _formulaTree_conf = renderFormulaTree_edit();
+        }
+
+        form.on('submit(analysisFormula-form-submit)', function (data) {
+            if (data.field.formulaId && $header.text().indexOf('修改') !== -1) {
+                if (febs.nativeEqual(data.field, _currentFormulaData)) {
+                    febs.alert.warn('数据未作任何修改！');
+                    return false;
+                }
+                febs.post(ctx + 'analysisFormula/update', data.field, function () {
+                    febs.alert.success('修改成功');
+                    reloadFormulaTree_edit();
+                    reset();
+                })
+            } else {
+                febs.post(ctx + 'analysisFormula', data.field, function () {
+                    febs.alert.success('新增成功');
+                    reloadFormulaTree_edit();
+                    reset();
+                })
+            }
+            return false;
+        });
+    });
+</script>

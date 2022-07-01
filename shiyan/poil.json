@@ -1,0 +1,1836 @@
+[
+  {
+    "silent": true,
+    "data": [
+      {
+        "symbolSize": 75,
+        "value": [
+          250,
+          850
+        ]
+      },
+      {
+        "symbolSize": 50,
+        "value": [
+          250,
+          500
+        ]
+      },
+      {
+        "symbolSize": 40,
+        "value": [
+          250,
+          150
+        ]
+      }
+    ],
+    "name": "成果转化",
+    "itemStyle": {
+      "color": "#99cc99"
+    },
+    "coordinateSystem": "cartesian2d",
+    "rippleEffect": {
+      "brushType": "stroke",
+      "scale": 1.7
+    },
+    "type": "effectScatter"
+  },
+  {
+    "lineStyle": {
+      "curveness": 0.1,
+      "color": "#F58158",
+      "width": 2,
+      "opacity": 0.2
+    },
+    "data": [
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            250,
+            500
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            250,
+            150
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            650,
+            900
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            650,
+            875
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            650,
+            850
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            650,
+            825
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            650,
+            800
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            775
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            750
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            725
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            700
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            675
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            650
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            625
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            600
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            575
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            550
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            525
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            500
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            475
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            450
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            425
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            400
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            375
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            150
+          ],
+          [
+            650,
+            350
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            150
+          ],
+          [
+            650,
+            325
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            150
+          ],
+          [
+            650,
+            300
+          ]
+        ]
+      }
+    ],
+    "effect": {
+      "symbol": "triangle",
+      "symbolSize": 10,
+      "show": true
+    },
+    "name": "成果转化",
+    "tooltip": {
+      "show": false
+    },
+    "zlevel": 2,
+    "coordinateSystem": "cartesian2d",
+    "type": "lines"
+  },
+  {
+    "draggable": false,
+    "data": [
+      {
+        "symbolSize": 75,
+        "name": "国家级政策",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "label": {
+          "offset": [
+            -30,
+            0
+          ],
+          "position": "left"
+        },
+        "value": [
+          250,
+          850
+        ]
+      },
+      {
+        "symbolSize": 50,
+        "name": "省级政策",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "label": {
+          "offset": [
+            -30,
+            0
+          ],
+          "position": "left"
+        },
+        "value": [
+          250,
+          500
+        ]
+      },
+      {
+        "symbolSize": 40,
+        "name": "市级政策",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "label": {
+          "offset": [
+            -30,
+            0
+          ],
+          "position": "left"
+        },
+        "value": [
+          250,
+          150
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《中华人民共和国促进科技成果转化法》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          900
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《自治区科技成果转化条例》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          875
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《玉田县支持企业科技创新促进科技成果转化十条措施》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          850
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《促进科技成果转化法》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          825
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《支持中央驻冀科研院所科技成果转化的若干措施（试行）》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          800
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《四川省促进科技成果转化条例》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          775
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《天津市促进科技成果转化条例》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          750
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《浙江省促进科技成果转化条例》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          725
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《安徽省促进科技成果转化条例》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          700
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《陕西省促进科技成果转化条例》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          675
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《河北省促进科技成果转化条例》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          650
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《广东省促进科技成果转化条例》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          625
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《青海省促进科技成果转化条例》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          600
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《浙江省科技成果转化条例》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          575
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《上海市促进科技成果转化条例》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          550
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《云南省促进科技成果转化条例（草案）》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          525
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《山东省科技成果转化条例》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          500
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《河南省促进科技成果转化条例》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          475
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《云南省促进科技成果转化条例》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          450
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《宁夏回族自治区促进科技成果转化条例》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          425
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《江苏省促进科技成果转化条例》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          400
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《陕西省科技成果转化条例》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          375
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《唐山市支持企业科技创新促进科技成果转化的十条措施》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          350
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《唐山市支持企业科技创新促进科技成果转化十条措施》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          325
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《石家庄市科技成果转化风险补偿专项资金管理办法实施细则》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          300
+        ]
+      }
+    ],
+    "name": "成果转化",
+    "itemStyle": {
+      "color": "#99cc99"
+    },
+    "coordinateSystem": "cartesian2d",
+    "label": {
+      "show": true,
+      "fontSize": 10,
+      "position": "right"
+    },
+    "type": "graph"
+  },
+  {
+    "silent": true,
+    "data": [
+      {
+        "symbolSize": 75,
+        "value": [
+          250,
+          850
+        ]
+      },
+      {
+        "symbolSize": 50,
+        "value": [
+          250,
+          500
+        ]
+      },
+      {
+        "symbolSize": 40,
+        "value": [
+          250,
+          150
+        ]
+      }
+    ],
+    "name": "科技人才",
+    "itemStyle": {
+      "color": "#99cc99"
+    },
+    "coordinateSystem": "cartesian2d",
+    "rippleEffect": {
+      "brushType": "stroke",
+      "scale": 1.7
+    },
+    "type": "effectScatter"
+  },
+  {
+    "lineStyle": {
+      "curveness": 0.1,
+      "color": "#F58158",
+      "width": 2,
+      "opacity": 0.2
+    },
+    "data": [
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            250,
+            500
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            250,
+            150
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            650,
+            900
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            650,
+            875
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            650,
+            850
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            650,
+            825
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            650,
+            800
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            650,
+            775
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            650,
+            750
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            650,
+            725
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            650,
+            700
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            650,
+            675
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            650,
+            650
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            650,
+            625
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            650,
+            600
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            650,
+            575
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            650,
+            550
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            650,
+            525
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            650,
+            500
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            650,
+            475
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            850
+          ],
+          [
+            650,
+            450
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            425
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            400
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            375
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            350
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            325
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            300
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            275
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            250
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            225
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            200
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            500
+          ],
+          [
+            650,
+            175
+          ]
+        ]
+      },
+      {
+        "lineStyle": {
+          "curveness": 0
+        },
+        "coords": [
+          [
+            250,
+            150
+          ],
+          [
+            650,
+            150
+          ]
+        ]
+      }
+    ],
+    "effect": {
+      "symbol": "triangle",
+      "symbolSize": 10,
+      "show": true
+    },
+    "name": "科技人才",
+    "tooltip": {
+      "show": false
+    },
+    "zlevel": 2,
+    "coordinateSystem": "cartesian2d",
+    "type": "lines"
+  },
+  {
+    "draggable": false,
+    "data": [
+      {
+        "symbolSize": 75,
+        "name": "国家级政策",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "label": {
+          "offset": [
+            -30,
+            0
+          ],
+          "position": "left"
+        },
+        "value": [
+          250,
+          850
+        ]
+      },
+      {
+        "symbolSize": 50,
+        "name": "省级政策",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "label": {
+          "offset": [
+            -30,
+            0
+          ],
+          "position": "left"
+        },
+        "value": [
+          250,
+          500
+        ]
+      },
+      {
+        "symbolSize": 40,
+        "name": "市级政策",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "label": {
+          "offset": [
+            -30,
+            0
+          ],
+          "position": "left"
+        },
+        "value": [
+          250,
+          150
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《新世纪百千万人才工程实施方案》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          900
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《中共中央、国务院关于进一步加强人才工作的决定》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          875
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《关于建立海外高层次留学人才回国工作绿色通道的意见》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          850
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《中华人民共和国对海外高层次人才回国和海外科技专家来华工作进出境物品管理办法》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          825
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《创新人才推进计划实施方案》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          800
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《边远贫困地区、边疆民族地区和革命老区人才支持计划科技人员专项计划实施方案》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          775
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《青岛市“千万平米”人才公寓建设推进方案》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          750
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《边远贫困地区、边疆民族地区和革命老区人才支持计划实施方案》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          725
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《落实专业技术人才知识更新工程实施方案》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          700
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《专业技术人才知识更新工程实施方案》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          675
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《国家知识产权局专业技术人才知识更新工程实施方案》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          650
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《降低企业引进高科技人才成本实施细则》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          625
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《关于深化人才发展体制机制改革的意见》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          600
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《高水平建设人才强省行动纲要》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          575
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《关于深化人才发展体制机制改革促进人才创新创业的实施意见》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          550
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《关于分类推进人才评价机制改革实施方案》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          525
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《关于深化项目评审、人才评价、机构评估改革的实施意见》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          500
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《关于分类推进人才评价机制改革的指导意见》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          475
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《关于深化项目评审、人才评价、机构评估改革的意见》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          450
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《河南省创新型科技人才队伍建设工程实施方案》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          425
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《陕西省创新人才推进计划实施方案》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          400
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《天津市创新人才推进计划实施方案》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          375
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《北京市高层次创新创业人才支持计划卫生领军人才支持项目实施方案》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          350
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《宁夏“三区”人才支持计划科技人员专项计划实施方案》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          325
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《河南省高层次创新型科技人才队伍建设工程（2011-2020）实施方案》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          300
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《山东省科技人才推进计划实施方案》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          275
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《北京市高层次创新创业人才支持计划卫生领军人才支持项目实施办法》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          250
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《重庆市引进高层次人才若干优惠政策规定》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          225
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《河北省“三三三人才工程”实施方案》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          200
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《重庆市科技人才分类评价实施方案》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          175
+        ]
+      },
+      {
+        "symbolSize": 10,
+        "name": "《邢台市“百名博硕人才引进”实施方案》",
+        "tooltip": {
+          "padding": 0,
+          "show": true
+        },
+        "value": [
+          650,
+          150
+        ]
+      }
+    ],
+    "name": "科技人才",
+    "itemStyle": {
+      "color": "#99cc99"
+    },
+    "coordinateSystem": "cartesian2d",
+    "label": {
+      "show": true,
+      "fontSize": 10,
+      "position": "right"
+    },
+    "type": "graph"
+  }
+]

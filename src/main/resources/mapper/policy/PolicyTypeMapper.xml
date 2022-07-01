@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.policy.mapper.PolicyTypeMapper">
+    <sql id="findPolicyDetailSql">
+        SELECT
+        p.id,
+        p.policytype
+        FROM
+        policy_type p
+        WHERE 1 = 1
+    </sql>
+    <select id="findById" parameterType="int" resultType="policytype">
+        SELECT
+        p.id,
+        p.policytype
+        FROM
+        policy_type p
+        WHERE p.id = #{id}
+    </select>
+
+    <select id="findPolicyDetailPage" parameterType="policytype" resultType="policytype">
+        <include refid="findPolicyDetailSql"/>
+    </select>
+</mapper>

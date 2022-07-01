@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.policy.mapper.AnnualMapper">
+    <select id="getCorporateTechnologyActivities" parameterType="String" resultType="Annual">
+        SELECT
+        p.id,
+        p.name,
+        p.province,
+        p.year,
+        p.unit_c,
+        p.data
+        FROM
+        annual p
+        WHERE p.type = #{type}
+        and ( p.name='规模以上工业企业新产品开发经费支出' or p.name='科技活动人员数' or p.name='R&amp;D人员' or p.name='规模以上工业企业R&amp;D经费外部支出' or p.name='规模以上工业企业R&amp;D经费内部支出')
+        and p.year > '2004'
+        order by p.name,p.year
+    </select>
+    <select id="getUndertakeProject" parameterType="String" resultType="Annual">
+        SELECT
+        p.id,
+        p.name,
+        p.province,
+        p.year,
+        p.unit_c,
+        p.data
+        FROM
+        annual p
+        WHERE p.type = #{type}
+        and ( p.name='研究与开发机构R&amp;D课题数' or p.name='高等学校R&amp;D课题数' or p.name='研究与开发机构R&amp;D课题投入人员' or p.name='高等学校R&amp;D课题投入人员' or p.name='研究与开发机构R&amp;D课题投入经费' or p.name='高等学校R&amp;D课题投入经费')
+        and p.year > '2004'
+        order by p.name,p.year
+    </select>
+    <select id="getEnterpriseDevelopment" parameterType="String" resultType="Annual">
+        SELECT
+        p.id,
+        p.name,
+        p.province,
+        p.year,
+        p.unit_c,
+        p.data
+        FROM
+        annual p
+        WHERE p.type = #{type}
+        and ( p.name='国家高新技术产业开发区总产值' or p.name='开发区高新技术企业数' or p.name='国家高新技术产业开发区实交税金')
+        and p.year > '2004'
+        order by p.name,p.year
+    </select>
+</mapper>

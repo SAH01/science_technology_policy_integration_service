@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.policy.mapper.PolicyIndexingMapper">
+    <sql id="findPolicyDetailSql">
+        SELECT
+        p.id,
+        p.publisher,
+        p.name,
+        p.document_type,
+        p.document_area,
+        p.document_id,
+        p.publish_type,
+        p.organ,
+        p.pass_date,
+        p.publish_date,
+        p.exe_date,
+        p.document_target,
+        p.theme_words,
+        p.key_words,
+        p.up_document,
+        p.pre_document,
+        p.post_document,
+        p.document_state,
+        p.sur_field,
+        p.text,
+        p.index_state
+        FROM
+        policy_enter p
+        WHERE 1 = 1
+    </sql>
+
+    <select id="findPolicyDetailPage" parameterType="PolicyEnter" resultType="PolicyEnter">
+        <include refid="findPolicyDetailSql"/>
+    </select>
+
+    <select id="findById" parameterType="int" resultType="PolicyEnter">
+        SELECT
+        p.id,
+        p.publisher,
+        p.name,
+        p.document_type,
+        p.document_area,
+        p.document_id,
+        p.publish_type,
+        p.organ,
+        p.pass_date,
+        p.publish_date,
+        p.exe_date,
+        p.document_target,
+        p.theme_words,
+        p.key_words,
+        p.up_document,
+        p.pre_document,
+        p.post_document,
+        p.document_state,
+        p.sur_field,
+        p.text,
+        p.index_state
+        FROM
+        policy_enter p
+        WHERE p.id = #{policyId}
+    </select>
+    <!--findPolicyCrawlingById-->
+    <select id="findPolicyById" parameterType="java.lang.String" resultType="PolicyEnter">
+        SELECT
+        p.id,
+        p.publisher,
+        p.name,
+        p.document_type,
+        p.document_area,
+        p.document_id,
+        p.publish_type,
+        p.organ,
+        p.pass_date,
+        p.publish_date,
+        p.exe_date,
+        p.document_target,
+        p.theme_words,
+        p.key_words,
+        p.up_document,
+        p.pre_document,
+        p.post_document,
+        p.document_state,
+        p.sur_field,
+        p.text,
+        p.index_state
+        FROM
+        policy_enter p
+        <where>
+            <!--添加if条件如果参数为空则不拼接sql-->
+            <if test="policyName != null and policyName != '' ">
+                p.name like concat('%',#{policyName},'%')
+            </if>
+            <if test="policyId != null and policyId != '' ">
+                and p.document_id like concat('%',#{policyId},'%')
+            </if>
+            <if test="policyOrgan != null and policyOrgan != '' ">
+                and p.organ like concat('%',#{policyOrgan},'%')
+            </if>
+            <if test="policyTime != null and policyTime != '' ">
+                and p.publish_date like concat('%',#{policyTime},'%')
+            </if>
+            <if test="policyType != null and policyType != '' ">
+                and p.index_state like concat('%',#{policyType},'%')
+            </if>
+            <if test="policyPublisher != null and policyPublisher != '' ">
+                and p.publisher like concat('%',#{policyPublisher},'%')
+            </if>
+        </where>
+    </select>
+</mapper>

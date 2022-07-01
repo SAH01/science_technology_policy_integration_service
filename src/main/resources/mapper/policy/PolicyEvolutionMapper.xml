@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.policy.mapper.PolicyEvolutionMapper">
+    <select id="getPolicyEvolutionList" parameterType="String" resultType="PolicyEvolution">
+        SELECT
+        p.id,
+        p.policyid,
+        p.policytext,
+        p.policyname,
+        p.time,
+        p.type,
+        p.policymain
+        FROM
+        policy_evolution p
+        WHERE p.type = #{type}
+        ORDER BY p.time
+    </select>
+    <select id="getPolicyEvolutionByNameList" parameterType="String" resultType="PolicyEvolution">
+        SELECT
+        p.id,
+        p.policyid,
+        p.policytext,
+        p.policyname,
+        p.time,
+        p.type,
+        p.policymain
+        FROM
+        policy_evolution p
+        WHERE p.policyname = #{policyname}
+        ORDER BY p.time
+    </select>
+</mapper>

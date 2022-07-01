@@ -1,0 +1,72 @@
+<style>
+    #febs-policy-detail #user-img, #febs-policy-detail .user-info {
+        display: inline-block;
+        float: left;
+        margin-left: 15px;
+    }
+
+    #febs-policy-detail #user-img img {
+        width: 7rem;
+        margin: 10px 10px 0 20px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    #febs-policy-detail #user-info-wrapper {
+        margin: 0 0 1rem 0;
+        display: inline-block;
+    }
+
+    #febs-policy-detail .user-info div {
+        margin: 10px 15px;
+        /*max-width: 19rem;*/
+    }
+
+    #febs-policy-detail #options-wrapper a {
+        padding: 4px 6px;
+        color: rgba(0, 0, 0, 0.65);
+        border: 1px solid #d9d9d9;
+        border-radius: 2px;
+    }
+
+    #febs-policy-detail #options-wrapper a:hover {
+        color: #40a9ff;
+        border-color: #40a9ff;
+    }
+    .policyName {
+        font-size: 20px;
+        font-weight: bold;
+        color: #000000;
+    }
+
+</style>
+<div class="layui-fluid" id="febs-policy-detail" lay-title="政策信息">
+    <div id="user-info-wrapper">
+
+        <div class="user-info">
+            <div align="center" class="policyName">
+                [[${policy.name}]]
+            </div>
+            <div><span class="layui-icon layui-icon-mail"></span> 关键词：
+                [[${#strings.defaultString(policy.keyword,'无关键词')}]]
+            </div>
+            <div id="content" class="layui-icon">
+                [[${policy.text}]]
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    layui.use(['febs'], function () {
+        var $ = layui.jquery;
+        var content = $("#content").text();
+        console.log(content);
+        $("#content").empty();
+        var splitedText = content.split('\n');
+        // console.log(splitedText);
+        for (var part in splitedText) {
+            $("#content").append('<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + splitedText[part] + '</p>')
+        }
+    });
+</script>

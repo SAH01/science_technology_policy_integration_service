@@ -1,0 +1,429 @@
+
+<div class="layui-fluid layui-anim febs-anim" id="febs-dept" lay-title="政策分类展示">
+
+    <div class="layui-card" >
+        <form class="layui-form layui-table-form" lay-filter="user-table-form">
+            <span id="hintMessage" class="febs-alert-base febs-alert-warn">提示：输入政策名称进行查找</span>
+            <div class="layui-row">
+                <div class="layui-col-md10">
+                    <div class="layui-form-item" align="center">
+                        <div class="layui-inline" style="margin-top: 10px;">
+                            <label class="layui-form-label layui-form-label-sm" style="margin-top: auto;">名称查询</label>
+                            <div class="layui-input-inline">
+
+                                <input type="text" id="policyName" name="policyName" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <!--<div class="layui-card-body">-->
+                        <!--<submit class="layui-btn layui-btn-normal" id="query">搜索</submit>-->
+                        <!--</div>-->
+                        <submit class="layui-btn layui-btn-normal" id="query">搜索</submit>
+                        <submit class="layui-btn layui-btn-normal" id="reset">重置</submit>
+
+                    </div>
+                </div>
+                <div class="layui-col-md2 layui-col-sm12 layui-col-xs12 table-action-area">
+
+                </div>
+            </div>
+        </form>
+        <!--<label class="layui-form-label layui-form-label-sm">政策名</label>-->
+        <!--<div class="layui-input-inline">-->
+        <!--<input type="text" name="policyName" autocomplete="off" class="layui-input">-->
+        <!--</div>-->
+        <!--<div class="layui-card-body" style="text-align:center">-->
+        <!--<button class="layui-btn layui-btn-normal" id="submit">政策内容</button>-->
+        <!--</div>-->
+    </div>
+
+    <div class="layui-row layui-col-space8 febs-container">
+        <div class="layui-col-md3 layui-col-sm3 layui-col-xs5">
+            <div class="layui-card">
+                <div class="layui-card-body febs-table-full" style="height:800px;overflow:auto;">
+                    <form class="layui-form layui-table-form" lay-filter="dept-table-form" id="dept-table-form">
+                        <div class="layui-row">
+                            <div class="layui-col-md8 layui-col-sm9 layui-col-xs9">
+                                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                    <legend>科技政策分类</legend>
+                                </fieldset>
+                                <div id="test13" class="demo-tree-more" lay-filter="deptTree"></div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <div class="dept-tree" lay-filter="deptTree" style="margin-left: 1rem"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md9 layui-col-sm9 layui-col-xs12">
+
+            <div class="layui-card">
+                <fieldset class="layui-elem-field layui-field-title" align="center">
+                    <legend>科技政策分类总览</legend>
+                </fieldset>
+                <div class="layui-card-body febs-table-full my-text-class" style="height:800px;overflow:auto;">
+                    <table name="policylist" lay-filter="policyTable" lay-data="{id: 'policyTable'}"></table>
+                    <div id="typePolicyNum" style="width: 800px;height:500px;"></div>
+
+                    <table id="corporateTechnologyActivities-table" border=1 cellspacing=0 cellpadding=0 style="width:850px;height:800px;overflow:auto;">
+                    </table>
+                </div>
+
+
+                <!--<div class="layui-card-body">-->
+                <!--<div id="basicColumnChart"></div>-->
+                <!--</div>-->
+            </div>
+
+        </div>
+
+        <div class="layui-col-md6 layui-col-sm6 layui-col-xs12 febs-hide" style="width:900px">
+            <div class="layui-card">
+
+
+                <div class="layui-card-body febs-table-full">
+                    <form class="layui-form layui-table-form" action="" lay-filter="dept-form">
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label">ID：</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="rank" name="rank" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label">name：</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="name" name="name" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label">上级ID：</label>
+                            <div class="layui-input-block">
+                                <input type="text" value="" id="policyid" name="Id" readonly autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label"></label>
+                            <div class="layui-input-block">
+                                <input type="text" name="policyId" autocomplete="off" class="layui-input"
+                                       lay-verify="number">
+                            </div>
+                        </div>
+                        <button class="layui-btn febs-hide" lay-submit="" lay-filter="dept-form-submit"
+                                id="submit-form"></button>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="user-option">
+    <span shiro:lacksPermission="user:view,user:update,user:delete">
+        <span class="layui-badge-dot febs-bg-orange"></span> 无权限
+    </span>
+    <a lay-event="detail" shiro:hasPermission="user:view"><i
+            class="layui-icon febs-edit-area febs-green">&#xe7a5;</i></a>
+</script>
+<script type="text/html" id="user-option1">
+    <a lay-event="detail1" shiro:hasPermission="user:view"><i
+            class="layui-icon febs-edit-area febs-green">&#xe7a5;</i></a>
+</script>
+<script data-th-inline="javascript" type="text/javascript">
+    layui.use([ 'dropdown', 'jquery','tree', 'validate', 'layer','febs', 'form', 'eleTree','element','table','apexcharts', 'jquery', 'util', 'echarts4', 'dataTool', 'echarts_gl'], function () {
+        var $ = layui.jquery,
+            febs = layui.febs,
+            element = layui.element,
+            tree = layui.tree,
+            layer=layui.layer,
+            form = layui.form,
+            table=layui.table,
+            $viewa = $('#febs-index'),
+            echarts = layui.echarts4,
+            eleTree = layui.eleTree,
+            util = layui.util,
+            dropdown = layui.dropdown,
+
+            validate = layui.validate,
+            $view = $('#febs-dept'),
+            $query = $view.find('#query'),
+            $_corporateTechnologyActivitiesTable = $view.find('#corporateTechnologyActivities-table'),
+            $reset = $view.find('#reset'),
+            $submit = $view.find('#submit'),
+            $policyid=$view.find('#policyid'),
+            $name=$view.find('#name'),
+            $rank=$view.find('#rank'),
+            $policyName=$view.find('#policyName'),
+            $header = $view.find('#form-header'),
+            $searchForm = $view.find('#dept-table-form'),
+            $searchForma = $view.find('form'),
+            _currentDeptData,
+            tableIns,
+            _deptTree;
+
+        form.verify(validate);
+        form.render();
+        Tree_init();
+        //initTable();
+        febs.get(ctx + 'jsondata/typePolicyNum/'+"0", null, function (json) {
+            initOrganPolicyNum(json.data);
+        });
+        febs.get(ctx + 'jsondata/getTableData/' + "0", null, function (json) {
+            initCorporateTechnologyActivities(json);
+        });
+        function Tree_init()
+        {
+            layer.load(1);
+            febs.get(ctx + 'jsondata/getTreeData' , null, function (json) {
+                shu(json);
+                layer.closeAll('loading');
+            });
+        }
+        function initTable(data) {
+            tableIns = febs.table.init({
+                elem: document.getElementsByName('policylist'),
+                id: 'policyTable',
+                url: ctx + 'policy/list2/'+data,
+                cols: [[
+                    {field: 'name', title: '政策文件名', minWidth: 500,align:'center'},
+                    {field: 'pubdata', title: '发布日期',align:'center'},
+                    // {field: 'organ', title: '发布机构'},
+                    // {field: 'policy_number', title: '文号'},
+                    // {field: 'policy_index', title: '编号'},
+                    {title: '解析', toolbar: '#user-option', minWidth: 140,align:'center'}
+                    //{title: '相似政策', toolbar: '#user-option1', minWidth: 140}
+                ]]
+            });
+        }
+        //饼状图
+        function initOrganPolicyNum(json) {
+            var dom_typePolicyNum = document.getElementById("typePolicyNum");
+            var myChart_typePolicyNum = echarts.init(dom_typePolicyNum);
+
+            var app = {};
+            app.title = '各部门出台政策数量及占比情况';
+            option = {
+                /*title: {
+                    text: '各部门出台政策数量及占比情况',
+                    subtext: '',
+                    x: 'center'
+                },*/
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    data: json.organs
+                },
+                series: [
+                    {
+                        name: '政策发布部门',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['55%', '50%'],
+                        data: json.dataList,
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+            myChart_typePolicyNum.hideLoading();
+            myChart_typePolicyNum.setOption(option);
+        }
+        //表格
+        function initCorporateTechnologyActivities(json) {
+            $_corporateTechnologyActivitiesTable.empty();
+            var appendHtml = '';
+            var rows = json.data.years.length + 1;
+            var cols = json.data.names.length + 1;
+            var tableData = new Array(rows);
+            tableData[0] = json.data.names.slice();
+            tableData[0].unshift('发布时间');
+            for (var i = 0; i < rows; i++) {
+                if (i > 0) {
+                    tableData[i] = new Array(cols);
+                    tableData[i][0] = json.data.years[rows - i - 1];
+                    // window.alert(json.data.length);
+                    for (var j = 0; j < json.data.data.length; j++) {
+                        tableData[i][j + 1] = json.data.data[j].values[rows - i - 1];
+                    }
+                }
+
+            }
+            for (var i = 0; i < tableData.length; i++) {
+                appendHtml += '<tr>';
+                for (var j = 0; j < tableData[i].length; j++) {
+                    if (tableData[i][j]== null) {
+                        appendHtml += '<td>' + '' + '</td>';
+                    } else {
+                        appendHtml += '<td align="center" valign="middle">' + tableData[i][j] + '</td>';
+                    }
+                }
+                appendHtml += '</tr>';
+            }
+            $_corporateTechnologyActivitiesTable.append(appendHtml);
+        }
+        function shu(json) {
+            tree.render({
+                elem: '#test13'
+                , data: json.data
+                , showCheckbox: false  //是否显示复选框
+                , id: 'demoId1'
+                , isJump: true //是否允许点击节点时弹出新窗口跳转
+                , click: function (obj) {
+                    var data = obj.data;  //获取当前点击的节点数据
+
+                    $policyid.text(data.id);
+                    var str="abcdefghijklmno";
+                    if(str.indexOf(data.id)!=-1) {
+                        $name.text(data.title);
+                        // febs.get(ctx + 'jsondata/getTableData/' + data.id, null, function (json) {
+                        //     initCorporateTechnologyActivities(json);
+                        // });
+                        // febs.get(ctx + 'jsondata/typePolicyNum/'+data.title, null, function (json) {
+                        //     initOrganPolicyNum(json.data);
+                        // });
+                    }
+                    else if(data.id==0)
+                    {
+                        $rank.text(data.title);
+                    }
+                    var t1=$name.text().split(" ")[0];
+                    var t2=$rank.text().split(" ")[0];
+                    var t22=t2.split("/")[0];
+                    var policyName=$searchForma.find('input[name="policyName"]').val().trim();
+                    var data=t1+","+t22+","+policyName;
+                    initTable(data)
+                    // var params = $.extend(getQueryParams());
+                    // window.alert(132);
+                    // tableIns.reload({where: params, page: {curr: 1}});
+
+                }
+            });
+        }
+        function getQueryParams() {
+            return {
+                form: $searchForm.find("select[name='form']").val(),
+                rank: $searchForm.find('input[name="rank"]').val().trim(),
+                invalidate_ie_cache: new Date()
+            };
+        }
+
+        table.on('tool(policyTable)', function (obj) {
+            var data = obj.data,
+                layEvent = obj.event;
+            if (layEvent === 'detail') {
+                febs.modal.view('政策信息', 'policy/detailnew/' + data.id, {
+                    area: $(window).width() <= 850 ? '95%' : '80%'
+                });
+            }
+        });
+
+
+
+
+        function zhuzhuang1(json) {
+            var basicColumnChartOptions = {
+                chart: {
+                    height: 320,
+                    type: 'bar',
+                    toolbar: {
+                        show: false
+                    }
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '65%'
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    show: true,
+                    width: 10,
+                    colors: ['transparent']
+                },
+                series: json.data.data,
+                xaxis: {
+                    categories: json.data.type
+                    // categories: ["1995","1997","1998","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019"]
+                },
+                fill: {
+                    opacity: 1
+
+                },
+                tooltip: {
+                    y: {
+                        formatter: function (val) {
+                            return val + " 条"
+                        }
+                    }
+                },
+                grid: {
+                    row: {
+                        colors: ['transparent', 'transparent'],
+                        opacity: 0.2
+                    },
+                    borderColor: '#f1f3fa'
+                }
+            };
+
+            new ApexCharts(
+                document.querySelector("#basicColumnChart"),
+                basicColumnChartOptions
+            ).render();
+        }
+        // $view.on('click', '#submit', function () {
+        //     $view.find('#submit-form').trigger('click');
+        // });
+        //
+        // form.on('submit(dept-form-submit)', function (data) {
+        //     return false;
+        // });
+
+        $query.on('click', function () {
+            var policyName=$searchForma.find('input[name="policyName"]').val().trim();
+            if(policyName!="") {
+                layer.load(1);
+                febs.get(ctx + 'jsondata/getName/' + policyName, null, function (json) {
+                    layer.closeAll('loading');
+                    shu(json);
+                });
+            }
+            else {
+                febs.alert.warn('请输入内容!');
+            }
+        });
+        $reset.on('click', function () {
+
+            Tree_init();
+            febs.get(ctx + 'jsondata/typePolicyNum/'+"0", null, function (json) {
+                initOrganPolicyNum(json.data);
+            });
+            febs.get(ctx + 'jsondata/getTableData/' + "0", null, function (json) {
+                initCorporateTechnologyActivities(json);
+            });
+
+        });
+
+
+
+
+
+    });
+</script>

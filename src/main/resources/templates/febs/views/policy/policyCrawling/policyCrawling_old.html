@@ -1,0 +1,220 @@
+
+<div class="layui-fluid layui-anim febs-anim" id="febs-dept" lay-title="政策爬取">
+    <div class="layui-card" style="text-align:center">
+        <div class="layui-card-body">
+            <button class="layui-btn layui-btn-normal" id="submit">政策爬取</button>
+            <submit class="layui-btn layui-btn-normal" id="query" style="width: 90px">政策入库</submit>
+        </div>
+    </div>
+
+    <div class="layui-col-md12 layui-col-sm12 layui-col-xs12" >
+        <div class="layui-card">
+            <table name="policylist" lay-filter="policyTable" lay-data="{id: 'policyTable'}"></table>
+
+        </div>
+
+
+    </div>
+
+    <div class="layui-row layui-col-space8 febs-container">
+        <div class="layui-col-md3 layui-col-sm3 layui-col-xs5">
+
+                <div class="layui-card-body febs-table-full" style="height:800px;overflow:auto;">
+                    <form class="layui-form layui-table-form" lay-filter="dept-table-form" id="dept-table-form">
+                        <div class="layui-row">
+                            <div class="layui-col-md8 layui-col-sm9 layui-col-xs9">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <div class="dept-tree" lay-filter="deptTree" style="margin-left: 1rem"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
+
+        </div>
+
+        <div class="layui-col-md6 layui-col-sm6 layui-col-xs12" >
+
+                <div class="layui-card-body febs-table-full">
+                    <form class="layui-form layui-table-form" action="" lay-filter="dept-form">
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label">ID：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="kindId" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label">branchID：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="branchId" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label">上级ID：</label>
+                            <div class="layui-input-block">
+                                <input type="text" value="" name="parentId" readonly autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label">部门名称：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="kindName" autocomplete="off" class="layui-input"
+                                       minlength="2" maxlength="200" lay-verify="range">
+                            </div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label">部门排序：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="orderNum" autocomplete="off" class="layui-input"
+                                       lay-verify="number">
+                            </div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label">部门：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="yearList" autocomplete="off" class="layui-input"
+                                       lay-verify="number">
+                            </div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label">城市：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="cityList" autocomplete="off" class="layui-input"
+                                       lay-verify="number">
+                            </div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label">城市：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="kindoneId" autocomplete="off" class="layui-input"
+                                       lay-verify="number">
+                            </div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label"></label>
+                            <div class="layui-input-block">
+                                <input type="text" name="policyId" autocomplete="off" class="layui-input"
+                                       lay-verify="number">
+                            </div>
+                        </div>
+                        <button class="layui-btn febs-hide" lay-submit="" lay-filter="dept-form-submit"
+                                id="submit-form"></button>
+
+
+                    </form>
+                </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/html" id="user-option">
+    <span shiro:lacksPermission="user:view,user:update,user:delete">
+        <span class="layui-badge-dot febs-bg-orange"></span> 无权限
+    </span>
+    <a lay-event="detail" shiro:hasPermission="user:view"><i
+            class="layui-icon febs-edit-area febs-green">&#xe7a5;</i></a>
+</script>
+<script type="text/html" id="user-option1">
+    <a lay-event="detail1" shiro:hasPermission="user:view"><i
+            class="layui-icon febs-edit-area febs-green">&#xe7a5;</i></a>
+</script>
+<script data-th-inline="javascript" type="text/javascript">
+    layui.use([ 'dropdown', 'jquery', 'validate', 'layer','febs', 'form', 'eleTree','element','table','apexcharts', 'jquery', 'util', 'echarts4', 'dataTool', 'echarts_gl'], function () {
+        var $ = layui.jquery,
+            febs = layui.febs,
+            element = layui.element,
+            form = layui.form,
+            table=layui.table,
+            $viewa = $('#febs-index'),
+            echarts = layui.echarts4,
+            eleTree = layui.eleTree,
+            dropdown = layui.dropdown,
+            validate = layui.validate,
+            $view = $('#febs-dept'),
+            $query = $view.find('#query'),
+            // $query = $view.find('#query'),
+            // $reset = $view.find('#reset'),
+            // $submit = $view.find('#submit'),
+            // $header = $view.find('#form-header'),
+            // $searchForm = $view.find('#dept-table-form'),
+            _currentDeptData,
+            tableIns,
+            _deptTree;
+
+        form.verify(validate);
+        form.render();
+        //initTable();
+
+
+
+
+
+
+        $view.on('click', '#submit', function () {
+            $view.find('#submit-form').trigger('click');
+        });
+        function tanchuang()
+        {
+            febs.modal.view('正在加载', 'policy/jindutiao', {
+                area: $(window).width() <= 400 ? '45%' : '40%'
+            });
+        }
+
+
+
+
+
+
+        form.on('submit(dept-form-submit)', function (data) {
+            //tanchuang();
+            febs.get(ctx + 'Crawling/getPolicy' , null, function (json) {
+                var information=json.data.information;
+                window.alert(information);
+                initTable();
+
+            });
+
+            return false;
+
+        });
+        $query.on('click', function () {
+            febs.get(ctx + 'Crawling/intoPolicy' , null, function (json) {
+                var information=json.data.information;
+                window.alert(information);
+
+            });
+        });
+        function initTable() {
+            tableIns = febs.table.init({
+                elem: $view.find('table'),
+                id: 'policyTable',
+                skin:'line',
+                even:true,
+                url: ctx + 'Crawling/list',
+                cols: [
+                    [
+                    {field: 'name', title: '政策名称', minWidth: 500},
+                    {field: 'year', title: '发布日期'},
+                    {field: 'organ', title: '发布机构'},
+                    {title: '查看', toolbar: '#user-option', minWidth: 100}
+                ]
+                ]
+            });
+        }
+        table.on('tool(policyTable)', function (obj) {
+            var data = obj.data,
+                layEvent = obj.event;
+            if (layEvent === 'detail') {
+                febs.modal.view('政策信息', 'policy/detailCrawling/' + data.id, {
+                    area: $(window).width() <= 850 ? '95%' : '80%'
+                });
+            }
+        });
+
+    });
+</script>

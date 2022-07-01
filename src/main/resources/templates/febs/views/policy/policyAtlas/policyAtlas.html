@@ -1,0 +1,333 @@
+
+<div class="layui-fluid layui-anim febs-anim" id="febs-dept" lay-title="知识图谱展示">
+
+
+    <form class="layui-form layui-table-form" lay-filter="user-table-form">
+        <div class="layui-card" >
+            <div class="layui-row">
+                <div class="layui-col-md10" style="height: 50px">
+                    <div class="layui-inline">
+                        <label class="layui-form-label layui-form-label-sm">发布部门</label>
+                        <div style="width: 230px;" class="layui-input-inline">
+                            <select name="dept" id="dept">
+                                <option value=""></option>
+                                <option value="国务院办公厅">国务院办公厅</option>
+                                <option value="科技部">科技部</option>
+                                <option value="财政部">财政部</option>
+                                <option value="人事部">人事部</option>
+                            </select>
+                            <!--<input type="text" name="category" id="category" lay-filter="category"-->
+                            <!--class="layui-input">-->
+                        </div>
+                    </div>
+                    <submit class="layui-btn layui-btn-normal" id="query">搜索</submit>
+                    <submit class="layui-btn layui-btn-normal" id="reset">重置</submit>
+
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form class="layui-form">
+        <div class="layui-form-item">
+
+        </div>
+    </form>
+
+    <!--</div>-->
+
+    <div class="layui-row layui-col-space8 febs-container">
+
+
+
+        <div class="layui-col-md12 layui-col-sm12 layui-col-xs9">
+            <div class="layui-card">
+
+
+                <div class="layui-card-body" style="height: 930px">
+
+                    <div  id="themecontainer" style="height: 930px"></div>
+                    <!--<div  id="container" style="height: 600px"></div>-->
+                </div>
+
+
+            </div>
+        </div>
+        <div class="layui-col-md6 layui-col-sm6 layui-col-xs12 febs-hide" style="width:900px">
+            <div class="layui-card">
+
+
+                <div class="layui-card-body febs-table-full">
+                    <form class="layui-form layui-table-form" action="" lay-filter="dept-form">
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label">ID：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="kindId" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label">branchID：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="branchId" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label">上级ID：</label>
+                            <div class="layui-input-block">
+                                <input type="text" value="" id="policyid" name="Id" readonly autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label"></label>
+                            <div class="layui-input-block">
+                                <input type="text" name="policyId" autocomplete="off" class="layui-input"
+                                       lay-verify="number">
+                            </div>
+                        </div>
+                        <button class="layui-btn febs-hide" lay-submit="" lay-filter="dept-form-submit"
+                                id="submit-form"></button>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script data-th-inline="javascript" type="text/javascript">
+    layui.use([ 'dropdown', 'jquery','tree', 'autocomplete','validate', 'layer','febs', 'form', 'eleTree','element','table','apexcharts', 'jquery', 'util', 'echarts4', 'dataTool', 'echarts_gl'], function () {
+        var $ = layui.jquery,
+            febs = layui.febs,
+            element = layui.element,
+            tree = layui.tree,
+            layer=layui.layer,
+            autocomplete=layui.autocomplete,
+            form = layui.form,
+            table=layui.table,
+            $viewa = $('#febs-index'),
+            echarts = layui.echarts4,
+            eleTree = layui.eleTree,
+            util = layui.util,
+            dropdown = layui.dropdown,
+
+            validate = layui.validate,
+            $view = $('#febs-dept'),
+            $query = $view.find('#query'),
+            $_corporateTechnologyActivitiesTable = $view.find('#corporateTechnologyActivities-table'),
+            $conint= $view.find('#container'),
+            $reset = $view.find('#reset'),
+            //$submit = $view.find('#submit'),
+            $policyid=$view.find('#policyid'),
+            $header = $view.find('#form-header'),
+            $searchForm = $view.find('#dept-table-form'),
+            $searchForma = $view.find('form'),
+            _currentDeptData,
+            _deptTree;
+
+        form.verify(validate);
+        form.render();
+
+
+
+        var themedom=document.getElementById("themecontainer");
+
+        var themeChart=echarts.init(themedom);
+
+
+
+        policytheme();
+        function policytheme()
+        {
+            febs.get(ctx + 'neo4j/getAtla' , null, function (json) {
+                themetu(json.data);
+            });
+        }
+
+        //Tree_init();
+        function themetu(json)
+        {
+            layer.load(1);
+            var size = 10; //节点大小
+            var data=json;
+            var color1 = '#006acc';
+            var color2 = '#ff7d18';
+            var color3 = '#10a050';
+            var color4 = '#DB7093';
+            var color5 = '#DA70D6';
+            var color6 = '#6A5ACD';
+            var color7='#6600CC';
+            var color8='#CC0000';
+            data.nodes.forEach(function(node) {
+                if (node.category === 0) {
+                   // node.symbolSize = 20;
+                    node.itemStyle = {
+                        color: color1
+                    };
+                } else if (node.category === 1) {
+                    node.itemStyle = {
+                        color: color2
+                    };
+                }
+                else if (node.category === 2) {
+                    node.itemStyle = {
+                        color: color3
+                    };
+                }
+                else if (node.category === 3) {
+                    node.itemStyle = {
+                        color: color4
+                    };
+                }
+
+            });
+
+            data.links.forEach(function(link) {
+                link.label = {
+                    align: 'center',
+                    fontSize: 10
+                };
+
+                if (link.name === '第一主题词') {
+                    link.lineStyle = {
+                        color: color2
+                    }
+                } else if (link.name === '第二主题词') {
+                    link.lineStyle = {
+                        color: color3
+                    }
+                }
+                else if (link.name === '第三主题词') {
+                    link.lineStyle = {
+                        color: color3
+                    }
+                }
+
+            });
+
+            var categories = [{
+                name: '主题词',
+                itemStyle: {
+                    color: color1
+                }
+            },
+                {
+                    name: '科技政策',
+                    itemStyle: {
+                        color: color2
+                    }
+                }];
+
+
+            var option = {
+                // title: {
+                //     text: '科技政策知识图谱'
+                // },
+                legend: [{
+                    data: ["主题词","科技政策"]
+                }],
+                series: [{
+                    type: 'graph',
+                    layout: 'force',
+                    symbolSize: 20,
+                    draggable: true,
+                    roam: true,
+                    focusNodeAdjacency: true,
+                    categories: categories,
+                    edgeSymbol: ['', 'arrow'],
+                    // edgeSymbolSize: [80, 10],
+                    edgeLabel: {
+                        normal: {
+                            show: true,
+                            textStyle: {
+                                fontSize: 20
+                            },
+                            formatter: function (x) {
+                                return x.data.name;
+                            }
+
+                        }
+                    },
+                    label: {
+                        show: true
+                    },
+                    force: {
+                        repulsion: 1500,
+                        edgeLength: 80
+                    },
+                    data: data.nodes,
+                    links: data.links
+                }]
+            };
+            themeChart.hideLoading();
+            themeChart.setOption(option);
+            layer.closeAll('loading');
+            themeChart.on('click', function (pointData) {
+
+                var result=pointData.name+","+pointData.data.category;
+
+                if(pointData.data.category===1)
+                {
+                    febs.modal.view('政策信息', 'policy/detailneo4j/' + pointData.name, {
+                        area: $(window).width() <= 850 ? '95%' : '80%'
+                    });
+                    // febs.get(ctx + 'neo4j/getTreeName/' + result, null, function (json) {
+                    //     tu(json.data);
+                    // });
+                }
+
+
+                //window.alert(result);
+            });
+        }
+
+
+
+
+        //按钮事件
+        util.event('lay-demo', {
+            getChecked: function(othis){
+                var id=$policyid.text();
+                //var name=$submit.text();//获取选中节点的数据
+                var str="abcdefghijklmno";
+                if(str.indexOf(id)==-1) {
+                    febs.modal.view('政策信息', 'policy/detail/' + id, {
+                        area: $(window).width() <= 850 ? '95%' : '80%'
+                    });
+                }
+                else {
+                    febs.alert.warn('请选择一个具体政策！');
+                }
+
+            }
+
+        });
+
+        $view.on('click', '#submit', function () {
+            $view.find('#submit-form').trigger('click');
+        });
+
+        form.on('submit(dept-form-submit)', function (data) {
+            return false;
+        });
+
+        $query.on('click', function () {
+            var dept=$searchForma.find('select[name="dept"]').val().trim();
+            febs.get(ctx + 'neo4j/getAtladept/'+dept , null, function (json) {
+                themetu(json.data);
+            });
+
+
+        });
+        $reset.on('click', function () {
+
+
+        });
+
+
+
+
+
+    });
+</script>

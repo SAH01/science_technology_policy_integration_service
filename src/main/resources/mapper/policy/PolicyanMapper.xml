@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.policy.mapper.PolicyanMapper">
+    <sql id="getPolicyList">
+        SELECT
+        p.id,
+        p.policyid,
+        p.policymatters,
+        p.policyorgan,
+        p.policytext,
+        p.policydept,
+        p.policyname,
+        p.policymain,
+        p.policykey
+        FROM
+        policy_analysis p
+        WHERE p.policyid = #{policyid}
+    </sql>
+
+    <select id="getPolicyList" parameterType="policyan" resultType="policyan">
+        <include refid="getPolicyList"/>
+    </select>
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.policy.mapper.PolicyDictionaryMapper">
+    <sql id="findPolicyDetailSql">
+        SELECT
+        p.id,
+        p.name,
+        p.weighted,
+        p.certain
+        FROM
+        dictionary p
+        WHERE 1 = 1
+        <if test="policy.name != null and policy.name != '' ">
+            AND p.name like CONCAT('%',#{policy.name},'%')
+        </if>
+    </sql>
+    <select id="getPolicyList"  resultType="PolicyContrast">
+        SELECT
+        p.id,
+        p.kindid,
+        p.kind,
+        p.policyname,
+        p.policydept,
+        p.policyid,
+        p.policymain,
+        p.policykey,
+        p.sortid,
+        p.parentname,
+        p.policymain2,
+        p.parentid,
+        p.policytime
+        FROM
+        policy_contrast p
+        WHERE p.kindid = #{kindid}
+        order by p.policytime
+    </select>
+
+
+
+    <select id="findPolicyDetailPage" resultType="PolicyDictionary">
+        <include refid="findPolicyDetailSql"/>
+    </select>
+
+</mapper>

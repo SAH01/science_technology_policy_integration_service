@@ -1,0 +1,818 @@
+<style>
+    .chart-title {
+        padding-top: .8rem;
+        font-size: 1rem;
+        font-weight: bold;
+        color: rgba(0, 0, 0, 0.99);
+        margin-top: 30px;
+
+    }
+    span.keyword {
+        color: #f5222d;
+    }
+    table td {
+        color: #0C0C0C;
+        font-size: 13px;
+    }
+    .ul-li-text ul li a {
+        font-size: 13px;
+        font-weight: 700;
+        padding: 4px 6px;
+        color: rgba(175, 31, 9, 0.65);
+        border-radius: 2px;
+    }
+</style>
+<div class="layui-fluid" id="VIEW-policy-constitute" lay-title="科技政策作用对象分析">
+
+    <div class="layui-row layui-col-space8 febs-container">
+        <div class="layui-card">
+            <div class="layui-card-header">科技政策作用对象分析说明</div>
+            <div class="layui-card-body febs-table-full">
+                <p>先从政策的作用对象出发，分析了<span class="keyword">政策作用对象数量分布</span>和<span class="keyword">各部门政策数量占比</span></p>
+                <p>再结合实际数据，尝试印证政策对这些对象的影响，分析了<span class="keyword">规模以上工业企业、高校和科研院所和高新技术企业发展</span>的基本情况。</p>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row febs-container">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body febs-table-full">
+                    <form class="layui-form layui-table-form" lay-filter="user-table-form">
+                        <div class="layui-row">
+                            <div class="layui-col-md10">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">发布时间</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="createTime" id="createTime" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">地域</label>
+                                        <div class="layui-input-inline">
+                                            <select name="regionProvince" id="regionProvince" data-th-value="全国">
+                                                <option value=""></option>
+                                                <option value="110000">北京市</option>
+                                                <option value="120000">天津市</option>
+                                                <option value="130000">河北省</option>
+                                                <option value="140000">山西省</option>
+                                                <option value="150000">内蒙古自治区</option>
+                                                <option value="210000">辽宁省</option>
+                                                <option value="220000">吉林省</option>
+                                                <option value="230000">黑龙江省</option>
+                                                <option value="310000">上海市</option>
+                                                <option value="320000">江苏省</option>
+                                                <option value="330000">浙江省</option>
+                                                <option value="340000">安徽省</option>
+                                                <option value="350000">福建省</option>
+                                                <option value="360000">江西省</option>
+                                                <option value="370000">山东省</option>
+                                                <option value="410000">河南省</option>
+                                                <option value="420000">湖北省</option>
+                                                <option value="430000">湖南省</option>
+                                                <option value="440000">广东省</option>
+                                                <option value="450000">广西壮族自治区</option>
+                                                <option value="460000">海南省</option>
+                                                <option value="500000">重庆市</option>
+                                                <option value="510000">四川省</option>
+                                                <option value="520000">贵州省</option>
+                                                <option value="530000">云南省</option>
+                                                <option value="540000">西藏自治区</option>
+                                                <option value="610000">陕西省</option>
+                                                <option value="620000">甘肃省</option>
+                                                <option value="630000">青海省</option>
+                                                <option value="640000">宁夏回族自治区</option>
+                                                <option value="650000">新疆维吾尔自治区</option>
+                                                <option value="710000">台湾省</option>
+                                                <option value="810000">香港特别行政区</option>
+                                                <option value="820000">澳门特别行政区</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md2 layui-col-sm12 layui-col-xs12 table-action-area">
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="query">
+                                    <i class="layui-icon">&#xe848;</i>
+                                </div>
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="reset">
+                                    <i class="layui-icon">&#xe79b;</i>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+
+                    <div class="layui-col-xs12"
+                         style="position:sticky;position:-webkit-sticky;top:10px; width: 200px;">
+                        <div class="about4">
+                            <div class="about4_main">
+                                <div class="chart-title">页面导航</div>
+                                <div id="policyTimeLine" class="ul-li-text">
+                                    <ul>
+                                        <li onclick="javascript:document.getElementById('query').scrollIntoView()">
+                                            <a>政策作用对象数量分布</a>
+                                        </li>
+                                        <li onclick="javascript:document.getElementById('constitute-foot').scrollIntoView()">
+                                            <a>各部门政策数量占比</a>
+                                        </li>
+                                        <li onclick="javascript:document.getElementById('organPolicyNum-foot').scrollIntoView()">
+                                            <a>规模以上工业企业</a>
+                                        </li>
+                                        <li onclick="javascript:document.getElementById('corporateTechnologyActivities-foot').scrollIntoView()">
+                                            <a>高校和科研院所</a>
+                                        </li>
+                                        <li onclick="javascript:document.getElementById('undertakeProject-foot').scrollIntoView()">
+                                            <a>高新技术企业发展</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-card-body febs-table-full " style="height: 600px;margin-left: 210px;">
+                        <div align="center" class="chart-title">
+                            <span id="regionName4">北京市</span>各年份政策文件的作用对象以及数量分布情况
+                        </div>
+                        <div style="margin-left:600px;margin-top:10px">
+                            <form class="layui-form" action="" lay-filter="constituteForm">
+                                <label class="layui-form-label">包含国家各部门的政策</label>
+                                <input type="checkbox" checked="" name="open" lay-skin="switch"
+                                       lay-filter="constitute-switch" lay-text="是|否">
+                            </form>
+                        </div>
+                        <div id="constitute" style="width: 800px;height:500px;"></div>
+                    </div>
+                    <div id="constitute-foot" style="margin-left: 280px;">
+                        <p>说明：政策作用对象数量分布将科技政策<span class="keyword">从作用对象角度</span>分成了4类："支撑企业创新", "服务人才创业", "激发院所激情", "调整优化机制"。</p>
+                        <p>图中分析了每一年各类政策的数量分布情况，可以选择包含或不包含国家各部门的科技政策，点击条形图可以<span class="keyword">进一步分析</span>某一年政策构成情况。</p>
+                    </div>
+
+                    <!--2. 各部门出台政策数量及占比情况-->
+                    <div class="layui-card-body febs-table-full" style="height: 600px;margin-left: 210px;">
+                        <div align="center" class="chart-title">
+                            各部门出台政策数量及占比情况
+                        </div>
+                        <div id="organPolicyNum" style="width: 800px;height:550px;margin-top: 30px;"></div>
+                    </div>
+                    <div id="organPolicyNum-foot" style="margin-left: 280px;margin-top: 10px;">
+                        <p>说明：各部门出台政策数量及占比情况展示了相关的政策发布部门，及其发布政策所占比例。</p>
+                        <p>与上图同步，可以选择包含或不包含国家各部门的科技政策。</p>
+                    </div>
+
+                    <!--3. 规模以上工业企业科技活动情况-->
+                    <div class="layui-card-body febs-table-full" style="margin-left: 210px;">
+                        <div align="center" class="chart-title">
+                            <span id="regionName3">北京市</span>规模以上工业企业科技活动情况
+                        </div>
+                        <div style="width: 800px;margin-top: 20px;">
+                            <table id="corporateTechnologyActivities-table" border=1 cellspacing=0 cellpadding=0
+                                   style="width: 800px;">
+                            </table>
+                        </div>
+                        <div id="corporateTechnologyActivities"
+                             style="width: 800px;height:450px;margin-top: 10px;"></div>
+                    </div>
+                    <div id="corporateTechnologyActivities-foot" style="margin-left: 280px;margin-top: -20px;">
+                        <p>说明：规模以上工业企业科技活动情况通过联合分析科技活动人员数、R&D人员、规模以上工业企业R&D经费支出总额和规模以上工业企业新产品开发经费支出情况，评价了<span class="keyword">科技政策对企业的自主创新所起到的</span>的作用。</p>
+                    </div>
+
+
+                    <!--4. 高校和科研院所承担课题情况-->
+                    <div class="layui-card-body febs-table-full" style="margin-left: 210px;">
+                        <div align="center" class="chart-title">
+                            <span id="regionName2">北京市</span>高校和科研院所承担课题情况
+                        </div>
+                        <div style="margin-top: 20px;">
+                            <table id="undertakeProject-table" border=1 cellspacing=0 cellpadding=0
+                                   style="width: 800px;margin-top: 20px;">
+                            </table>
+                        </div>
+                        <div id="undertakeProject" style="width: 800px;height:450px;margin-top: 20px;"></div>
+
+                    </div>
+                    <div id="undertakeProject-foot" style="margin-left: 280px;margin-top: -20px;">
+                        <p>说明：高校和科研院所承担课题情况通过联合分析高校和科研院所在R&D课题数经费投入、人力投入的基本情况，评价了<span class="keyword">科技政策对高校院所协同创新所起到的</span>的作用。</p>
+                    </div>
+                    <!--5. 高新技术企业发展情况-->
+                    <div class="layui-card-body febs-table-full" style="margin-left: 210px;">
+                        <div align="center" class="chart-title">
+                            <span id="regionName1">北京市</span>高新技术企业发展情况
+                        </div>
+                        <div style="margin-top: 20px;">
+                            <table id="enterpriseDevelopment-table" border=1 cellspacing=0 cellpadding=0
+                                   style="width: 800px;">
+                            </table>
+                        </div>
+                        <div id="enterpriseDevelopment" style="width:800px;height:450px;margin-top: 20px;"></div>
+
+                    </div>
+                    <div id="enterpriseDevelopment-foot" style="margin-left: 280px;margin-top: -20px;">
+                        <p>说明：高新技术企业发展情况通过联合分析高新技术产业总产值、实交税金、企业数，评价了<span class="keyword">科技政策对"创新型经济"培育成效所起到的</span>的作用。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<script src="http://echarts.baidu.com/resource/echarts-gl-latest/dist/echarts-gl.min.js"></script>-->
+<script>
+    layui.use(['febs', 'echarts4', 'dataTool', 'dropdown', 'laydate', 'form', 'treeSelect'], function () {
+        var $ = layui.jquery,
+            echarts = layui.echarts4,
+            laydate = layui.laydate,
+            febs = layui.febs,
+            form = layui.form,
+            treeSelect = layui.treeSelect,
+            dropdown = layui.dropdown,
+            $view = $('#VIEW-policy-constitute'),
+            $query = $view.find('#query'),
+            $reset = $view.find('#reset'),
+            $searchForm = $view.find('form'),
+            $_corporateTechnologyActivitiesTable = $view.find('#corporateTechnologyActivities-table'),
+            $_undertakeProjectTable = $view.find('#undertakeProject-table'),
+            $_enterpriseDevelopmentTable = $view.find('#enterpriseDevelopment-table');
+        var dom_corporateTechnologyActivities = document.getElementById("corporateTechnologyActivities");
+        var myChart_corporateTechnologyActivities = echarts.init(dom_corporateTechnologyActivities);
+        var dom_undertakeProject = document.getElementById("undertakeProject");
+        var myChart_undertakeProject = echarts.init(dom_undertakeProject);
+        var dom_enterpriseDevelopment = document.getElementById("enterpriseDevelopment");
+        var myChart_enterpriseDevelopment = echarts.init(dom_enterpriseDevelopment);
+        form.render();
+        /*统计各年不同类型政策数量，用堆叠条形图展示*/
+        var dom_constitute = document.getElementById("constitute");
+        var myChart_constitute = echarts.init(dom_constitute);
+        /*统计不同部门出台政策占比*/
+        var dom_organPolicyNum = document.getElementById("organPolicyNum");
+        var myChart_organPolicyNum = echarts.init(dom_organPolicyNum);
+        var switchOn = 1;
+        var params = getQueryParams();
+        laydate.render({
+            elem: '#createTime',
+            range: true,
+            trigger: 'click'
+        });
+
+        // treeSelect.render({
+        //     elem: $view.find('#regionProvince'),
+        //     type: 'get',
+        //     data: ctx + 'region/province',
+        //     placeholder: '北京市',
+        //     search: false
+        // });
+
+        $query.on('click', function () {
+            params = getQueryParams();
+            echarts.dispose(dom_constitute);
+            myChart_constitute = echarts.init(dom_constitute);
+            myChart_organPolicyNum.clear();
+            myChart_constitute.showLoading();
+            myChart_organPolicyNum.showLoading();
+            /*统计各年不同类型政策数量，用堆叠条形图展示*/
+            febs.get(ctx + 'analyze/everyYearEveryCategoryNum', params, function (json) {
+                // console.log(json);
+                initPolicyProportion(json.data);
+            });
+            febs.get(ctx + 'analyze/everyOrganPolicyNum', params, function (json) {
+                initOrganPolicyNum(json.data);
+
+            });
+            var regionId = $searchForm.find("select[name='regionProvince']").val().trim();
+            if (regionId !== "") {
+                // 显示加载动画
+                myChart_corporateTechnologyActivities.showLoading();
+                myChart_undertakeProject.showLoading();
+                myChart_enterpriseDevelopment.showLoading();
+                // 表格内数据清除
+                $_corporateTechnologyActivitiesTable.empty();
+                $_undertakeProjectTable.empty();
+                $_enterpriseDevelopmentTable.empty();
+                /*统计规模以上工业企业科技活动情况*/
+                febs.get(ctx + 'annualjson/corporateTechnologyActivities/' + regionId, null, function (json) {
+                    var regionName = json.data.province;
+                    $('#regionName1').text(regionName);
+                    $('#regionName2').text(regionName);
+                    $('#regionName3').text(regionName);
+                    $('#regionName4').text(regionName);
+                    // console.log(json);
+                    initCorporateTechnologyActivities(json.data);
+                });
+                /*统计高校和科研院所承担课题情况*/
+                febs.get(ctx + 'annualjson/undertakeProject/' + regionId, null, function (json) {
+                    undertakeProject(json.data);
+                });
+                /*统计高新技术企业发展情况*/
+                febs.get(ctx + 'annualjson/enterpriseDevelopment/' + regionId, null, function (json) {
+
+                    enterpriseDevelopment(json.data);
+
+
+                });
+            }
+        });
+
+        $reset.on('click', function () {
+            $searchForm[0].reset();
+            treeSelect.revokeNode('regionProvince');
+        });
+        /*统计各年不同类型政策数量，用堆叠条形图展示*/
+        febs.get(ctx + 'analyze/everyYearEveryCategoryNum', params, function (json) {
+            // console.log(json);
+            initPolicyProportion(json.data);
+        });
+
+        /* 监听指定开关 */
+        form.on('switch(constitute-switch)', function (data) {
+            layer.tips('温馨提示：您已' + (this.checked ? '打开' : '关闭') + '包含国家各部门的政策，' + '\n' + '当前统计结果中' + (this.checked ? '包含' : '不包含') + '国家各部门出台的科技政策。', data.othis)
+            /*统计各年不同类型政策数量，用堆叠条形图展示*/
+            // 初始化一个新的实例
+            echarts.dispose(dom_constitute);
+            myChart_constitute = echarts.init(dom_constitute);
+            myChart_organPolicyNum.clear();
+            params = getQueryParams();
+            switchOn = this.checked ? 1 : 0;
+            params.checked = switchOn;
+            // console.log(params);
+            febs.get(ctx + 'analyze/everyYearEveryCategoryNum', params, function (json) {
+                // console.log(json);
+                initPolicyProportion(json.data);
+            });
+            febs.get(ctx + 'analyze/everyOrganPolicyNum', params, function (json) {
+                // console.log(json);
+                initOrganPolicyNum(json.data);
+            });
+        });
+
+        /*2. 统计不同部门出台的政策占比*/
+        febs.get(ctx + 'analyze/everyOrganPolicyNum', params, function (json) {
+            // console.log(json);
+            initOrganPolicyNum(json.data);
+        });
+        febs.get(ctx + 'annualjson/corporateTechnologyActivities/' + 110000, null, function (json) {
+            initCorporateTechnologyActivities(json.data);
+        });
+        /*统计高校和科研院所承担课题情况*/
+        febs.get(ctx + 'annualjson/undertakeProject/' + 110000, null, function (json) {
+            undertakeProject(json.data);
+        });
+        /*统计高新技术企业发展情况*/
+        febs.get(ctx + 'annualjson/enterpriseDevelopment/' + 110000, null, function (json) {
+            enterpriseDevelopment(json.data);
+        });
+
+
+        function getQueryParams() {
+            var createTimeFrom,
+                createTimeTo,
+                createTime = $searchForm.find('input[name="createTime"]').val();
+            if (createTime) {
+                createTimeFrom = createTime.split(' - ')[0];
+                createTimeTo = createTime.split(' - ')[1];
+            } else {
+                createTimeFrom = '2009-01-01';
+                createTimeTo = '';
+            }
+            var regionId = $searchForm.find("select[name='regionProvince']").val().trim() === "" ? "110000" : $searchForm.find("select[name='regionProvince']").val().trim();
+            return {
+                createTimeFrom: createTimeFrom,
+                createTimeTo: createTimeTo,
+                regionId: regionId,
+                checked: 1,
+                invalidate_ie_cache: new Date()
+            };
+        }
+
+        function initPolicyProportion(json) {
+            // var regionName = json.regionName;
+            // $('#regionName1').text(regionName);
+            // $('#regionName2').text(regionName);
+            // $('#regionName3').text(regionName);
+            // $('#regionName4').text(regionName);
+            // console.log(json);
+            var app = {};
+            app.title = '政策文件的作用对象分布情况';
+            option = {
+                /*title: {
+                    text: app.title,
+                    x:'center',
+                    y:'top',
+                    textAlign:'center'
+                },*/
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                legend: {
+                    data: json.categories
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'value'
+                },
+                yAxis: {
+                    type: 'category',
+                    data: json.years
+                },
+                series: []
+            };
+            for (var ser in json.data) {
+                for (var val in json.data[ser]) {
+                    option.series.push({
+                        name: val,
+                        type: 'bar',
+                        stack: '总量',
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'insideRight'
+                            }
+                        },
+                        data: json.data[ser][val]
+                    })
+                }
+            }
+            myChart_constitute.hideLoading();
+            myChart_constitute.setOption(option);
+            myChart_constitute.on('click', function (pointData) {
+                // console.log(pointData);
+                var yearData = pointData.name;
+                var category = pointData.seriesName;
+                var num = pointData.data;
+                params = getQueryParams();
+                params.checked = switchOn;
+                params.yearData = yearData;
+                params.category = category;
+                params.num = num;
+                if (pointData.seriesName) {
+                    febs.modal.open('相应的政策', 'policy/policyObjectDetail', {
+                        //传递参数，弹出的页面可以使用 POPUP_DATA.username 获取值
+                        area: '90%',
+                        data: {
+                            params:params
+                        }
+                    });
+                }
+            });
+        }
+
+        function initOrganPolicyNum(json) {
+
+            var app = {};
+            app.title = '各部门出台政策数量及占比情况';
+            option = {
+                /*title: {
+                    text: '各部门出台政策数量及占比情况',
+                    subtext: '',
+                    x: 'center'
+                },*/
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    data: json.organs
+                },
+                series: [
+                    {
+                        name: '政策发布部门',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['55%', '50%'],
+                        data: json.dataList,
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+            myChart_organPolicyNum.hideLoading();
+            myChart_organPolicyNum.setOption(option);
+        }
+
+        function initCorporateTechnologyActivities(json) {
+            $_corporateTechnologyActivitiesTable.empty();
+            var appendHtml = '';
+            var rows = json.years.length + 1;
+            var cols = json.names.length + 1;
+            var tableData = new Array(rows);
+            tableData[0] = json.names.slice();
+            tableData[0].unshift('年份/指标名');
+            for (var i = 0; i < rows; i++) {
+                if (i > 0) {
+                    tableData[i] = new Array(cols);
+                    tableData[i][0] = json.years[rows - i - 1];
+                    for (var j = 0; j < json.data.length; j++) {
+                        tableData[i][j + 1] = json.data[j].values[rows - i - 1] + json.data[j].unit_c;
+                    }
+                }
+
+            }
+            for (var i = 0; i < tableData.length; i++) {
+                appendHtml += '<tr>';
+                for (var j = 0; j < tableData[i].length; j++) {
+                    // console.log(tableData[i][j].slice(0,4));
+                    if (tableData[i][j].slice(0, 4) == "null"||tableData[i][j].slice(0, 4) == "") {
+                        appendHtml += '<td>' + '' + '</td>';
+                    } else {
+                        appendHtml += '<td align="center" valign="middle">' + tableData[i][j] + '</td>';
+                    }
+                }
+                appendHtml += '</tr>';
+            }
+            $_corporateTechnologyActivitiesTable.append(appendHtml);
+            var app = {};
+            app.title = '规模以上工业企业科技活动情况';
+
+            option = {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross',
+                        crossStyle: {
+                            color: '#999'
+                        }
+                    }
+                },
+                toolbox: {
+                    feature: {
+                        dataView: {show: true, readOnly: false},
+                        magicType: {show: true, type: ['line', 'bar']},
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    }
+                },
+                legend: {
+                    data: json.names
+                },
+                grid: {
+                    top: '15%',
+                    left: '1%',
+                    right: '1%',
+                    containLabel: true
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: json.years,
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                        name: '人数',
+                        axisLabel: {
+                            formatter: '{value} 人'
+                        }
+                    },
+                    {
+                        type: 'value',
+                        name: '万元',
+                        axisLabel: {
+                            formatter: '{value} 万元'
+                        }
+                    }
+                ],
+                series: []
+            };
+            for (var i = 0; i < json.data.length; i++) {
+                var tmpData = json.data[i];
+                var yAxisIndex = 0;
+                if (tmpData.type == "line")
+                    yAxisIndex = 1;
+                option.series.push({
+                    name: tmpData.name,
+                    type: tmpData.type,
+                    yAxisIndex: yAxisIndex,
+                    data: tmpData.values
+                })
+            }
+            myChart_corporateTechnologyActivities.hideLoading();
+            myChart_corporateTechnologyActivities.setOption(option);
+        }
+
+        function undertakeProject(json) {
+            $_undertakeProjectTable.empty();
+            var appendHtml = '';
+            var rows = json.years.length + 1;
+            var cols = json.names.length + 1;
+            var tableData = new Array(rows);
+            tableData[0] = json.names.slice();
+            tableData[0].unshift('年份/指标名');
+            for (var i = 0; i < rows; i++) {
+                if (i > 0) {
+                    tableData[i] = new Array(cols);
+                    tableData[i][0] = json.years[rows - i - 1];
+                    for (var j = 0; j < json.data.length; j++) {
+                        tableData[i][j + 1] = json.data[j].values[rows - i - 1] + json.data[j].unit_c;
+                    }
+                }
+
+            }
+            for (var i = 0; i < tableData.length; i++) {
+                appendHtml += '<tr>';
+                for (var j = 0; j < tableData[i].length; j++) {
+                    // console.log(tableData[i][j].slice(0,4));
+                    if (tableData[i][j].slice(0, 4) == "null"||tableData[i][j].slice(0, 4) == "") {
+                        appendHtml += '<td>' + '' + '</td>';
+                    } else {
+                        appendHtml += '<td align="center" valign="middle">' + tableData[i][j] + '</td>';
+                    }
+                }
+                appendHtml += '</tr>';
+            }
+            $_undertakeProjectTable.append(appendHtml);
+            var app = {};
+            app.title = '高校和科研院所承担课题情况';
+            option = {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross',
+                        crossStyle: {
+                            color: '#999'
+                        }
+                    }
+                },
+                toolbox: {
+                    feature: {
+                        dataView: {show: true, readOnly: false},
+                        magicType: {show: true, type: ['line', 'bar']},
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    }
+                },
+                legend: {
+                    data: json.names,
+                    padding:[0, 30,80,0]
+                },
+                grid: {
+                    top: '18%',
+                    left: '1%',
+                    right: '1%',
+                    containLabel: true
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: json.years,
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                        name: '人、项',
+                        axisLabel: {
+                            formatter: '{value}'
+                        }
+                    },
+                    {
+                        type: 'value',
+                        name: '万元',
+                        axisLabel: {
+                            formatter: '{value} 万元'
+                        }
+                    }
+                ],
+                series: []
+            };
+            for (var i = 0; i < json.data.length; i++) {
+                var tmpData = json.data[i];
+                var yAxisIndex = 0;
+                if (tmpData.type == "line")
+                    yAxisIndex = 1;
+                option.series.push({
+                    name: tmpData.name,
+                    type: tmpData.type,
+                    yAxisIndex: yAxisIndex,
+                    data: tmpData.values
+                })
+            }
+            myChart_undertakeProject.hideLoading();
+            myChart_undertakeProject.setOption(option);
+        }
+
+        function enterpriseDevelopment(json) {
+            $_enterpriseDevelopmentTable.empty();
+            var appendHtml = '';
+            var rows = json.years.length + 1;
+            var cols = json.names.length + 1;
+            var tableData = new Array(rows);
+            tableData[0] = json.names.slice();
+            tableData[0].unshift('年份/指标名');
+            for (var i = 0; i < rows; i++) {
+                if (i > 0) {
+                    tableData[i] = new Array(cols);
+                    tableData[i][0] = json.years[rows - i - 1];
+                    for (var j = 0; j < json.data.length; j++) {
+                        tableData[i][j + 1] = json.data[j].values[rows - i - 1] + json.data[j].unit_c;
+                    }
+                }
+
+            }
+            for (var i = 0; i < tableData.length; i++) {
+                appendHtml += '<tr>';
+                for (var j = 0; j < tableData[i].length; j++) {
+                    // console.log(tableData[i][j].slice(0,4));
+                    if (tableData[i][j].slice(0, 4) == "null"||tableData[i][j].slice(0, 4) == "") {
+                        appendHtml += '<td>' + '' + '</td>';
+                    } else {
+                        appendHtml += '<td align="center" valign="middle">' + tableData[i][j] + '</td>';
+                    }
+                }
+                appendHtml += '</tr>';
+            }
+            $_enterpriseDevelopmentTable.append(appendHtml);
+            var app = {};
+            app.title = '高校和科研院所承担课题情况';
+            option = {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross',
+                        crossStyle: {
+                            color: '#999'
+                        }
+                    }
+                },
+                toolbox: {
+                    feature: {
+                        dataView: {show: true, readOnly: false},
+                        magicType: {show: true, type: ['line', 'bar']},
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    }
+                },
+                legend: {
+                    data: json.names,
+                    padding:[0, 30,80,0]
+                },
+                grid: {
+                    top: '15%',
+                    left: '1%',
+                    right: '1%',
+                    containLabel: true
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: json.years,
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                        name: '万元',
+                        axisLabel: {
+                            formatter: '{value} 万元'
+                        }
+                    },
+                    {
+                        type: 'value',
+                        name: '个',
+                        axisLabel: {
+                            formatter: '{value} 个'
+                        }
+                    }
+                ],
+                series: []
+            };
+            for (var i = 0; i < json.data.length; i++) {
+                var tmpData = json.data[i];
+                var yAxisIndex = 0;
+                if (tmpData.type == "line")
+                    yAxisIndex = 1;
+                option.series.push({
+                    name: tmpData.name,
+                    type: tmpData.type,
+                    yAxisIndex: yAxisIndex,
+                    data: tmpData.values
+                })
+            }
+            myChart_enterpriseDevelopment.hideLoading();
+            myChart_enterpriseDevelopment.setOption(option);
+        }
+    });
+</script>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.policy.mapper.PolicyContrastMapper">
+    <select id="getPolicyContrastList" parameterType="int" resultType="PolicyContrast">
+        SELECT
+        p.id,
+        p.kindid,
+        p.kind,
+        p.policyname,
+        p.policydept,
+        p.policyid,
+        p.policymain,
+        p.policykey,
+        p.sortid,
+        p.parentname,
+        p.policymain2,
+        p.parentid,
+        p.policytime
+        FROM
+        policy_contrast p
+        WHERE p.kindid = #{kindid}
+        order by p.policytime
+    </select>
+    <select id="getQuestionNumPolicyContrast" resultType="PolicyContrast">
+        SELECT
+        p.id,
+        p.kindid,
+        p.kind,
+        p.policyname,
+        p.policydept,
+        p.policyid,
+        p.policymain,
+        p.policykey,
+        p.sortid,
+        p.parentname,
+        p.policymain2,
+        p.parentid,
+        p.policytime
+        FROM
+        policy_contrast p
+        <where>
+            1=1
+
+            <if test="rangelist != null">
+                and
+                <foreach collection="rangelist" separator=" or " item="rangelist" open="(" close=")">
+                    p.city like CONCAT('%',#{rangelist},'%')
+                </foreach>
+            </if>
+            <if test="namelist != null">
+                and
+                <foreach collection="namelist" separator=" or " item="namelist" open="(" close=")">
+                    p.policyname like CONCAT('%',#{namelist},'%')
+                </foreach>
+            </if>
+        </where>
+        order by p.policytime
+    </select>
+    <select id="getPolicyContrastListByName" parameterType="String" resultType="PolicyContrast">
+        SELECT
+        p.id,
+        p.kindid,
+        p.kind,
+        p.policyname,
+        p.policydept,
+        p.policyid,
+        p.policymain,
+        p.policykey,
+        p.sortid,
+        p.parentname,
+        p.policymain2
+        FROM
+        policy_contrast p
+        WHERE p.policyname = #{policyname}
+    </select>
+    <select id="getPolicyContrastListByTime" parameterType="int" resultType="PolicyContrast">
+        SELECT
+        p.id,
+        p.kindid,
+        p.kind,
+        p.policyname,
+        p.policydept,
+        p.policyid,
+        p.policymain,
+        p.policykey,
+        p.sortid,
+        p.parentname,
+        p.policymain2,
+        p.policytime
+        FROM
+        policy_contrast p
+        WHERE p.kindid = #{kindid}
+        order by p.policytime
+    </select>
+    <select id="getPolicyContrast" parameterType="int" resultType="PolicyContrast">
+        SELECT
+        p.id,
+        p.kindid,
+        p.kind,
+        p.policyname,
+        p.policydept,
+        p.policyid,
+        p.policymain,
+        p.policykey,
+        p.sortid,
+        p.parentname,
+        p.policymain2
+        FROM
+        policy_contrast p
+        WHERE p.id = #{id}
+    </select>
+    <select id="getgroupList" resultType="PolicyContrast">
+        SELECT
+        p.id,
+        p.kindid,
+        p.kind,
+        p.policyname,
+        p.policydept,
+        p.policyid,
+        p.policymain,
+        p.policykey,
+        p.sortid,
+        p.parentname
+        FROM
+        policy_contrast p
+        group by p.kindid
+    </select>
+    <select id="getPolicyContrastListGroupKind" resultType="PolicyContrast">
+        SELECT
+        count(*) allnum,
+        p.policytime
+        FROM
+        policy_contrast p
+        where p.kindid = #{kindid}
+        group by p.kindid,p.policytime
+        order by p.policytime
+    </select>
+    <select id="getPolicyContrastListByYear" parameterType="int" resultType="PolicyContrast">
+        SELECT
+        count(*) allnum,
+        p.year
+        FROM
+        policy_contrast p
+        where p.kindid = #{kindid}
+        group by p.year
+        order by p.year
+    </select>
+    <select id="getPolicyContrastListByCity" parameterType="int" resultType="PolicyContrast">
+        SELECT
+        count(*) allnum,
+        p.kind,
+        p.city
+        FROM
+        policy_contrast p
+        where p.parentid = #{parentid}
+        group by p.kind,p.city
+        order by p.kind
+    </select>
+    <select id="getAllsum" resultType="PolicyContrast">
+        SELECT
+        count(*) allnum,
+        p.parentid
+        FROM
+        policy_contrast p
+        group by p.parentid
+    </select>
+</mapper>

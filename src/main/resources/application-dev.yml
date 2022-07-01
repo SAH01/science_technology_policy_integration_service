@@ -1,0 +1,73 @@
+spring:
+  datasource:
+
+    dynamic:
+      # 是否开启 SQL日志输出，生产环境建议关闭，有性能损耗
+      p6spy: true
+      hikari:
+        connection-timeout: 30000
+        max-lifetime: 1800000
+        max-pool-size: 15
+        min-idle: 5
+        pool-name: FebsHikariCP
+      # 配置默认数据源
+      primary: base
+      datasource:
+
+        # 数据源-1，名称为 base
+        base:
+          username: root
+          password: reliable
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://127.0.0.1:3306/febs?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+#        oracle:
+#          username: yearbook
+#          password: Huawei12#$
+#          driver-class-name: oracle.jdbc.OracleDriver
+#          url: jdbc:oracle:thin:@192.168.62.199:1521:orcl
+#          ConnectionTestQuery: SELECT 1
+        neo4j:
+          driverClassName: org.neo4j.jdbc.http.HttpDriver
+          url: jdbc:neo4j:http://localhost:7474
+          username: neo4j
+          password: wzs208751
+          initialSize: 5
+          minIdle: 5
+          maxActive: 20
+          maxWait: 60000
+          timeBetweenEvictionRunsMillis: 60000
+          minEvictableIdleTimeMillis: 300000
+          testWhileIdle: false
+          testOnBorrow: false
+          testOnReturn: false
+          poolPreparedStatements: true
+
+
+        quartz:
+          username: root
+          password: reliable
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://127.0.0.1:3306/febs?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+
+
+  redis:
+    # Redis数据库索引（默认为 0）
+    database: 0
+    # Redis服务器地址
+    host: 127.0.0.1
+    # Redis服务器连接端口
+    port: 6379
+    # Redis 密码
+    password:
+    jedis:
+      pool:
+        # 连接池中的最小空闲连接
+        min-idle: 8
+        # 连接池中的最大空闲连接
+        max-idle: 500
+        # 连接池最大连接数（使用负值表示没有限制）
+        max-active: 2000
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: 10000
+    # 连接超时时间（毫秒）
+    timeout: 0

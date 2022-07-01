@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.policy.mapper.ScienceTechnologyEntityIndexMapper">
+    <select id="getEntityIndexContentsByEntityIndexIds" resultType="string">
+        -- SELECT ENTITYINDEX_CONTENT FROM entity_index WHERE ENTITYINDEX_ID = '51' OR ENTITYINDEX_ID = '52'
+        SELECT
+        ENTITYINDEX_CONTENT
+        FROM
+        entity_index
+        <where>
+            <foreach collection="entityIndexIds" separator=" or " item="entityIndexId" open="(" close=")">
+                ENTITYINDEX_ID = #{entityIndexId}
+            </foreach>
+        </where>
+    </select>
+
+    <select id="getEntityIndexContentByEntityIndexId" resultType="string">
+        SELECT
+        ENTITYINDEX_CONTENT
+        FROM
+        entity_index
+        where ENTITYINDEX_ID = #{entityIndexId}
+    </select>
+</mapper>

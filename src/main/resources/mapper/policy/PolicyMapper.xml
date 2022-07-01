@@ -1,0 +1,1048 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.policy.mapper.Policy2Mapper">
+    <sql id="findPolicyDetailSql">
+        SELECT
+        p.id,
+        p.name,
+        p.type,
+        p.category,
+        p.range,
+        p.document,
+        p.form,
+        p.organ,
+        p.viadata,
+        p.pubdata,
+        p.perdata,
+        p.field,
+        p.theme,
+        p.keyword,
+        p.superior,
+        p.precursor,
+        p.succeed,
+        p.state,
+        p.text,
+        p.pdf,
+        p.redundancy,
+        p.rank,
+        p.year
+        FROM
+        policy p
+        WHERE 1 = 1
+        <if test="policy.id != null and policy.id != 0">
+            AND p.id = #{policy.id}
+        </if>
+        <if test="policy.name != null and policy.name != ''">
+            AND p.name like CONCAT('%',#{policy.name},'%')
+        </if>
+        <if test="policy.rank != null and policy.rank != ''">
+            AND p.rank like CONCAT('%',#{policy.rank},'%')
+        </if>
+        <if test="policy.text != null and policy.text != ''">
+            AND p.text like CONCAT('%',#{policy.text},'%')
+        </if>
+        <if test="policy.createTimeFrom != null and policy.createTimeFrom !=''">
+            And p.pubdata &gt; #{policy.createTimeFrom}
+        </if>
+        <if test="policy.form != null and policy.form != ''">
+        AND p.form = #{policy.form}
+        </if>
+        <if test="policy.keyword != null and policy.keyword != ''">
+            AND p.keyword like CONCAT('%',#{policy.keyword},'%')
+        </if>
+        <if test="policy.organ != null and policy.organ != ''">
+            AND p.organ like CONCAT('%',#{policy.organ},'%')
+        </if>
+        <if test="policy.createTimeTo!= null and policy.createTimeTo !=''">
+            And p.pubdata &lt; #{policy.createTimeTo}
+        </if>
+    </sql>
+    <select id="getPolicyMultiple" parameterType="policy" resultType="policy">
+        SELECT
+        p.id,
+        p.name,
+        p.type,
+        p.category,
+        p.range,
+        p.document,
+        p.form,
+        p.organ,
+        p.viadata,
+        p.pubdata,
+        p.perdata,
+        p.field,
+        p.theme,
+        p.keyword,
+        p.superior,
+        p.precursor,
+        p.succeed,
+        p.state,
+        p.text,
+        p.pdf,
+        p.redundancy,
+        p.rank
+        FROM
+        policy p
+        WHERE 1 = 1
+        <if test="policy.id != null and policy.id != 0">
+            AND p.id = #{policy.id}
+        </if>
+        <if test="policy.name != null and policy.name != ''">
+            AND p.name like CONCAT('%',#{policy.name},'%')
+        </if>
+        <if test="policy.rank != null and policy.rank != ''">
+            AND p.rank like CONCAT('%',#{policy.rank},'%')
+        </if>
+        <if test="policy.text != null and policy.text != ''">
+            AND p.text like CONCAT('%',#{policy.text},'%')
+        </if>
+        <if test="policy.createTimeFrom != null and policy.createTimeFrom !=''">
+            And p.pubdata &gt; #{policy.createTimeFrom}
+        </if>
+        <if test="policy.form != null and policy.form != ''">
+            AND p.form = #{policy.form}
+        </if>
+        <if test="policy.type != null and policy.type != ''">
+            AND p.type = #{policy.type}
+        </if>
+        <if test="policy.keyword != null and policy.keyword != ''">
+            AND p.keyword like CONCAT('%',#{policy.keyword},'%')
+        </if>
+        <if test="policy.organ != null and policy.organ != ''">
+            AND p.organ like CONCAT('%',#{policy.organ},'%')
+        </if>
+        <if test="policy.createTimeTo!= null and policy.createTimeTo !=''">
+            And p.pubdata &lt; #{policy.createTimeTo}
+        </if>
+    </select>
+    <select id="getPolicyMultipleAll" parameterType="policy" resultType="policy">
+        SELECT
+        count(*) allsum,
+        p.form
+        FROM
+        policy p
+        WHERE 1 = 1
+        <if test="policy.id != null and policy.id != 0">
+            AND p.id = #{policy.id}
+        </if>
+        <if test="policy.name != null and policy.name != ''">
+            AND p.name like CONCAT('%',#{policy.name},'%')
+        </if>
+        <if test="policy.rank != null and policy.rank != ''">
+            AND p.rank like CONCAT('%',#{policy.rank},'%')
+        </if>
+        <if test="policy.text != null and policy.text != ''">
+            AND p.text like CONCAT('%',#{policy.text},'%')
+        </if>
+        <if test="policy.createTimeFrom != null and policy.createTimeFrom !=''">
+            And p.pubdata &gt; #{policy.createTimeFrom}
+        </if>
+        <if test="policy.form != null and policy.form != ''">
+            AND p.form = #{policy.form}
+        </if>
+        <if test="policy.keyword != null and policy.keyword != ''">
+            AND p.keyword like CONCAT('%',#{policy.keyword},'%')
+        </if>
+        <if test="policy.organ != null and policy.organ != ''">
+            AND p.organ like CONCAT('%',#{policy.organ},'%')
+        </if>
+        <if test="policy.createTimeTo!= null and policy.createTimeTo !=''">
+            And p.pubdata &lt; #{policy.createTimeTo}
+        </if>
+        group by p.form
+    </select>
+    <select id="findById" parameterType="Integer" resultType="policy">
+        SELECT
+        p.id,
+        p.name,
+        p.type,
+        p.range,
+        p.category,
+        p.document,
+        p.form,
+        p.organ,
+        p.viadata,
+        p.pubdata,
+        p.perdata,
+        p.field,
+        p.theme,
+        p.keyword,
+        p.superior,
+        p.precursor,
+        p.succeed,
+        p.state,
+        p.text,
+        p.pdf,
+        p.redundancy
+        FROM
+        policy p
+        WHERE p.id = #{policyId}
+    </select>
+    <select id="getPolicyList" parameterType="Integer" resultType="policy">
+        SELECT
+        p.id,
+        p.name,
+        p.type,
+        p.range,
+        p.category,
+        p.document,
+        p.form,
+        p.organ,
+        p.viadata,
+        p.pubdata,
+        p.perdata,
+        p.field,
+        p.theme,
+        p.keyword,
+        p.superior,
+        p.precursor,
+        p.succeed,
+        p.state,
+        p.text,
+        p.pdf,
+        p.redundancy,
+        p.year
+        FROM
+        policy p
+    </select>
+    <select id="getPolicyListSearch" parameterType="String" resultType="policy">
+        SELECT
+        p.id,
+        p.name,
+        p.type,
+        p.range,
+        p.category,
+        p.document,
+        p.form,
+        p.organ,
+        p.viadata,
+        p.pubdata,
+        p.perdata,
+        p.field,
+        p.theme,
+        p.keyword,
+        p.superior,
+        p.precursor,
+        p.succeed,
+        p.state,
+        p.text,
+        p.pdf,
+        p.redundancy,
+        p.rank
+        FROM
+        policy p
+        where p.text like CONCAT('%',#{name},'%')
+        order by p.form
+    </select>
+    <select id="getPolicyListByName" parameterType="String" resultType="policy">
+        SELECT
+        p.id,
+        p.name,
+        p.type,
+        p.range,
+        p.category,
+        p.document,
+        p.form,
+        p.organ,
+        p.viadata,
+        p.pubdata,
+        p.perdata,
+        p.field,
+        p.theme,
+        p.keyword,
+        p.superior,
+        p.precursor,
+        p.succeed,
+        p.state,
+        p.text,
+        p.pdf,
+        p.redundancy,
+        p.rank
+        FROM
+        policy p
+        where p.name like CONCAT('%',#{name},'%')
+        order by p.form
+    </select>
+    <select id="getPolicyListSearchAll" parameterType="String" resultType="policy">
+        SELECT
+        count(*) allsum,
+        p.form
+        FROM
+        policy p
+        where p.text like CONCAT('%',#{name},'%')
+        group by p.form
+    </select>
+    <select id="getPolicyListGroupForm"  resultType="policy">
+        SELECT
+        count(*) allsum,
+        p.form
+        FROM
+        policy p
+        group by p.form
+    </select>
+    <select id="getPolicyListGroupRank" parameterType="String" resultType="policy">
+        SELECT
+        count(*) allsum,
+        p.rank
+        FROM
+        policy p
+        where p.form= #{form}
+        group by p.rank
+    </select>
+    <select id="getPolicyListGroupFormRank"  resultType="policy">
+        SELECT
+        count(*) allsum,
+        p.form,
+        p.rank
+        FROM
+        policy p
+        group by p.form,p.rank
+    </select>
+    <select id="getPolicyListByNameAll" parameterType="String" resultType="policy">
+        SELECT
+        count(*) allsum,
+        p.form
+        FROM
+        policy p
+        where p.name like CONCAT('%',#{name},'%')
+        group by p.form
+    </select>
+
+    <select id="findPolicyDetailPage" parameterType="policy" resultType="policy">
+        <include refid="findPolicyDetailSql"/>
+    </select>
+    <select id="findPolicyDetailPage2" parameterType="policy" resultType="policy">
+        <include refid="findPolicyDetailSql2"/>
+    </select>
+    <sql id="findPolicyDetailSql2">
+        SELECT
+        p.id,
+        p.name,
+        p.type,
+        p.category,
+        p.range,
+        p.document,
+        p.form,
+        p.organ,
+        p.viadata,
+        p.pubdata,
+        p.perdata,
+        p.field,
+        p.theme,
+        p.keyword,
+        p.superior,
+        p.precursor,
+        p.succeed,
+        p.state,
+        p.text,
+        p.pdf,
+        p.redundancy,
+        p.rank,
+        p.year
+        FROM policy p
+        <where>
+            1=1
+            <if test="organlist != null">
+                and
+                <foreach collection="organlist" separator=" or " item="organlist" open="(" close=")">
+                    p.organ like CONCAT('%',#{organlist},'%')
+                </foreach>
+            </if>
+
+            <if test="rangelist != null">
+                and
+                <foreach collection="rangelist" separator=" or " item="rangelist" open="(" close=")">
+                    p.range like CONCAT('%',#{rangelist},'%')
+                </foreach>
+            </if>
+
+            <if test="themelist != null">
+                and
+                <foreach collection="themelist" separator=" or " item="themelist" open="(" close=")">
+                    p.theme like CONCAT('%',#{themelist},'%')
+                </foreach>
+            </if>
+            <if test="yearlist != null">
+                and
+                <foreach collection="yearlist" separator=" or " item="yearlist" open="(" close=")">
+                    p.year like CONCAT('%',#{yearlist},'%')
+                </foreach>
+            </if>
+            <if test="namelist != null">
+                and
+                <foreach collection="namelist" separator=" or " item="namelist" open="(" close=")">
+                    p.name like CONCAT('%',#{namelist},'%')
+                </foreach>
+            </if>
+        </where>
+    </sql>
+    <select id="getPolicyKeyWordsList" resultType="String">
+        SELECT
+        p.keyword
+        FROM
+        policy p
+        WHERE p.id &gt; 6000
+    </select>
+    <select id="getQuestionNumByPolicy" resultType="Policy">
+        SELECT
+        p.id,
+        p.name,
+        p.type,
+        p.category,
+        p.range,
+        p.document,
+        p.form,
+        p.organ,
+        p.viadata,
+        p.pubdata,
+        p.perdata,
+        p.field,
+        p.theme,
+        p.keyword,
+        p.superior,
+        p.precursor,
+        p.succeed,
+        p.state,
+        p.text,
+        p.pdf,
+        p.redundancy,
+        p.rank,
+        p.year
+        FROM policy p
+        <where>
+            1=1
+            <if test="organlist != null">
+                and
+                <foreach collection="organlist" separator=" or " item="organlist" open="(" close=")">
+                    p.organ like CONCAT('%',#{organlist},'%')
+                </foreach>
+            </if>
+
+            <if test="rangelist != null">
+                and
+                <foreach collection="rangelist" separator=" or " item="rangelist" open="(" close=")">
+                    p.range like CONCAT('%',#{rangelist},'%')
+                </foreach>
+            </if>
+
+            <if test="themelist != null">
+                and
+                <foreach collection="themelist" separator=" or " item="themelist" open="(" close=")">
+                    p.theme like CONCAT('%',#{themelist},'%')
+                </foreach>
+            </if>
+            <if test="yearlist != null">
+                and
+                <foreach collection="yearlist" separator=" or " item="yearlist" open="(" close=")">
+                    p.year like CONCAT('%',#{yearlist},'%')
+                </foreach>
+            </if>
+            <if test="namelist != null">
+                and
+                <foreach collection="namelist" separator=" or " item="namelist" open="(" close=")">
+                    p.name like CONCAT('%',#{namelist},'%')
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="getQuestionNumByPolicy2" resultType="Policy">
+        SELECT
+        p.id,
+        p.name,
+        p.type,
+        p.category,
+        p.range,
+        p.document,
+        p.form,
+        p.organ,
+        p.viadata,
+        p.pubdata,
+        p.perdata,
+        p.field,
+        p.theme,
+        p.keyword,
+        p.superior,
+        p.precursor,
+        p.succeed,
+        p.state,
+        p.text,
+        p.pdf,
+        p.redundancy,
+        p.rank,
+        p.year
+        FROM policy p
+        <where>
+            1=1
+            <if test="organlist != null">
+                and
+                <foreach collection="organlist" separator=" or " item="organlist" open="(" close=")">
+                    p.organ like CONCAT('%',#{organlist},'%')
+                </foreach>
+            </if>
+
+            <if test="rangelist != null">
+                and
+                <foreach collection="rangelist" separator=" or " item="rangelist" open="(" close=")">
+                    p.range like CONCAT('%',#{rangelist},'%')
+                </foreach>
+            </if>
+
+            <if test="themelist != null">
+                and
+                <foreach collection="themelist" separator=" or " item="themelist" open="(" close=")">
+                    p.theme like CONCAT('%',#{themelist},'%')
+                </foreach>
+            </if>
+            <if test="yearlist != null">
+                and
+                <foreach collection="yearlist" separator=" or " item="yearlist" open="(" close=")">
+                    #{yearlist}>p.year
+                </foreach>
+            </if>
+            <if test="namelist != null">
+                and
+                <foreach collection="namelist" separator=" or " item="namelist" open="(" close=")">
+                    p.name like CONCAT('%',#{namelist},'%')
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="getQuestionNumByPolicy3" resultType="Policy">
+        SELECT
+        p.id,
+        p.name,
+        p.type,
+        p.category,
+        p.range,
+        p.document,
+        p.form,
+        p.organ,
+        p.viadata,
+        p.pubdata,
+        p.perdata,
+        p.field,
+        p.theme,
+        p.keyword,
+        p.superior,
+        p.precursor,
+        p.succeed,
+        p.state,
+        p.text,
+        p.pdf,
+        p.redundancy,
+        p.rank,
+        p.year
+        FROM policy p
+        <where>
+        1=1
+            <if test="organlist != null">
+            and
+            <foreach collection="organlist" separator=" or " item="organlist" open="(" close=")">
+                p.organ like CONCAT('%',#{organlist},'%')
+            </foreach>
+            </if>
+
+            <if test="rangelist != null">
+                and
+            <foreach collection="rangelist" separator=" or " item="rangelist" open="(" close=")">
+                p.range like CONCAT('%',#{rangelist},'%')
+            </foreach>
+            </if>
+
+            <if test="themelist != null">
+                and
+            <foreach collection="themelist" separator=" or " item="themelist" open="(" close=")">
+                p.theme like CONCAT('%',#{themelist},'%')
+            </foreach>
+        </if>
+            <if test="yearlist != null">
+                and
+                <foreach collection="yearlist" separator=" or " item="yearlist" open="(" close=")">
+                    p.year>#{yearlist}
+                </foreach>
+            </if>
+            <if test="namelist != null">
+                and
+                <foreach collection="namelist" separator=" or " item="namelist" open="(" close=")">
+                    p.name like CONCAT('%',#{namelist},'%')
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="getQuestionNumByPolicy4" resultType="Policy">
+        SELECT
+        p.id,
+        p.name,
+        p.type,
+        p.category,
+        p.range,
+        p.document,
+        p.form,
+        p.organ,
+        p.viadata,
+        p.pubdata,
+        p.perdata,
+        p.field,
+        p.theme,
+        p.keyword,
+        p.superior,
+        p.precursor,
+        p.succeed,
+        p.state,
+        p.text,
+        p.pdf,
+        p.redundancy,
+        p.rank,
+        p.year
+        FROM policy p
+        <where>
+            1=1
+            <if test="organlist != null">
+                and
+                <foreach collection="organlist" separator=" or " item="organlist" open="(" close=")">
+                    p.organ like CONCAT('%',#{organlist},'%')
+                </foreach>
+            </if>
+
+            <if test="rangelist != null">
+                and
+                <foreach collection="rangelist" separator=" or " item="rangelist" open="(" close=")">
+                    p.range like CONCAT('%',#{rangelist},'%')
+                </foreach>
+            </if>
+
+            <if test="themelist != null">
+                and
+                <foreach collection="themelist" separator=" or " item="themelist" open="(" close=")">
+                    p.theme like CONCAT('%',#{themelist},'%')
+                </foreach>
+            </if>
+            <if test="startyear != null and startyear !=''">
+                And p.year>#{startyear}
+            </if>
+            <if test="endyear != null and endyear !=''">
+                And #{endyear}>p.year
+            </if>
+            <if test="namelist != null">
+                and
+                <foreach collection="namelist" separator=" or " item="namelist" open="(" close=")">
+                    p.name like CONCAT('%',#{namelist},'%')
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="getKeyWordByPolicy" resultType="String">
+        SELECT p.newkey
+        FROM policy p JOIN policy_category c ON p.category = c.CATEGORY_NAME
+        <where>
+            <foreach collection="regionIds" separator=" or " item="regionId" open="(" close=")">
+                p.type = #{regionId}
+            </foreach>
+            <if test="intermediate.categoryId != null and intermediate.categoryId !=''">
+                And c.CATEGORY_ID = #{intermediate.categoryId}
+            </if>
+            <if test="intermediate.createTimeFrom != null and intermediate.createTimeFrom !=''">
+                And p.pubdata &gt; #{intermediate.createTimeFrom}
+            </if>
+            <if test="intermediate.createTimeTo!= null and intermediate.createTimeTo !=''">
+                And p.pubdata &lt; #{intermediate.createTimeTo}
+            </if>
+        </where>
+    </select>
+
+    <select id="getOneThemeManyRegionPolicyNumAndYear" resultType="PolicyStatisticalResult">
+        SELECT o.REGION_NAME region,YEAR(pubdata) year,count(*) num
+        FROM policy p
+        LEFT JOIN province_city o ON (p.type = o.REGION_ID)
+        <where>
+            <foreach collection="regionIds" separator=" or " item="regionId" open="(" close=")">
+                p.type = #{regionId}
+            </foreach>
+            <if test="intermediate.createTimeFrom != null and intermediate.createTimeFrom !=''">
+                And p.pubdata &gt; #{intermediate.createTimeFrom}
+            </if>
+            <if test="intermediate.createTimeTo!= null and intermediate.createTimeTo !=''">
+                And p.pubdata &lt; #{intermediate.createTimeTo}
+            </if>
+            AND
+            <foreach collection="formulaKeywords" separator=" or " item="formulaKeyword" open="(" close=")">
+                text like CONCAT('%',#{formulaKeyword},'%')
+            </foreach>
+        </where>
+        GROUP BY p.type,year
+        order by p.type,p.pubdata
+    </select>
+    <select id="getEveryYearEveryCategoryNum" resultType="YearCategoryNum">
+        SELECT YEAR(pubdata) year,
+        o.REGION_NAME regionName,
+        category,
+        count(*) num
+        FROM policy p
+        LEFT JOIN province_city o on p.type = o.REGION_ID
+        <where>
+            (
+            <if test="intermediate.regionId != null and intermediate.regionId !=''">
+                o.REGION_ID = #{intermediate.regionId}
+            </if>
+            <if test="intermediate.checked != null and intermediate.checked !=''">
+                or type = #{intermediate.checked}
+            </if>
+            )
+            <if test="intermediate.createTimeFrom != null and intermediate.createTimeFrom !=''">
+                And p.pubdata &gt; #{intermediate.createTimeFrom}
+            </if>
+            <if test="intermediate.createTimeTo!= null and intermediate.createTimeTo !=''">
+                And p.pubdata &lt; #{intermediate.createTimeTo}
+            </if>
+        </where>
+        GROUP BY YEAR(pubdata),category
+        HAVING year != NULL or year !=''
+    </select>
+
+    <select id="getEveryOrganPolicyNum" resultType="OrganPolicyNum">
+        SELECT SUBSTRING_INDEX(SUBSTRING_INDEX(organ,';',1),' ',1) organ,
+        count(*) num
+        from policy p LEFT JOIN province_city o on p.type = o.REGION_ID
+        WHERE (
+        <if test="intermediate.regionId != null and intermediate.regionId !=''">
+            o.REGION_ID = #{intermediate.regionId}
+        </if>
+        <if test="intermediate.checked != null and intermediate.checked !=''">
+            or type = #{intermediate.checked}
+        </if>
+        )
+        <if test="intermediate.createTimeFrom != null and intermediate.createTimeFrom !=''">
+            And p.pubdata &gt; #{intermediate.createTimeFrom}
+        </if>
+        <if test="intermediate.createTimeTo!= null and intermediate.createTimeTo !=''">
+            And p.pubdata &lt; #{intermediate.createTimeTo}
+        </if>
+        GROUP BY SUBSTRING_INDEX(SUBSTRING_INDEX(organ,';',1),' ',1)
+        HAVING count(*) &gt; 1 AND SUBSTRING_INDEX(SUBSTRING_INDEX(organ,';',1),' ',1) != ''
+        ORDER BY num
+    </select>
+
+    <select id="getPolicyYearRegionNameList" resultType="PolicyYearRegionName">
+        SELECT YEAR(pubdata) year, o.REGION_NAME region, p.name, p.type, p.text
+        FROM policy p
+        LEFT JOIN province_city o ON (p.type = o.REGION_ID)
+        <where>
+            <foreach collection="regionIds" separator=" or " item="regionId" open="(" close=")">
+                p.type = #{regionId}
+            </foreach>
+            <if test="intermediate.createTimeFrom != null and intermediate.createTimeFrom !=''">
+                And p.pubdata &gt; #{intermediate.createTimeFrom}
+            </if>
+            <if test="intermediate.createTimeTo!= null and intermediate.createTimeTo !=''">
+                And p.pubdata &lt; #{intermediate.createTimeTo}
+            </if>
+
+            <if test="intermediate.regionName != null and intermediate.regionName !=''">
+                And o.REGION_NAME = #{intermediate.regionName}
+            </if>
+            <if test="intermediate.yearData!= null and intermediate.yearData !=''">
+                And YEAR(pubdata) = #{intermediate.yearData}
+            </if>
+            AND
+            <foreach collection="formulaKeywords" separator=" or " item="formulaKeyword" open="(" close=")">
+                text like CONCAT('%',#{formulaKeyword},'%')
+            </foreach>
+        </where>
+        order by year desc, p.type
+    </select>
+
+    <select id="getSuperiorPolicyByPolicyName" resultType="PolicyYearRegionName">
+        SELECT YEAR(pubdata) year, o.REGION_NAME region, p.name, p.type, p.text
+        FROM policy p
+        LEFT JOIN province_city o ON (p.type = o.REGION_ID)
+        <where>
+            p.superior = (SELECT superior FROM policy WHERE name = #{policyName} limit 1)
+            AND
+            <foreach collection="formulaKeywords" separator=" or " item="formulaKeyword" open="(" close=")">
+                text like CONCAT('%',#{formulaKeyword},'%')
+            </foreach>
+        </where>
+        order by year desc, region
+    </select>
+
+    <select id="getPolicyByName" resultType="PolicyYearRegionName">
+        SELECT YEAR(pubdata) year, o.REGION_NAME region, p.name, p.type, p.text
+        FROM policy p
+        LEFT JOIN province_city o ON (p.type = o.REGION_ID)
+        where p.name = #{name} limit 1
+    </select>
+
+    <select id="getOneYearOneRegionCategoryNum" resultType="YearCategoryNum">
+        SELECT YEAR(pubdata) year,
+        o.REGION_NAME regionName,
+        category,
+        count(*) num
+        FROM policy p
+        LEFT JOIN province_city o ON p.type = o.REGION_ID
+        <where>
+            <if test="intermediate.regionId != null and intermediate.regionId !=''">
+                type = #{intermediate.regionId}
+            </if>
+        </where>
+        GROUP BY YEAR(pubdata),category
+        <if test="intermediate.yearData!= null and intermediate.yearData !=''">
+            HAVING year = #{intermediate.yearData}
+        </if>
+    </select>
+
+    <select id="getOneYearCountryCategoryNum" resultType="YearCategoryNum">
+        SELECT YEAR(pubdata) year,
+        o.REGION_NAME regionName,
+        category,
+        count(*) num
+        FROM policy p
+        LEFT JOIN province_city o ON p.type = o.REGION_ID
+        WHERE type = 1
+        GROUP BY YEAR(pubdata),category
+        <if test="intermediate.yearData!= null and intermediate.yearData !=''">
+            HAVING year = #{intermediate.yearData}
+        </if>
+    </select>
+
+    <select id="getOneYearOneRegionOneCategoryPolicy" resultType="policy">
+        select
+        p.id,
+        p.name,
+        p.organ,
+        p.pubdata,
+        p.text
+        from policy p
+        <where>
+            (
+            <if test="intermediate.regionId!= null and intermediate.regionId !=''">
+                p.type = #{intermediate.regionId}
+            </if>
+            <if test="intermediate.checked != null and intermediate.checked !=''">
+                or type = #{intermediate.checked}
+            </if>
+            )
+            <if test="intermediate.categoryId!= null and intermediate.categoryId !=''">
+                and p.category = #{intermediate.categoryId}
+            </if>
+            <if test="intermediate.yearData!= null and intermediate.yearData !=''">
+                and YEAR(p.pubdata) = #{intermediate.yearData}
+            </if>
+        </where>
+    </select>
+    <select id="getOneYearCategoryNum" resultType="YearCategoryNum">
+        SELECT YEAR(pubdata) year,
+        o.REGION_NAME regionName,
+        category,
+        count(*) num
+        FROM policy p
+        LEFT JOIN province_city o ON p.type = o.REGION_ID
+        <where>
+            (
+            p.type = 1
+            <if test="intermediate.regionId != null and intermediate.regionId !=''">
+                or type = #{intermediate.regionId}
+            </if>
+            )
+        </where>
+        GROUP BY YEAR(pubdata),category
+        <if test="intermediate.yearData!= null and intermediate.yearData !=''">
+            HAVING year = #{intermediate.yearData}
+        </if>
+    </select>
+    <select id="findPolicyDetailPage3" parameterType="policy" resultType="policy">
+        <include refid="findPolicyDetailSql3"/>
+    </select>
+    <sql id="findPolicyDetailSql3">
+        SELECT
+        p.id,
+        p.name,
+        p.type,
+        p.category,
+        p.range,
+        p.document,
+        p.form,
+        p.organ,
+        p.viadata,
+        p.pubdata,
+        p.perdata,
+        p.field,
+        p.theme,
+        p.keyword,
+        p.superior,
+        p.precursor,
+        p.succeed,
+        p.state,
+        p.text,
+        p.pdf,
+        p.redundancy,
+        p.rank,
+        p.year
+        FROM policy p
+        <where>
+            1=1
+            <if test="organlist != null">
+                and
+                <foreach collection="organlist" separator=" or " item="organlist" open="(" close=")">
+                    p.organ like CONCAT('%',#{organlist},'%')
+                </foreach>
+            </if>
+
+            <if test="rangelist != null">
+                and
+                <foreach collection="rangelist" separator=" or " item="rangelist" open="(" close=")">
+                    p.range like CONCAT('%',#{rangelist},'%')
+                </foreach>
+            </if>
+
+            <if test="themelist != null">
+                and
+                <foreach collection="themelist" separator=" or " item="themelist" open="(" close=")">
+                    p.theme like CONCAT('%',#{themelist},'%')
+                </foreach>
+            </if>
+            <if test="yearlist != null">
+                and
+                <foreach collection="yearlist" separator=" or " item="yearlist" open="(" close=")">
+                    #{yearlist}>p.year
+                </foreach>
+            </if>
+            <if test="namelist != null">
+                and
+                <foreach collection="namelist" separator=" or " item="namelist" open="(" close=")">
+                    p.name like CONCAT('%',#{namelist},'%')
+                </foreach>
+            </if>
+        </where>
+    </sql>
+    <select id="findPolicyDetailPage4" parameterType="policy" resultType="policy">
+        <include refid="findPolicyDetailSql4"/>
+    </select>
+    <sql id="findPolicyDetailSql4">
+        SELECT
+        p.id,
+        p.name,
+        p.type,
+        p.category,
+        p.range,
+        p.document,
+        p.form,
+        p.organ,
+        p.viadata,
+        p.pubdata,
+        p.perdata,
+        p.field,
+        p.theme,
+        p.keyword,
+        p.superior,
+        p.precursor,
+        p.succeed,
+        p.state,
+        p.text,
+        p.pdf,
+        p.redundancy,
+        p.rank,
+        p.year
+        FROM policy p
+        <where>
+            1=1
+            <if test="organlist != null">
+                and
+                <foreach collection="organlist" separator=" or " item="organlist" open="(" close=")">
+                    p.organ like CONCAT('%',#{organlist},'%')
+                </foreach>
+            </if>
+
+            <if test="rangelist != null">
+                and
+                <foreach collection="rangelist" separator=" or " item="rangelist" open="(" close=")">
+                    p.range like CONCAT('%',#{rangelist},'%')
+                </foreach>
+            </if>
+
+            <if test="themelist != null">
+                and
+                <foreach collection="themelist" separator=" or " item="themelist" open="(" close=")">
+                    p.theme like CONCAT('%',#{themelist},'%')
+                </foreach>
+            </if>
+            <if test="yearlist != null">
+                and
+                <foreach collection="yearlist" separator=" or " item="yearlist" open="(" close=")">
+                    p.year>#{yearlist}
+                </foreach>
+            </if>
+            <if test="namelist != null">
+                and
+                <foreach collection="namelist" separator=" or " item="namelist" open="(" close=")">
+                    p.name like CONCAT('%',#{namelist},'%')
+                </foreach>
+            </if>
+        </where>
+    </sql>
+    <select id="findPolicyDetailPage5" parameterType="policy" resultType="policy">
+        <include refid="findPolicyDetailSql5"/>
+    </select>
+    <sql id="findPolicyDetailSql5">
+        SELECT
+        p.id,
+        p.name,
+        p.type,
+        p.category,
+        p.range,
+        p.document,
+        p.form,
+        p.organ,
+        p.viadata,
+        p.pubdata,
+        p.perdata,
+        p.field,
+        p.theme,
+        p.keyword,
+        p.superior,
+        p.precursor,
+        p.succeed,
+        p.state,
+        p.text,
+        p.pdf,
+        p.redundancy,
+        p.rank,
+        p.year
+        FROM policy p
+        <where>
+            1=1
+            <if test="organlist != null">
+                and
+                <foreach collection="organlist" separator=" or " item="organlist" open="(" close=")">
+                    p.organ like CONCAT('%',#{organlist},'%')
+                </foreach>
+            </if>
+
+            <if test="rangelist != null">
+                and
+                <foreach collection="rangelist" separator=" or " item="rangelist" open="(" close=")">
+                    p.range like CONCAT('%',#{rangelist},'%')
+                </foreach>
+            </if>
+
+            <if test="themelist != null">
+                and
+                <foreach collection="themelist" separator=" or " item="themelist" open="(" close=")">
+                    p.theme like CONCAT('%',#{themelist},'%')
+                </foreach>
+            </if>
+            <if test="startyear != null and startyear !=''">
+                And p.year>#{startyear}
+            </if>
+            <if test="endyear != null and endyear !=''">
+                And #{endyear}>p.year
+            </if>
+
+            <if test="namelist != null">
+                and
+                <foreach collection="namelist" separator=" or " item="namelist" open="(" close=")">
+                    p.name like CONCAT('%',#{namelist},'%')
+                </foreach>
+            </if>
+        </where>
+    </sql>
+</mapper>

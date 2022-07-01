@@ -1,0 +1,49 @@
+
+    <div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="demo" style="margin-top: 20px; margin-bottom: 20px;">
+        <div class="layui-progress-bar layui-bg-red" lay-percent="0%"></div>
+    </div>
+
+    <div class="site-demo-button febs-hide" style="margin-top: 20px; margin-bottom: 0;">
+        <button class="layui-btn site-demo-active" data-type="loading">模拟loading</button>
+    </div>
+<script>
+    layui.use('element', function(){
+        var $ = layui.jquery
+            ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+        //触发事件
+        var active = {
+            setPercent: function(){
+                //设置50%进度
+                element.progress('demo', '50%')
+            }
+            ,loading: function(othis){
+                var DISABLED = 'layui-btn-disabled';
+                if(othis.hasClass(DISABLED)) return;
+
+                //模拟loading
+                var n = 0, timer = setInterval(function(){
+                    n = n + Math.random()*10|0;
+                    if(n>100){
+                        n = 100;
+                        clearInterval(timer);
+                        othis.removeClass(DISABLED);
+                    }
+                    element.progress('demo', n+'%');
+                }, 300+Math.random()*1000);
+
+                othis.addClass(DISABLED);
+                if(n>=100){
+                    window.close();
+                }
+            }
+        };
+        begin();
+        function begin()
+        {
+            var othis=$('.site-demo-active');
+            type = $('.site-demo-active').data('type');
+            active[type] ? active[type].call(this, othis) : '';
+        }
+    });
+</script>

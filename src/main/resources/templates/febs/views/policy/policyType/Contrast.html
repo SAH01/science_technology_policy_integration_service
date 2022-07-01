@@ -1,0 +1,790 @@
+
+<div class="layui-fluid layui-anim febs-anim" id="febs-dept" lay-title="政策对比">
+    <div class="layui-card" style="text-align:center">
+        <div class="layui-card-body">
+            <button class="layui-btn layui-btn-normal" id="submit">政策对比</button>
+        </div>
+    </div>
+
+    <div class="layui-row layui-col-space8 febs-container">
+        <div class="layui-col-md3 layui-col-sm3 layui-col-xs5">
+            <div class="layui-card">
+                <div class="layui-card-body febs-table-full" style="height:800px;overflow:auto;">
+                    <form class="layui-form layui-table-form" lay-filter="dept-table-form" id="dept-table-form">
+                        <div class="layui-row">
+                            <div class="layui-col-md8 layui-col-sm9 layui-col-xs9">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <div class="dept-tree" lay-filter="deptTree" style="margin-left: 1rem"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md6 layui-col-sm6 layui-col-xs12" style="width: 900px">
+            <div class="layui-card">
+                <div class="layui-card-header">政策条数对比</div>
+                <div class="layui-card-body">
+                    <div id="basicColumnChart"></div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md6 layui-col-sm6 layui-col-xs12" style="width:900px">
+            <div class="layui-card">
+
+                <!--<div class="layui-card-footer">-->
+                <!--<button class="layui-btn layui-btn-normal" id="submit">政策对比</button>-->
+                <!--</div>-->
+
+                <div class="layui-fluid layui-anim febs-anim-up" id="febs-index" lay-title="科技政策对比总览">
+                    <div class="layui-row layui-col-space8 febs-container">
+                        <div class="layui-card">
+                            <div class="layui-card-body febs-table-full" style="height: 600px;">
+                                <div class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="container" style="height: 550px"></div>
+                            </div>
+                            <div class="layui-card-footer">科技政策对比总览
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-card-body febs-table-full">
+                    <form class="layui-form layui-table-form" action="" lay-filter="dept-form">
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label">ID：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="kindId" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label">branchID：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="branchId" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label">上级ID：</label>
+                            <div class="layui-input-block">
+                                <input type="text" value="" name="parentId" readonly autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label">部门名称：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="kindName" autocomplete="off" class="layui-input"
+                                       minlength="2" maxlength="200" lay-verify="range">
+                            </div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label">部门排序：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="orderNum" autocomplete="off" class="layui-input"
+                                       lay-verify="number">
+                            </div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label">部门：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="yearList" autocomplete="off" class="layui-input"
+                                       lay-verify="number">
+                            </div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label">城市：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="cityList" autocomplete="off" class="layui-input"
+                                       lay-verify="number">
+                            </div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label">城市：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="kindoneId" autocomplete="off" class="layui-input"
+                                       lay-verify="number">
+                            </div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label"></label>
+                            <div class="layui-input-block">
+                                <input type="text" name="policyId" autocomplete="off" class="layui-input"
+                                       lay-verify="number">
+                            </div>
+                        </div>
+                        <button class="layui-btn febs-hide" lay-submit="" lay-filter="dept-form-submit"
+                                id="submit-form"></button>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script data-th-inline="javascript" type="text/javascript">
+    layui.use([ 'dropdown', 'jquery', 'validate', 'layer','febs', 'form', 'eleTree','element','table','apexcharts', 'jquery', 'util', 'echarts4', 'dataTool', 'echarts_gl'], function () {
+        var $ = layui.jquery,
+            febs = layui.febs,
+            element = layui.element,
+            form = layui.form,
+            table=layui.table,
+            $viewa = $('#febs-index'),
+            echarts = layui.echarts4,
+            eleTree = layui.eleTree,
+            dropdown = layui.dropdown,
+            validate = layui.validate,
+            $view = $('#febs-dept'),
+            $query = $view.find('#query'),
+            $reset = $view.find('#reset'),
+            $submit = $view.find('#submit'),
+            $header = $view.find('#form-header'),
+            $searchForm = $view.find('#dept-table-form'),
+            _currentDeptData,
+            _deptTree;
+
+        form.verify(validate);
+        form.render();
+        renderDeptTree();
+
+        zhuinit();
+        function zhuinit()
+        {
+            febs.get(ctx + 'performance/getJs/' +0 , null, function (json) {
+                zhuzhuang(json);
+            });
+        }
+
+
+        function zhuzhuang(json) {
+            var basicColumnChartOptions = {
+                chart: {
+                    height: 320,
+                    type: 'bar',
+                    toolbar: {
+                        show: false
+                    }
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '50%'
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    show: true,
+                    width: 10,
+                    colors: ['transparent']
+                },
+                series: json.data.infor,
+                xaxis: {
+                    categories: json.data.city
+                },
+                fill: {
+                    opacity: 1
+
+                },
+                tooltip: {
+                    y: {
+                        formatter: function (val) {
+                            return "政策数量："+val
+                        }
+                    }
+                },
+                grid: {
+                    row: {
+                        colors: ['transparent', 'transparent'],
+                        opacity: 0.2
+                    },
+                    borderColor: '#f1f3fa'
+                }
+            };
+
+            new ApexCharts(
+                document.querySelector("#basicColumnChart"),
+                basicColumnChartOptions
+            ).render();
+        }
+
+        function zhuzhuang1(jso) {
+            var basicColumnChartOptions = {
+                chart: {
+                    height: 320,
+                    type: 'bar',
+                    toolbar: {
+                        show: false
+                    }
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '50%'
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    show: true,
+                    width: 10,
+                    colors: ['transparent']
+                },
+                series: jso.data.infor,
+                xaxis: {
+                    categories: jso.data.city
+                },
+                fill: {
+                    opacity: 1
+
+                },
+                tooltip: {
+                    y: {
+                        formatter: function (val) {
+                            return jso.data[val]
+                        }
+                    }
+                },
+                grid: {
+                    row: {
+                        colors: ['transparent', 'transparent'],
+                        opacity: 0.2
+                    },
+                    borderColor: '#f1f3fa'
+                }
+            };
+
+            new ApexCharts(
+                document.querySelector("#basicColumnChart"),
+                basicColumnChartOptions
+            ).render();
+        }
+
+
+
+
+        //树形图
+        eleTree.on("nodeClick(deptTree)", function (d) {
+
+            var data = d.data.currentData.data;
+            var name=data.kindName;
+            var kindid=data.kindId;
+            var kindoneid=data.kindoneId;
+            var citylist=data.cityList;
+            var list=citylist.split(",");
+            var city = [];
+            for(i=0;i<list.length;i++)
+            {
+                city.push(list[i]);
+            }
+
+            $header.text(name);
+            $submit.text(name);
+            if(data.branchId===0) {
+                $("#basicColumnChart").empty();
+
+                febs.get(ctx + 'performance/getJs/' +kindid , null, function (json) {
+                    zhuzhuang(json);
+                });
+
+                febs.get(ctx + 'performance/getMap/' +kindid , null, function (json) {
+                    initMapCharts(json.data, data.yearList);
+                });
+            }
+            // else {
+            //     $("#basicColumnChart").empty();
+            //     febs.get(ctx + 'performance/getJs/' +kindid , null, function (json) {
+            //         zhuzhuang1(json);
+            //     });
+            // }
+
+            _currentDeptData = data;
+            form.val("dept-form", {
+                "kindName": data.kindName,
+                "orderNum": data.orderNum,
+                "createTime": data.createTime,
+                "parentId": data.parentId,
+                "kindId": data.kindId,
+                "branchId":data.branchId,
+                "policyId":data.policyId,
+                "kindoneId":data.kindoneId
+            });
+        });
+
+
+
+        $view.on('click', '#submit', function () {
+            $view.find('#submit-form').trigger('click');
+        });
+
+
+
+        function renderDeptTree() {
+            _deptTree = eleTree.render({
+                elem: '.dept-tree',
+                url: ctx + 'kind/tree',
+                accordion: true,
+                highlightCurrent: true,
+                showCheckbox: false,
+                checkStrictly: true,
+                renderAfterExpand: false,
+                // where: {
+                //     "deptName": $deptName.val().trim(),
+                //     "invalidate_ie_cache": new Date()
+                // },
+                request: {
+                    name: 'name',
+                    key: "id",
+                    checked: "checked",
+                    data: 'data'
+                },
+                response: {
+                    statusName: "code",
+                    statusCode: 200,
+                    dataName: "data"
+                }
+            });
+            return _deptTree;
+        }
+
+
+        form.on('submit(dept-form-submit)', function (data) {
+            var id=data.field.kindId;
+            if(data.field.branchId==1)
+            {
+                febs.modal.view('政策对比', 'policy/contrast2/' + data.field.policyId, {
+                    area: $(window).width() <= 850 ? '95%' : '80%'
+                });
+            }
+            else if(data.field.branchId==2)
+            {
+                febs.modal.view('政策对比', 'policy/contrast3/' + data.field.kindName, {
+                    area: $(window).width() <= 850 ? '95%' : '80%'
+                });
+            }
+            else {
+                febs.alert.warn('请选择一个分支！');
+            }
+
+            return false;
+
+        });
+        var dom = document.getElementById("container");
+        var uploadedDataURL = "data/data-1528969802719-HyXIqhk-m.json";
+        var myChart = echarts.init(dom);
+        var geoCoordMap = {
+            //32个省
+            '北京': [116.4551, 40.2539],
+            "天津": [117.4219, 39.4189],
+            "河北": [114.4995, 38.1006],
+            "山西": [112.3352, 37.9413],
+            '内蒙古': [110.3467, 41.4899],
+            "辽宁": [123.1238, 42.1216],
+            "吉林": [125.8154, 44.2584],
+            '黑龙江': [127.9688, 45.368],
+            '上海': [121.4648, 31.2891],
+            "江苏": [118.8062, 31.9208],
+            "浙江": [119.5313, 29.8773],
+            "安徽": [117.29, 32.0581],
+            "福建": [119.4543, 25.9222],
+            "江西": [116.0046, 28.6633],
+            "山东": [117.1582, 36.8701],
+            "河南": [113.4668, 34.6234],
+            "湖北": [114.3896, 30.6628],
+            "湖南": [113.0823, 28.2568],
+            "广东": [113.12244, 23.009505],
+            "广西": [108.479, 23.1152],
+            "海南": [110.3893, 19.8516],
+            "重庆": [108.384366, 30.439702],
+            "四川": [103.9526, 30.7617],
+            "贵州": [106.6992, 26.7682],
+            "云南": [102.9199, 25.4663],
+            "西藏": [91.11, 29.97],
+            "陕西": [109.1162, 34.2004],
+            "甘肃": [103.5901, 36.3043],
+            "青海": [101.4038, 36.8207],
+            "宁夏": [106.3586, 38.1775],
+            "新疆": [87.9236, 43.5883],
+            '台湾': [121.5135, 25.0308]
+        };
+        var max = 0,
+            min = 0; //max和min为json结果的最大值和最小值，可用来动态调整地图上数据点的大小
+        var maxSize4Pin = 30,
+            minSize4Pin = 5;//maxSize4Pin和minSize4Pin为最终地图上显示球球的大小
+        var nameColor = '#0d445a';
+        var name_fontFamily = '等线';
+        var subname_fontSize = 12;
+        var name_fontSize = 20;
+
+        // febs.get(ctx + 'performance/getMapData', null, function (json) {
+        //     // console.log(json);
+        //     initMapCharts(json.data);
+        // });
+
+        function initMapCharts(json,yearlist) {
+            var list=yearlist.split(",");
+            var a=[];
+            var year = [];
+            for(i=0;i<list.length;i++)
+            {
+                year.push(list[i]);
+            }
+
+
+
+
+            var mapData = json.mapDetails;
+
+            /*帮助生成条形图数据的辅助元素*/
+            var categoryData = [];
+            var regionValueData = [];
+            /** 条形图地区和数值*/
+            var regionData = [];
+            var barData = [];
+            for (var key in geoCoordMap) {
+                //添加到数组开头unshift
+                categoryData.push(key);
+            }
+            for (var i = 0; i < mapData.length; i++) {
+                regionData.push([]);
+                barData.push([]);
+                regionValueData.push([]);
+                for (var j = mapData[i].length - 1; j >= 0; j--) {
+                    regionValueData[i].push({region: categoryData[j], value: mapData[i][j].value})
+                }
+                sort(regionValueData[i]);
+                // console.log(regionValueData[i]);
+            }
+            // console.log(regionValueData);
+            /** 根据数据，重新对max和min赋值，让球球可以动态调整大小*/
+            for (var i = 0; i < regionValueData[0].length; i++) {
+                // console.log(regionValueData[0][i].value);
+                if (max < regionValueData[0][i].value) {
+                    max = regionValueData[0][i].value;
+                }
+                if (min > regionValueData[0][i].value) {
+                    min = regionValueData[0][i].value;
+                }
+            }
+            // console.log(max);
+            // console.log(min);
+            /** 生成条形图地区和数值*/
+            for (var i = 0; i < regionValueData.length; i++) {
+                for (var j = 0; j < regionValueData[i].length; j++) {
+                    regionData[i].push((regionValueData[i].length - j) + '. ' + regionValueData[i][j].region);
+                    barData[i].push(regionValueData[i][j].value);
+                }
+            }
+
+            //顺序排序，地图展示效果为倒序
+            function sort(arr) {
+                for (var j = 0; j < arr.length - 1; j++) {
+                    //两两比较，如果前一个比后一个大，则交换位置。
+                    for (var i = 0; i < arr.length - 1 - j; i++) {
+                        if (arr[i].value > arr[i + 1].value) {
+                            var temp = arr[i];
+                            arr[i] = arr[i + 1];
+                            arr[i + 1] = temp;
+                        }
+                    }
+                }
+            }
+            $.getJSON(uploadedDataURL, function (geoJson) {
+                echarts.registerMap('china', geoJson);
+                var convertData = function (data) {
+                    var res = [];
+                    for (var i = 0; i < data.length; i++) {
+                        var a = data[i].value;
+                        var geoCoord = geoCoordMap[data[i].name];
+                        if (geoCoord) {
+                            res.push({
+                                name: data[i].name,
+                                value: geoCoord.concat(a)
+                            });
+                        }
+
+                    }
+
+                    return res;
+                };
+
+                optionXyMap01 = {
+                    timeline: {
+                        data: year,
+                        axisType: 'category',
+                        autoPlay: true,
+                        playInterval: 3000,
+                        left: '10%',
+                        right: '10%',
+                        bottom: '1.5%',
+                        width: '80%',
+                        //  height: null,
+                        label: {
+                            normal: {
+                                textStyle: {
+                                    color: nameColor,
+                                    fontSize: subname_fontSize
+                                }
+                            },
+                            emphasis: {
+                                textStyle: {
+                                    fontSize: subname_fontSize,
+                                    color: '#fff'
+                                }
+                            }
+                        },
+                        symbolSize: 10,
+                        lineStyle: {
+                            color: '#555'
+                        },
+                        checkpointStyle: {
+                            borderColor: '#777',
+                            borderWidth: 2
+                        },
+                        controlStyle: {
+                            showNextBtn: true,
+                            showPrevBtn: true,
+                            normal: {
+                                color: '#666',
+                                borderColor: '#666'
+                            },
+                            emphasis: {
+                                color: nameColor,
+                                borderColor: nameColor
+                            }
+                        },
+
+                    },
+                    baseOption: {
+                        animation: true,
+                        animationDuration: 1000,
+                        animationEasing: 'cubicInOut',
+                        animationDurationUpdate: 1000,
+                        animationEasingUpdate: 'cubicInOut',
+                        grid: {
+                            right: '1%',
+                            top: '15%',
+                            bottom: '10%',
+                            width: '20%'
+                        },
+                        tooltip: {
+                            trigger: 'axis', // hover触发器
+                            axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                type: 'shadow', // 默认为直线，可选为：'line' | 'shadow'
+                                shadowStyle: {
+                                    color: 'rgba(150,150,150,0.1)' //hover颜色
+                                }
+                            }
+                        },
+                        geo: {
+                            show: true,
+                            map: 'china',
+                            roam: true,
+                            zoom: 1,
+                            center: [113.83531246, 34.0267395887],
+                            label: {
+                                emphasis: {
+                                    show: false
+                                }
+                            },
+                            itemStyle: {
+                                normal: {
+                                    borderColor: 'rgba(0, 0, 0, 1)',
+                                    borderWidth: 1,
+                                    areaColor: {
+                                        type: 'radial',
+                                        x: 0.5,
+                                        y: 0.5,
+                                        r: 0.8,
+                                        colorStops: [{
+                                            offset: 0,
+                                            color: 'rgba(32, 144, 163, 0)' // 0% 处的颜色
+                                        }, {
+                                            offset: 1,
+                                            color: 'rgba(32, 144, 163 , .2)' // 100% 处的颜色
+                                        }],
+                                        globalCoord: false // 缺省为 false
+                                    },
+                                    shadowColor: 'rgba(255, 255, 255, 1)',
+                                    shadowOffsetX: -2,
+                                    shadowOffsetY: 2,
+                                    shadowBlur: 10
+                                },
+                                emphasis: {
+                                    areaColor: '#4bd1ec',
+                                    borderWidth: 0
+                                }
+                            }
+                        },
+                    },
+                    options: []
+
+                };
+                for (var n = 0; n < year.length; n++) {
+                    optionXyMap01.options.push({
+                        // backgroundColor: '#051b4a',
+                        backgroundColor: '#ffffff',
+                        title: [{
+                            text: '各地区科技政策对比总览',
+                            // subtext: '内部数据请勿外传',
+                            left: 'center',
+                            top: '3%',
+                            textStyle: {
+                                color: nameColor,
+                                fontSize: 20
+                            }
+                        }
+                        ],
+                        series: [
+                            //未知作用
+                            {
+                                //文字和标志
+                                name: 'light',
+                                type: 'scatter',
+                                // geoIndex: 0,
+                                coordinateSystem: 'geo',
+                                data: convertData(mapData[n]),
+                                symbolSize: function (val) {
+                                    var a = (maxSize4Pin - minSize4Pin) / (max - min);
+                                    var b = minSize4Pin - a * min;
+                                    b = maxSize4Pin - a * max;
+                                    return a * val[2] + b;
+                                },
+                                label: {
+                                    normal: {
+                                        formatter: '{b}',
+                                        position: 'right',
+                                        show: true,
+                                        textStyle: {
+                                            fontSize: subname_fontSize,
+                                            fontWeight: 'bold',
+                                        }
+                                    },
+                                    emphasis: {
+                                        show: true
+                                    }
+                                },
+                                itemStyle: {
+                                    normal: {
+                                        color: '#00467F'
+                                    }
+                                }
+                            },
+                            //地图？
+                            {
+                                type: 'map',
+                                map: 'china',
+                                geoIndex: 0,
+                                aspectScale: 0.75, //长宽比
+                                showLegendSymbol: false, // 存在legend时显示
+                                label: {
+                                    normal: {
+                                        show: false
+                                    },
+                                    emphasis: {
+                                        show: false,
+                                        textStyle: {
+                                            fontSize: subname_fontSize,
+                                            color: nameColor
+                                        }
+                                    }
+                                },
+                                roam: true,
+                                itemStyle: {
+                                    normal: {
+                                        areaColor: '#031525',
+                                        borderColor: '#FFFFFF',
+                                    },
+                                    emphasis: {
+                                        areaColor: '#2B91B7'
+                                    }
+                                },
+                                animation: false,
+                                data: mapData
+                            },
+
+                            {
+                                name: '点',
+                                type: 'scatter',
+                                coordinateSystem: 'geo',
+                                symbol: 'pin', //气泡
+                                symbolSize: function (val) {
+                                    var a = (maxSize4Pin - minSize4Pin) / (max - min);
+                                    var b = minSize4Pin - a * min;
+                                    b = maxSize4Pin - a * max;
+                                    return a * val[2] + b;
+                                },
+                                data: convertData(mapData[n].sort(function (a, b) {
+                                    return b.value - a.value;
+                                })),
+                                label: {
+                                    normal: {
+                                        formatter: '{@[2]}',
+                                        show: true,
+                                        textStyle: {
+                                            color: '#df950b',
+                                            fontSize: 10,
+                                        }
+                                    }
+                                },
+                                itemStyle: {
+                                    normal: {
+                                        color: '#F62157', //标志颜色
+                                    }
+                                },
+                                zlevel: 6
+                            },
+                            //地图点的动画效果
+                            {
+                                name: 'Top 5',
+                                type: 'effectScatter',
+                                coordinateSystem: 'geo',
+                                data: convertData(mapData[n].sort(function (a, b) {
+                                    return b.value - a.value;
+                                }).slice(0, 5)),
+                                symbolSize: function (val) {
+                                    var a = (maxSize4Pin - minSize4Pin) / (max - min);
+                                    var b = minSize4Pin - a * min;
+                                    b = maxSize4Pin - a * max;
+                                    return a * val[2] + b;
+                                },
+                                showEffectOn: 'render',
+                                rippleEffect: {
+                                    brushType: 'stroke'
+                                },
+                                hoverAnimation: true,
+                                label: {
+                                    normal: {
+                                        formatter: '{b}',
+                                        position: 'right',
+                                        show: true,
+                                        textStyle: {
+                                            fontSize: subname_fontSize,
+                                            fontWeight: 'bold',
+                                        }
+                                    }
+                                },
+                                itemStyle: {
+                                    normal: {
+                                        color: nameColor,
+                                        shadowBlur: 10,
+                                        shadowColor: nameColor
+                                    }
+                                },
+                                zlevel: 1
+                            }
+                        ]
+                    })
+                }
+                myChart.setOption(optionXyMap01);
+            });
+        }
+
+    });
+</script>

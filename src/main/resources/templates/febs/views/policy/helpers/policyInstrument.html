@@ -1,0 +1,403 @@
+<style>
+    table p{
+        color: #0C0C0C;
+        font-size: 13px;
+    }
+    span.keyword{
+        color: #f5222d;
+    }
+</style>
+<div class="layui-fluid" id="VIEW-chart-index" lay-title="政策工具视角分析">
+    <div class="layui-row layui-col-space8 febs-container">
+        <div class="layui-card">
+            <div class="layui-card-header">政策工具视角分析说明</div>
+            <div class="layui-card-body febs-table-full">
+                <p>1.政策工具视角分析参考<span class="keyword">业界广泛采用的政策工具</span>的设计，对科技政策中提取出来的<span class="keyword">关键词</span>按照政策工具进行了分类，可以反映不同工具类型的科技政策占比情况。</p>
+                <p>2.支持选择时间区间和地域来对<span class="keyword">不同历史阶段、不同地区</span>的科技政策进行分析。</p>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row febs-container">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body febs-table-full">
+                    <form class="layui-form layui-table-form" lay-filter="user-table-form">
+                        <div class="layui-row">
+                            <div class="layui-col-md10">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">发布时间</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="createTime" id="createTime" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">地域</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="regionProvince" id="regionProvince" lay-filter="regionProvince"
+                                                   class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md2 layui-col-sm12 layui-col-xs12 table-action-area">
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="query">
+                                    <i class="layui-icon">&#xe848;</i>
+                                </div>
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="reset">
+                                    <i class="layui-icon">&#xe79b;</i>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="layui-tab layui-tab-brief" >
+                        <div class="layui-tab-content nepadmin-pad0">
+                            <div class="layui-tab-item layui-show">
+                                <div class="layui-row">
+                                    <table border=1 cellspacing=0 cellpadding=0 style="width: 100%;">
+                                        <tr>
+                                            <td width="100px"><p align=center><span>工具类型</span></p></td>
+                                            <td width="150px"><p align=center><span>工具名称</span></p></td>
+                                            <td><p align=center><span>核心关键词</span></p></td>
+                                            <td width="150px" colspan=2><p align=center><span>频数</span></p></td>
+                                            <td width="75px"><p align=center><span>内部占比（%）</span></p></td>
+                                            <td width="75px"><p align=center><span>百分比（%）</span></p></td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan=5><p align=center><span>供给型</span></p></td>
+                                            <td><p align=center><span>教育培训</span></p></td>
+                                            <td><p align=left><span class="keywords">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="frequency">&nbsp;</span></p></td>
+                                            <td rowspan=5><p align=center><span class="group_frequency">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="proportion">&nbsp;</span></p></td>
+                                            <td rowspan=5><p align=center><span class="group_proportion">&nbsp;</span></p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p align=center><span>科技信息支持</span></p></td>
+                                            <td><p align=left><span class="keywords">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="frequency">&nbsp;</span></p></td>
+                                            <td><p align=center class="proportion"><span>&nbsp;</span></p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p align=center><span>科技基础设施建设</span></p></td>
+                                            <td><p align=left><span class="keywords">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="frequency">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="proportion">&nbsp;</span></p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p align=center><span>科技资金投入</span></p></td>
+                                            <td><p align=left><span class="keywords">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="frequency">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="proportion">&nbsp;</span></p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p align=center><span>公共服务</span></p></td>
+                                            <td><p align=left><span class="keywords">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="frequency">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="proportion">&nbsp;</span></p></td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan=5><p align=center><span>环境型</span></p></td>
+                                            <td><p align=center><span>目标规划</span></p></td>
+                                            <td><p align=left><span class="keywords">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="frequency">&nbsp;</span></p></td>
+                                            <td rowspan=5><p align=center><span class="group_frequency">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="proportion">&nbsp;</span></p></td>
+                                            <td rowspan=5><p align=center><span class="group_proportion">&nbsp;</span></p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p align=center><span>金融支持</span></p></td>
+                                            <td><p align=left><span class="keywords">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="frequency">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="proportion">&nbsp;</span></p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p align=center><span>税收优惠</span></p></td>
+                                            <td><p align=left><span class="keywords">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="frequency">&nbsp;</span></p></td>
+                                            <td><p align=center><spanv class="proportion">&nbsp;</spanv></p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p align=center><span>知识产权保护</span></p></td>
+                                            <td><p align=left><span class="keywords">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="frequency">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="proportion">&nbsp;</span></p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p align=center><span>法规管制</span></p></td>
+                                            <td><p align=left><span class="keywords">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="frequency">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="proportion">&nbsp;</span></p></td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan=4><p align=center><span>需求型</span></p></td>
+                                            <td><p align=center><span>公共技术采购</span></p></td>
+                                            <td><p align=left><span class="keywords">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="frequency">&nbsp;</span></p></td>
+                                            <td rowspan=4><p align=center><span class="group_frequency">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="proportion">&nbsp;</span></p></td>
+                                            <td rowspan=4><p align=center><span class="group_proportion">&nbsp;</span></p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p align=center><span>外包</span></p></td>
+                                            <td><p align=left><span class="keywords">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="frequency">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="proportion">&nbsp;</span></p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p align=center><span>贸易管制</span></p></td>
+                                            <td><p align=left><span class="keywords">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="frequency">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="proportion">&nbsp;</span></p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p align=center><span>海外机构管理</span></p></td>
+                                            <td><p align=left><span class="keywords">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="frequency">&nbsp;</span></p></td>
+                                            <td><p align=center><span class="proportion">&nbsp;</span></p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p align=center><span>合计</span></p></td>
+                                            <td><p align=center><span>N/A</span></p></td>
+                                            <td><p align=center><span>N/A</span></p></td>
+                                            <td colspan=2><p align=center><span id="words_num">1300</span></p></td>
+                                            <td><p align=center><span>N/A</span></p></td>
+                                            <td><p align=center><span>100%</span></p></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-tab layui-tab-brief" lay-filter="chart-index-echartBar">
+                        <div class="layui-tab-content nepadmin-pad0">
+                            <div class="layui-tab-item layui-show">
+                                <div class="layui-row">
+                                    <div id="container_instrument" style="width: 100%;height:500px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<script src="http://echarts.baidu.com/resource/echarts-gl-latest/dist/echarts-gl.min.js"></script>-->
+<script>
+    layui.use(['febs', 'echarts4', 'dataTool', 'dropdown', 'laydate', 'form', 'treeSelect','echarts_gl'], function () {
+        var $ = layui.jquery,
+            echarts = layui.echarts4,
+            dataTool = layui.dataTool,
+            laydate = layui.laydate,
+            febs = layui.febs,
+            form = layui.form,
+            treeSelect = layui.treeSelect,
+            $view = $('#VIEW-chart-index'),
+            $query = $view.find('#query'),
+            $reset = $view.find('#reset'),
+            $searchForm = $view.find('form');
+
+        var params = getQueryParams();
+        var dom_instrument = document.getElementById("container_instrument");
+        var myChart_instrument = echarts.init(dom_instrument);
+        form.render();
+        febs.get(ctx + 'helpers/getInstrumentTableData', params, function (json) {
+            initTable(json.data);
+            initChart(json.data);
+        });
+        laydate.render({
+            elem: '#createTime',
+            range: true,
+            trigger: 'click'
+        });
+
+        treeSelect.render({
+            elem: $view.find('#regionProvince'),
+            type: 'get',
+            data: ctx + 'region/provinceWithCountry',
+            placeholder: '国家各部门',
+            search: false
+        });
+
+        $query.on('click', function () {
+            febs.view.loadBar.start();
+            myChart_instrument.showLoading();
+            params = getQueryParams();
+            febs.get(ctx + 'helpers/updateInstrumentTableData', params, function (json) {
+                // console.log(json);
+                initTable(json.data);
+                initChart(json.data);
+                febs.view.loadBar.finish();
+            });
+        });
+
+        $reset.on('click', function () {
+            $searchForm[0].reset();
+            treeSelect.revokeNode('regionProvince');
+        });
+
+        function getQueryParams() {
+            var createTimeFrom,
+                createTimeTo,
+                createTime = $searchForm.find('input[name="createTime"]').val();
+            if (createTime) {
+                createTimeFrom = createTime.split(' - ')[0];
+                createTimeTo = createTime.split(' - ')[1];
+            }else {
+                createTimeFrom = '2009-01-01';
+                createTimeTo = '';
+            }
+            var regionId = $searchForm.find("input[name='regionProvince']").val().trim()==""?"1":$searchForm.find("input[name='regionProvince']").val().trim();
+            return {
+                createTimeFrom: createTimeFrom,
+                createTimeTo: createTimeTo,
+                regionId: regionId,
+                invalidate_ie_cache: new Date()
+            };
+        }
+        function initTable(json) {
+            // console.log(json);
+            // console.log(typeof json);
+            // console.log(json.keywords.length);
+            // console.log(json.keywords[0].length);
+            $("#words_num").html(json.words_num);
+            var i = 0;
+            $(".keywords").each(function(){
+                var keyword_row="";
+                var start = 0;//parseInt(json.keywords[i].length/10);
+                var end = 10;
+                if(typeof json.keywords[i] != 'undefined' && json.keywords[i] != null && json.keywords[i] !== ''){
+                    // console.log(json.keywords[i]);
+                    if(json.keywords[i].length<10){
+                        end = start+json.keywords[i].length;
+                    }
+                    for (var j = start; j < end; j++) {
+                        // keyword_row+=('<a href="https://www.baidu.com?wd='+json.keywords[i][j]+'">'+json.keywords[i][j]+'</a>'+"、");
+                        keyword_row+=('<span class="keywords">'+json.keywords[i][j]+'</span>'+"、");
+                    }
+                    $(this).html(keyword_row);
+                }
+                i++;
+            });
+            i=0;
+            $(".proportion").each(function(){
+                $(this).html((json.proportion[i]*100).toFixed(2));
+                i++;
+            });
+            i=0;
+            $(".frequency").each(function(){
+                $(this).html(json.frequency[i]);
+                i++;
+            });
+            i=0;
+            $(".group_proportion").each(function(){
+                $(this).html((json.group_proportion[i]*100).toFixed(2));
+                i++;
+            });
+            i=0;
+            $(".group_frequency").each(function(){
+                $(this).html(json.group_frequency[i]);
+                i++;
+            });
+        }
+        function initChart(json) {
+            var app = {};
+            option = null;
+            app.title = '政策工具运用统计表';
+
+            option = {
+                title: {
+                    text: '政策工具运用统计表',
+                    x:'center',
+                    y:'top',
+                    textAlign:'center'
+                },
+                tooltip : {
+                    show: true,
+                    formatter: "{a} <br/>{b}"
+                },
+
+                calculable:false,
+                series: [
+                    {
+                        name:'工具类型',
+                        type:'pie',
+                        // selectedMode: 'single',
+                        center: ['45%', '40%'],
+                        radius: [0, '30%'],
+                        data:[
+                            {value:json.group_frequency[0], name:'供给型'+(json.group_proportion[0]*100).toFixed(2)+'%'},
+                            {value:json.group_frequency[1], name:'环境型'+(json.group_proportion[1]*100).toFixed(2)+'%'},
+                            {value:json.group_frequency[2], name:'需求型'+(json.group_proportion[2]*100).toFixed(2)+'%', selected:true}
+                        ],
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    },
+                    {
+                        name:'需求型',
+                        type:'pie',
+                        center: ['15%', '30%'],
+                        radius: [0, '30%'],
+                        data:[
+                            {value:json.frequency[10], name:'公共技术采购'+(json.proportion[10]*100).toFixed(2)+'%'},
+                            {value:json.frequency[11], name:'外包'+(json.proportion[11]*100).toFixed(2)+'%'},
+                            {value:json.frequency[12], name:'贸易管制'+(json.proportion[12]*100).toFixed(2)+'%'},
+                            {value:json.frequency[13], name:'海外机构管理'+(json.proportion[13]*100).toFixed(2)+'%'}
+                        ]
+                    },
+                    {
+                        name:'环境型',
+                        type:'pie',
+                        center: ['35%', '80%'],
+                        radius: [0, '30%'],
+                        data:[
+                            {value:json.frequency[5], name:'目标规划'+(json.proportion[5]*100).toFixed(2)+'%'},
+                            {value:json.frequency[6], name:'金融支持'+(json.proportion[6]*100).toFixed(2)+'%'},
+                            {value:json.frequency[7], name:'税收优惠'+(json.proportion[7]*100).toFixed(2)+'%'},
+                            {value:json.frequency[8], name:'知识产权保护'+(json.proportion[8]*100).toFixed(2)+'%'},
+                            {value:json.frequency[9], name:'法规管制'+(json.proportion[9]*100).toFixed(2)+'%'}
+                        ],
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    },
+                    {
+                        name:'供给型',
+                        type:'pie',
+                        center: ['80%', '50%'],
+                        radius: [0, '30%'],
+                        data:[
+                            {value:json.frequency[0], name:'教育培训'+(json.proportion[0]*100).toFixed(2)+'%'},
+                            {value:json.frequency[1], name:'科技信息支持'+(json.proportion[1]*100).toFixed(2)+'%'},
+                            {value:json.frequency[2], name:'科技基础设施建设'+(json.proportion[2]*100).toFixed(2)+'%'},
+                            {value:json.frequency[3], name:'科技资金投入'+(json.proportion[3]*100).toFixed(2)+'%'},
+                            {value:json.frequency[4], name:'公共服务'+(json.proportion[4]*100).toFixed(2)+'%'}
+                        ],
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+            if (option && typeof option === "object") {
+                myChart_instrument.hideLoading();
+                myChart_instrument.setOption(option, true);
+            }
+        }
+
+    });
+</script>

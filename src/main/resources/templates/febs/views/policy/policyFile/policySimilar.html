@@ -1,0 +1,184 @@
+<style>
+    #febs-policy-detail #user-img, #febs-policy-detail .user-info {
+        display: inline-block;
+        float: left;
+        margin-left: 2px;
+    }
+
+    #febs-policy-detail #user-img img {
+        width: 7rem;
+        margin: 10px 10px 0 20px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    #febs-policy-detail #user-info-wrapper {
+        margin: 0 0 1rem 0;
+        display: inline-block;
+    }
+
+    #febs-policy-detail .user-info div {
+        margin: 10px 15px;
+        /*max-width: 19rem;*/
+    }
+
+    #febs-policy-detail #options-wrapper a {
+        padding: 4px 6px;
+        color: rgba(0, 0, 0, 0.65);
+        border: 1px solid #d9d9d9;
+        border-radius: 2px;
+    }
+
+    #febs-policy-detail #options-wrapper a:hover {
+        color: #40a9ff;
+        border-color: #40a9ff;
+    }
+    .policyName {
+        font-size: 20px;
+        font-weight: bold;
+        color: #000000;
+    }
+
+</style>
+<div class="layui-fluid" id="febs-policy-detail" lay-title="政策对比">
+    <div id="user-info-wrapper">
+        <div class="user-info">
+
+            <div class="layui-form">
+                <table class="layui-table" id="content1">
+                    <colgroup>
+                        <col width="150">
+                        <col width="150">
+                        <col width="80">
+                        <col width="150">
+                        <col>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>政策名称</th>
+                        <th>实施对象</th>
+                        <th>实施范围</th>
+                        <th>关键短语</th>
+                        <th>政策内容</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div id="poname" class="layui-icon">
+                [[${policy.policyname}]]
+            </div>
+            <div id="siname" class="layui-icon">
+                [[${policy.similarname}]]
+            </div>
+            <div id="podept" class="layui-icon">
+                [[${policy.policydept}]]
+            </div>
+            <div id="sidept" class="layui-icon">
+                [[${policy.similardept}]]
+            </div>
+            <div id="poorgan" class="layui-icon">
+                [[${policy.policyorgan}]]
+            </div>
+            <div id="siorgan" class="layui-icon">
+                [[${policy.similarorgan}]]
+            </div>
+            <div id="pomain" class="layui-icon">
+                [[${policy.one}]]
+            </div>
+            <div id="simain" class="layui-icon">
+                [[${policy.two}]]
+            </div>
+            <div id="potext" class="layui-icon">
+                [[${policy.policytext}]]
+            </div>
+            <div id="sitext" class="layui-icon">
+                [[${policy.similartext}]]
+            </div>
+            <div id="pomatters" class="layui-icon">
+                [[${policy.policymatters}]]
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+<script type="text/html" id="user-option">
+    <span shiro:lacksPermission="user:view,user:update,user:delete">
+        <span class="layui-badge-dot febs-bg-orange"></span> 无权限
+    </span>
+    <a lay-event="detail" shiro:hasPermission="user:view"><i
+            class="layui-icon febs-edit-area febs-green">&#xe7a5;</i></a>
+    <a lay-event="del" shiro:hasPermission="user:delete"><i class="layui-icon febs-edit-area febs-red">&#xe7f9;</i></a>
+</script>
+<script>
+    layui.use(['febs'], function () {
+        var $ = layui.jquery;
+        var pooname = $("#poname").text();
+        var siiname=$("#siname").text();
+        var poodept = $("#podept").text();
+        var siidept=$("#sidept").text();
+        var pooorgan=$("#poorgan").text();
+        var siiorgan=$("#siorgan").text();
+        var poomain=$("#pomain").text();
+        var siimain=$("#simain").text();
+        var pootext=$("#potext").text();
+        var siitext=$("#sitext").text();
+        var poomatters=$("#pomatters").text();
+        $("#pomatters").empty();
+        $("#potext").empty();
+        $("#sitext").empty();
+        $("#siorgan").empty();
+        $("#poorgan").empty();
+        $("#poname").empty();
+        $("#siname").empty();
+        $("#podept").empty();
+        $("#sidept").empty();
+        $("#pomain").empty();
+        $("#simain").empty();
+        var pomatters=poomatters.split("|");
+        var potext=pootext.split("|");
+        var sitext=siitext.split("|");
+        var pomain=poomain.split("|");
+        var simain=siimain.split("|");
+        var poorgan=pooorgan.split("|");
+        var siorgan=siiorgan.split("|");
+        var poname=pooname.split("|");
+        var siname=siiname.split("|");
+        var podept=poodept.split("|");
+        var sidept=siidept.split("|");
+        var content = $("#content1").text();
+        var htmlstr = "";
+        for(i=0;i<poname.length;i++)
+        {
+            if(i%2==0)
+            {
+                htmlstr += "<tr>";
+                htmlstr += "<td >" + pomatters[i] + "</td>";
+                htmlstr += "</tr>";
+                htmlstr += "<tr>";
+                htmlstr += "<td style='font-weight: bold'>" + poname[i] + "</td>";
+                htmlstr += "<td style='font-weight: bold'>" + podept[i] + "</td>";
+                htmlstr += "<td style='font-weight: bold'>" + poorgan[i] + "</td>";
+                htmlstr += "<td style='font-weight: bold'>" + pomain[i] + "</td>";
+                htmlstr += "<td style='font-weight: bold'>" + potext[i] + "</td>";
+                htmlstr += "</tr>";
+            }
+
+            htmlstr += "<tr>";
+            htmlstr += "<td >" + siname[i] + "</td>";
+            htmlstr += "<td >" + sidept[i] + "</td>";
+            htmlstr += "<td >" + siorgan[i] + "</td>";
+            htmlstr += "<td >" + simain[i] + "</td>";
+            htmlstr += "<td >" + sitext[i] + "</td>";
+            htmlstr += "</tr>";
+
+        }
+        $("#content1").append(htmlstr )
+
+
+    });
+</script>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.policy.mapper.PolicyEvoMapper">
+    <select id="getPolicyEvoList" parameterType="String" resultType="PolicyEvo">
+        SELECT
+        p.id,
+        p.policyname,
+        p.policydept,
+        p.policytime,
+        p.policytype,
+        p.policymain,
+        p.policytext,
+        p.highpolicy,
+        p.lowpolicy,
+        p.keyword,
+        p.policytext2
+        FROM
+        policyevo p
+        WHERE p.policytype = #{policytype}
+        ORDER BY p.policytime
+    </select>
+    <select id="getPolicyEvoByNameList" parameterType="String" resultType="PolicyEvo">
+        SELECT
+        p.id,
+        p.policyname,
+        p.policydept,
+        p.policytime,
+        p.policytype,
+        p.policymain,
+        p.policytext,
+        p.highpolicy,
+        p.lowpolicy,
+        p.keyword,
+        p.policytext2
+        FROM
+        policyevo p
+        WHERE p.policyname = #{policyname}
+        ORDER BY p.policytime
+    </select>
+    <select id="getPolicyEvoGroupByType" resultType="PolicyEvo">
+        SELECT
+        count(*) allsum,
+        p.policytype
+        FROM
+        policyevo p
+        group by p.policytype
+    </select>
+    <select id="getPolicyEvoListByTime" parameterType="String" resultType="PolicyEvo">
+        SELECT
+        count(*) allsum,
+        p.policytime,
+        p.policytype
+        FROM
+        policyevo p
+        where p.policytype=#{policytype}
+        group by p.policytime
+    </select>
+</mapper>

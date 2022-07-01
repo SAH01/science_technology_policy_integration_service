@@ -1,0 +1,169 @@
+<div class="layui-fluid layui-anim febs-anim" id="febs-policyFile" lay-title="政策演变">
+    <div class="layui-row febs-container">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body febs-table-full">
+                    <form class="layui-form layui-table-form" lay-filter="user-table-form">
+                        <div class="layui-row">
+                            <div class="layui-col-md10">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">主题</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="policyName" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md2 layui-col-sm12 layui-col-xs12 table-action-area">
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="query">
+                                    <i class="layui-icon">&#xe848;</i>
+                                </div>
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="reset">
+                                    <i class="layui-icon">&#xe79b;</i>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <table lay-filter="policyTable" lay-data="{id: 'policyTable'}"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="user-option">
+    <span shiro:lacksPermission="user:view,user:update,user:delete">
+        <span class="layui-badge-dot febs-bg-orange"></span> 无权限
+    </span>
+    <a lay-event="detail" shiro:hasPermission="user:view"><i
+            class="layui-icon febs-edit-area febs-green">&#xe7a5;</i></a>
+</script>
+<script data-th-inline="none" type="text/javascript">
+    layui.use(['dropdown', 'jquery', 'laydate', 'form', 'table', 'febs', 'treeSelect'], function () {
+        var $ = layui.jquery,
+            laydate = layui.laydate,
+            febs = layui.febs,
+            form = layui.form,
+            table = layui.table,
+            treeSelect = layui.treeSelect,
+            dropdown = layui.dropdown,
+            $view = $('#febs-policyFile'),
+            $query = $view.find('#query'),
+            $reset = $view.find('#reset'),
+            $searchForm = $view.find('form'),
+            sortObject = {field: 'createTime', type: null},
+            tableIns;
+
+        form.render();
+
+        initTable();
+
+        laydate.render({
+            elem: '#createTime',
+            range: true,
+            trigger: 'click'
+        });
+
+        dropdown.render({
+            elem: $view.find('.action-more'),
+            click: function (name, elem, event) {
+                var checkStatus = table.checkStatus('policyTable');
+                if (name === 'add') {
+                    febs.modal.open('新增政策', 'system/user/add', {
+                        btn: ['提交', '重置'],
+                        area: $(window).width() <= 750 ? '95%' : '50%',
+                        yes: function (index, layero) {
+                            $('#user-add').find('#submit').trigger('click');
+                        },
+                        btn2: function () {
+                            $('#user-add').find('#reset').trigger('click');
+                            return false;
+                        }
+                    });
+                }
+                if (name === 'delete') {
+                    if (!checkStatus.data.length) {
+                        febs.alert.warn('请选择需要删除的政策');
+                    } else {
+                        febs.modal.confirm('删除政策', '确定删除该政策？', function () {
+                            var userIds = [];
+                            layui.each(checkStatus.data, function (key, item) {
+                                userIds.push(item.userId)
+                            });
+                            deleteUsers(userIds.join(','));
+                        });
+                    }
+                }
+
+            },
+        });
+
+        table.on('tool(policyTable)', function (obj) {
+            var data = obj.data,
+                layEvent = obj.event;
+            if (layEvent === 'detail') {
+                febs.modal.view('政策信息', 'policy/type/' + data.id, {
+                    area: $(window).width() <= 900 ? '95%' : '85%'
+                });
+            }
+        });
+
+        table.on('sort(policyTable)', function (obj) {
+            sortObject = obj;
+            tableIns.reload({
+                initSort: obj,
+                where: $.extend(getQueryParams(), {
+                    field: obj.field,
+                    order: obj.type
+                })
+            });
+        });
+
+        $query.on('click', function () {
+            var params = $.extend(getQueryParams(), {field: sortObject.field, order: sortObject.type});
+            tableIns.reload({where: params, page: {curr: 1}});
+        });
+
+        $reset.on('click', function () {
+            $searchForm[0].reset();
+            sortObject.type = 'null';
+            tableIns.reload({where: getQueryParams(), page: {curr: 1}, initSort: sortObject});
+        });
+
+        function initTable() {
+            tableIns = febs.table.init({
+                elem: $view.find('table'),
+                id: 'policyTable',
+                url: ctx + 'policytype/list',
+                cols: [[
+                    {type: 'checkbox'},
+                    {field: 'policytype', title: '主题', minWidth: 600},
+                    // {field: 'policy_number', title: '文号'},
+                    // {field: 'policy_index', title: '编号'},
+                    {title: '操作', toolbar: '#user-option', minWidth: 140}
+                ]]
+            });
+        }
+
+        function getQueryParams() {
+            var createTimeFrom,
+                createTimeTo,
+                createTime = $searchForm.find('input[name="createTime"]').val();
+            if (createTime) {
+                createTimeFrom = createTime.split(' - ')[0];
+                createTimeTo = createTime.split(' - ')[1];
+            }
+            return {
+                createTimeFrom: createTimeFrom,
+                createTimeTo: createTimeTo,
+                name: $searchForm.find('input[name="policyName"]').val().trim(),
+                invalidate_ie_cache: new Date()
+            };
+        }
+
+        function deleteUsers(userIds) {
+            var currentUserId = currentUser.userId + '';
+            febs.alert.warn('权限不够，无法删除');
+        }
+    })
+</script>

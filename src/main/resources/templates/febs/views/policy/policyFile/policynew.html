@@ -1,0 +1,260 @@
+<div class="layui-fluid layui-anim febs-anim" id="febs-dept" lay-title="科技政策演变"
+     xmlns:shiro="http://www.w3.org/1999/xhtml">
+    <div class="layui-row layui-col-space8 febs-container">
+        <div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-fluid layui-anim febs-anim-up" id="febs-index" lay-title="科技政策演变">
+                    <div class="layui-row layui-col-space8 febs-container">
+                        <div class="layui-card">
+                            <div class="layui-card-body febs-table-full" style="height: 600px;">
+                                <div class="layui-col-md12 layui-col-sm12 layui-col-xs12" id="container" style="height: 800px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-card-header febs-hide" id="form-header">新增分类</div>
+                <div class="layui-card-body febs-table-full febs-hide">
+                    <form class="layui-form layui-table-form" action="" lay-filter="dept-form">
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label febs-form-item-require">ID：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="policyId" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">上级ID：</label>
+                            <div class="layui-input-block">
+                                <input type="text" value="" name="parentId" readonly autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label febs-form-item-require">类别名称：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="policyName" autocomplete="off" class="layui-input"
+                                       minlength="2" maxlength="10" lay-verify="range">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">类别排序：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="orderNum" autocomplete="off" class="layui-input"
+                                       lay-verify="number">
+                            </div>
+                        </div>
+                        <button type="reset" class="layui-btn febs-hide" id="reset-form"></button>
+                        <button class="layui-btn febs-hide" lay-submit="" lay-filter="dept-form-submit"
+                                id="submit-form"></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script data-th-inline="javascript" type="text/javascript">
+    layui.use(['dropdown', 'jquery', 'validate', 'febs', 'form', 'eleTree'], function () {
+        var $ = layui.jquery,
+            febs = layui.febs,
+            form = layui.form,
+            validate = layui.validate,
+            eleTree = layui.eleTree,
+            dropdown = layui.dropdown,
+            $view = $('#febs-dept'),
+            $query = $view.find('#query'),
+            $reset = $view.find('#reset'),
+            $submit = $view.find('#submit'),
+            $header = $view.find('#form-header'),
+            $searchForm = $view.find('#dept-table-form'),
+            $policyName = $searchForm.find('input[name="policyName"]'),
+            _currentDeptData,
+            _kindTree;
+
+        form.verify(validate);
+        form.render();
+        tuin();
+        function tuin()
+        {
+            febs.get(ctx + 'performance/getT/' +0 , null, function (json) {
+                tu(json);
+            });
+        }
+        renderDeptTree();
+        function tu(json)
+        {
+
+            var dom = document.getElementById("container");
+            var myChart = echarts.init(dom);
+            var size = 20; //节点大小
+            var data=json.data
+
+            //
+            // var data = {
+            //     nodes: [{
+            //         name: '操作系统集团',
+            //         category: 0
+            //     }, {
+            //         name: '浏览器有限公司',
+            //         category: 0
+            //     }, {
+            //         name: 'HTML科技',
+            //         category: 0
+            //     }, {
+            //         name: 'JavaScript科技',
+            //         category: 0
+            //     }, {
+            //         name: 'CSS科技',
+            //         category: 0
+            //     }, {
+            //         name: 'Chrome',
+            //         category: 1
+            //     }, {
+            //         name: 'IE',
+            //         category: 1
+            //     }, {
+            //         name: 'Firefox',
+            //         category: 1
+            //     }, {
+            //         name: 'Safari',
+            //         category: 1
+            //     }],
+            //
+            //     links: [{
+            //         source: '浏览器有限公司',
+            //         target: '操作系统集团',
+            //         name: '参股'
+            //     }, {
+            //         source: 'HTML科技',
+            //         target: '浏览器有限公司',
+            //         name: '参股'
+            //     }, {
+            //         source: 'CSS科技',
+            //         target: '浏览器有限公司',
+            //         name: '参股'
+            //     }, {
+            //         source: 'JavaScript科技',
+            //         target: '浏览器有限公司',
+            //         name: '参股'
+            //     }, {
+            //         source: 'Chrome',
+            //         target: '浏览器有限公司',
+            //         name: '董事'
+            //     }, {
+            //         source: 'IE',
+            //         target: '浏览器有限公司',
+            //         name: '董事'
+            //     }, {
+            //         source: 'Firefox',
+            //         target: '浏览器有限公司',
+            //         name: '董事'
+            //     }, {
+            //         source: 'Safari',
+            //         target: '浏览器有限公司',
+            //         name: '董事'
+            //     }, {
+            //         source: 'Chrome',
+            //         target: 'JavaScript科技',
+            //         name: '法人'
+            //     }]
+            // }
+
+            var color1 = '#006acc';
+            var color2 = '#ff7d18';
+            var color3 = '#10a050';
+
+            data.nodes.forEach(function(node) {
+                if (node.category === 0) {
+            node.symbolSize = 50;
+            node.itemStyle = {
+                color: color1
+            };
+        } else if (node.category === 1) {
+            node.itemStyle = {
+                color: color2
+            };
+        }
+        });
+
+            data.links.forEach(function(link) {
+                link.label = {
+                    align: 'center',
+                    fontSize: 10
+                };
+
+            if (link.name === '参股') {
+                link.lineStyle = {
+                    color: color2
+                }
+            } else if (link.name === '董事') {
+                link.lineStyle = {
+                    color: color1
+                }
+            } else if (link.name === '法人') {
+                link.lineStyle = {
+                    color: color3
+                }
+            }
+        });
+
+            var categories = [{
+                name: '公司',
+                itemStyle: {
+                    color: color1
+                }
+            },
+                {
+                    name: '董事',
+                    itemStyle: {
+                        color: color2
+                    }
+                }]
+
+            option = {
+                title: {
+                    text: '知识图谱',
+                },
+                legend: [{
+                    // selectedMode: 'single',
+                    data: ["公司","董事"],
+            // icon: 'circle'
+        }],
+            series: [{
+                type: 'graph',
+                layout: 'force',
+                symbolSize: 50,
+                draggable: true,
+                roam: true,
+                focusNodeAdjacency: true,
+                categories: categories,
+                edgeSymbol: ['', 'arrow'],
+                // edgeSymbolSize: [80, 10],
+                edgeLabel: {
+                    normal: {
+                        show: true,
+                        textStyle: {
+                            fontSize: 10
+                        },
+                        formatter: function (x) {
+                            return x.data.name;
+                        }
+
+                    }
+                },
+                label: {
+                    show: true
+                },
+                force: {
+                    repulsion: 2000,
+                    edgeLength: 120
+                },
+                data: data.nodes,
+                links: data.links
+            }]
+        }
+
+
+            myChart.setOption(option);
+        }
+
+
+    });
+</script>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.policy.mapper.PolicyNameMapper">
+    <select id="getPolicyNameList" parameterType="String" resultType="PolicyName">
+        SELECT
+        p.TYPE_ID,
+        p.PARENT_ID,
+        p.TYPE_NAME,
+        p.ORDER_NUM
+        FROM
+        t_policy_type p
+        WHERE p.TYPE_NAME = #{TYPE_NAME}
+    </select>
+    <select id="getPolicyNameById" parameterType="int" resultType="PolicyName">
+        SELECT
+        p.TYPE_ID,
+        p.PARENT_ID,
+        p.TYPE_NAME,
+        p.ORDER_NUM
+        FROM
+        t_policy_type p
+        WHERE p.TYPE_ID = #{TYPE_ID}
+    </select>
+    <select id="getAllList" resultType="PolicyName">
+        SELECT
+        p.TYPE_ID,
+        p.PARENT_ID,
+        p.TYPE_NAME,
+        p.ORDER_NUM
+        FROM
+        t_policy_type p
+    </select>
+</mapper>
