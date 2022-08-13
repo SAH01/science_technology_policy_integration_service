@@ -1,55 +1,4 @@
-运行须知：
-
-1. 编辑器记得安装lombok插件
-2. 安装redis并启动服务。
-3. 创建两个数据库，使用项目根目录/sql目录下的两个sql文件，数据库名要求和sql文件.sql前面的部分一致。
-在mysql命令行打开：
-        
-        例如：febs_base.sql
-        
-        首先创建febs_base数据库，create database febs_base; 
-        
-        使用数据库 use febs_base;
-        
-        导入数据： source C://..../febs_base.sql
-
-4. 启动服务。
-
-### FEBS-Shiro 2.0
-![https://img.shields.io/badge/license-Apache%202.0-blue.svg?longCache=true&style=flat-square](https://img.shields.io/badge/license-Apache%202.0-blue.svg?longCache=true&style=flat-square)
-![https://img.shields.io/badge/springboot-2.1.8-yellow.svg?style=flat-square](https://img.shields.io/badge/springboot-2.1.8-yellow.svg?style=flat-square)
-![https://img.shields.io/badge/shiro-1.4.0-orange.svg?longCache=true&style=flat-square](https://img.shields.io/badge/shiro-1.4.0-orange.svg?longCache=true&style=flat-square)
-![https://img.shields.io/badge/layui-2.5.5-brightgreen.svg?longCache=true&style=flat-square](https://img.shields.io/badge/layui-2.5.5-brightgreen.svg?longCache=true&style=flat-square)
-
-FEBS-Shiro是一款简单高效的后台权限管理系统，使用Spring Boot，Shiro和Layui构建。FEBS意指：**F**ast，**E**asy use，**B**eautiful和**S**afe。相信无论作为企业级应用，私活开发脚手架或者权限系统构建学习，FEBS-Shiro都会是一个不错的选择。
-
-### 演示地址
-
-[https://shiro.mrbird.cn:8080](https://shiro.mrbird.cn:8080)
-
-演示环境账号密码：
-
-账号 | 密码| 权限
----|---|---
-
-
-
-本地部署账号密码：
-
-账号 | 密码| 权限
----|---|---
-
-
-### 更多版本
-当前分支为2.0版本，页面采用Layui全新构建，FEBS的其他版本：
-
-名称 | 描述| 地址
----|---|---
-FEBS-Shiro 1.x | Spring Boot 2.0.4 & Shiro1.4.0 权限管理系统（单页）。 | [https://github.com/wuyouzhuguli/FEBS-Shiro/tree/mysql](https://github.com/wuyouzhuguli/FEBS-Shiro/tree/mysql)
-FEBS-Security | Spring Boot 2.0.4 & Spring Security 5.0.7 权限管理系统（单页）。 | [https://github.com/wuyouzhuguli/FEBS-Security](https://github.com/wuyouzhuguli/FEBS-Security)
-FEBS-Vue | FEBS-Shiro前后端分离版本，前端架构采用Vue全家桶。 | [https://github.com/wuyouzhuguli/FEBS-Vue](https://github.com/wuyouzhuguli/FEBS-Vue)
-
-### 系统模块
+### 基础系统模块
 系统功能模块组成如下所示：
 ```
 ├─系统管理
@@ -87,21 +36,9 @@ FEBS-Vue | FEBS-Shiro前后端分离版本，前端架构采用Vue全家桶。 |
 ```
 ### 系统特点
 
-1. 前后端请求参数校验
+**项目描述**：系统提供了完善的科技政策管理体系。通过参考现有的文本自动分类算法，使其能够完成科技政策的自动分类。提取科技政策的各种信息，完成多种条件相结合的检索方法。使用新词发现算法建立了科技政策的词典，同时配合文本分析算法，在一定程度上完成了科技政策之间的对比。采集大量科技政策建立有关科技政策的知识库，构成知识图谱，让政策与政策之间形成一定的关联。参考国务院发布的主题词表，确认了科技政策表达的主体内容。
 
-2. 支持Excel导入导出
-
-3. 前端页面布局多样化，主题多样化
-
-4. 支持多数据源，代码生成
-
-5. 多Tab页面，适合企业应用
-
-6. 用户权限动态刷新
-
-7. 浏览器兼容性好，页面支持PC，Pad和移动端。
-
-8. 代码简单，结构清晰
+**技术概述**：系统采用SpringBoot框架搭建，使用Shiro进行用户权限管理，实现单点登录，提高系统安全性。Redis统一缓存处理，提高系统性能和用户满意度，Hanlp文本处理并构建科技政策知识图谱网络图。该项目河北省科学技术情报研究院已投入使用。
 
 ### 技术选型
 
@@ -121,63 +58,146 @@ FEBS-Vue | FEBS-Shiro前后端分离版本，前端架构采用Vue全家桶。 |
 
 ### 系统截图
 
-#### PC端
-![screenshot](screenshot/pc_screenshot_1.jpg)
-![screenshot](screenshot/pc_screenshot_2.jpg)
-![screenshot](screenshot/pc_screenshot_3.jpg)
-![screenshot](screenshot/pc_screenshot_4.jpg)
-![screenshot](screenshot/pc_screenshot_5.jpg)
-![screenshot](screenshot/pc_screenshot_6.jpg)
+![image-20220813220021646](https://raw.githubusercontent.com/SAH01/wordpress-img/master/imgs/image-20220813220021646.png)
 
-#### 手机
-![screenshot](screenshot/mobile_screenshot_1.jpg)
-![screenshot](screenshot/mobile_screenshot_2.jpg)
-#### Pad
-![screenshot](screenshot/pad_screenshot_1.jpg)
-![screenshot](screenshot/pad_screenshot_2.jpg)
-![screenshot](screenshot/pad_screenshot_3.jpg)
+![image-20220813220037779](https://raw.githubusercontent.com/SAH01/wordpress-img/master/imgs/image-20220813220037779.png)
+
+系统架构分为四个层次，分别为用户访问层、业务应用层、服务支撑层和数据存储层。用户层按用户的权限将用户分为三类，三类用户能够使用本系统的不同的功能。业务应用层主要包括科技政策查询，其中有政策文件查询、科技政策分类总览、科技政策知识图谱展示。科技政策分析中包括科技政策对比、演化和主题词分析以及智能问答，政策文件管理主要是政策类别管理。服务支撑层是该系统用到的主要方法，用来对数据进行加工。服务支撑层包括：文本自动分类、提取科技政策文本关键词、新词发现技术、知识图谱。数据存储层为系统提供数据，主要是保存科技政策文件的Mysql数据库和保存知识图谱的Neo4j数据库。
+
+#### 1、科技政策文件管理
+
+##### （1）科技政策查询
+
+① 功能：用户根据自己的需要对科技政策进行检索和查看
+
+② 输入数据：选择发布时间范围（可选），政策名称（可选），关键词（可选），发布单位（可选），全文检索（可选）。
+
+③ 输出结果：根据用户选择的查询条件，输入的政策名称，选择的时间范围，政策的发布机构，科技政策包含的关键词或包含的内容，在表格中以分页的形式进行展示，展示顺序按照发布时间倒序排序，在表格中显示的内容包括政策名称，政策发布日期和政策发布机构。
+
+④ 使用场景：用户知道某篇科技政策的具体或大概的名称，按照政策名称进行具体或模糊查询。想要寻找具体部门发布的科技政策，可以选择发布单位，按照单位条件进行内容检索。寻找包含某个关键词的科技政策可以按照关键词条件查找。
+
+⑤ 解决方案：通过用户点击查询按钮来获取用户的输入，将获取的输入传入到后台的控制类中，将获取的数据进行整理后传递给MyBatis-plus中相应的mapper，动态的创建SQL语句，之后使用MyBatis-plus的分页查询查件，到数据库中进行查询，将查询的数据转换成json格式，传递给Layui的table元素，解析json数据后以表格进行展示。
+
+![img](https://raw.githubusercontent.com/SAH01/wordpress-img/master/imgs/clip_image002.jpg)
+
+##### （2）政策录入和标引
+
+**录入和标引**
+
+![img](https://raw.githubusercontent.com/SAH01/wordpress-img/master/imgs/clip_image004.jpg)
+
+ 
+
+![img](https://raw.githubusercontent.com/SAH01/wordpress-img/master/imgs/clip_image006.jpg)
+
+![img](https://raw.githubusercontent.com/SAH01/wordpress-img/master/imgs/clip_image008.jpg)
+
+![img](https://raw.githubusercontent.com/SAH01/wordpress-img/master/imgs/clip_image010.jpg)
+
+#### 2、 科技政策分类总览
+
+##### （1）科技政策类别占比
+
+① 功能：显示科技政策中不同类别所占的比例和具体数量。
+
+② 输入数据：科技政策总数和科技政策每个类别的数量。
+
+③ 输出结果：根据科技政策总数和科技政策每个类别的数量，经过计算得出比例并显示在饼状图和表格中。
+
+④ 使用场景：显示出科技政策总数和不同类别的占比，直观告诉用户本系统拥有的科技政策数量和分布情况。
+
+⑤ 解决方案：对采集到的科技政策进行自动文本分类，并将分类结果保存到MySQL数据库中，之后当用户进入到该功能时，自动从数据库中提取科技政策数据并进行计算，将计算结果转化为json数据格式后，将其传递到前端进行展示。
+
+![image-20220813220328707](https://raw.githubusercontent.com/SAH01/wordpress-img/master/imgs/image-20220813220328707.png)
+
+##### （2）政策分类表格展示
+
+① 功能：以表格形式展示出某类某级科技政策的信息，分页进行展示
+
+② 输入数据：点击左侧政策分类栏中的信息，程序获取点击的数据
+
+③ 输出结果：以表格分页的形式展示出该类的政策，表格中包含了科技政策的政策文件名和发布日期。
+
+④ 使用场景：用户不需要太过精确的查询，只是想要大致了解该类政策的信息时，可以使用这项功能，不需要使用科技政策查询功能。
+
+⑤ 解决方案：当用户点击一个政策类别时，获取该类别对应的信息传递到后台，之后以这个信息为查询条件进行数据库查询，将查询的数据转化为json数据格式并传到前台展示。
+
+![image-20220813220345196](https://raw.githubusercontent.com/SAH01/wordpress-img/master/imgs/image-20220813220345196.png) 
+
+#### 3、科技政策知识图谱
+
+##### 科技政策信息展示
+
+① 功能：对科技政策的基础信息进行展示，同时对该科技政策的上位政策、下位政策和相似政策进行展示。
+
+② 输入数据：用户在名称查询位置选择一个具体的科技政策，系统会在页面中展示出该科技政策的基础信息，和它的上位政策、下位政策和相似政策。科技政策的查询采用了类似百度的查询方式。
+
+③ 输出结果：系统根据用户选择的科技政策，在界面上展示出该科技政策的基础信息，和它的上位政策、下位政策和相似政策，并以关系图的形式加以展示。
+
+④ 使用场景：用户想要知道某个科技政策的基本信息和与它有关联的科技政策时，可以使用该功能。
+
+⑤ 解决方案：将用户选择的科技政策传递给后台，按照科技政策名称进行查询，将查询结果转换成json格式返回到前台，并进行展示，使用Echarts进行关系图展示。
+
+![image-20220813220558594](https://raw.githubusercontent.com/SAH01/wordpress-img/master/imgs/image-20220813220558594.png)
+
+![image-20220813220424333](https://raw.githubusercontent.com/SAH01/wordpress-img/master/imgs/image-20220813220424333.png)
+
+![img](https://raw.githubusercontent.com/SAH01/wordpress-img/master/imgs/clip_image018.jpg) 
+
+
+
+#### 4、科技政策分析
+
+##### （1）科技政策对比分析
+
+① 功能：对同类科技政策进行对比分析，提取出科技政策内容的关键部分进行对比展示。
+
+② 输入数据：用户点击左侧的科技政策分析，可以选择选中科技政策的具体名称或科技政策下的对比细节。
+
+③ 输出数据：当用户选中的是科技政策的具体名称时，会显示出该科技政策的详细内容。当选中的是科技政策下的对比细节时，会显示出该类科技政策的对比内容，并对内容进行标红。
+
+④ 使用场景：用户想要了解某类科技政策的不同点时，了解不同地区的科技政策的异同之处。
+
+⑤ 解决方法：当用户选中具体名称时，会向后台传递该政策的名称，并按名称进行查询，将查询结果传递给前台进行展示。当用户选中的是对比细节时，会向后台传递该类别和细节，对该类科技政策进行查询和解析，之后将解析的结果进行展示。
+
+![image-20220813220625420](https://raw.githubusercontent.com/SAH01/wordpress-img/master/imgs/image-20220813220625420.png)
+
+##### （2）科技政策演化分析
+
+① 功能：以时间轴的方式展示出科技政策的演变趋势。
+
+② 输入数据：用户选择某类科技政策的某个标准。
+
+③ 输出结果：以时间轴的形式进行展示。
+
+④ 使用场景：用户想要了解科技政策的变化历程和演变趋势。
+
+⑤ 解决方案：将用户选中的信息传递给后台，后台进行数据库查询，并按时间倒序排列，对查询的数据进行解析，将解析后的结果返回到前台进行展示。
+
+![image-20220813220644030](https://raw.githubusercontent.com/SAH01/wordpress-img/master/imgs/image-20220813220644030.png)
+
+![image-20220813220650584](https://raw.githubusercontent.com/SAH01/wordpress-img/master/imgs/image-20220813220650584.png)
+
+##### （3）主题词分析
+
+① 功能：对科技政策进行主题词分析，提取出科技政策的主题词。
+
+② 输入数据：用户可以选择时间范围、科技政策的地域。
+
+③ 输出结果：系统根据用户选择的查询条件进行查询，将查询到的结果进行统计，同时参考国务院公文主题词表，统计出某个主题词的频数和占比情况，并进行展示。
+
+④ 使用场景：对一个地区或国家部门出台的科技政策，按照国务院公文主题词进行分析。可以判断科技政策中主题的占比情况。
+
+⑤ 解决方案：根据国务院公文主题词，判断每篇科技政策中哪几个主题词出现的比重大，根据用户的选择，确定要分析的科技政策，对主题词的展示按照国务院公文主题词表进行展示。
+
+![image-20220813221432647](https://raw.githubusercontent.com/SAH01/wordpress-img/master/imgs/image-20220813221432647.png)
+
 ### 浏览器兼容
 |[<img src="https://raw.github.com/alrra/browser-logos/master/src/archive/internet-explorer_9-11/internet-explorer_9-11_48x48.png" alt="Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari |[<img src="https://raw.github.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Opera
 | --------- | --------- | --------- | --------- | --------- |--------- |
 |IE 10+| Edge| last 15 versions| last 15 versions| last 10 versions| last 15 versions
-### 参与贡献
-欢迎提交PR一起完善项目，以下为提PR并合并的小伙伴（排名不分先后）：
-
-<a href="https://github.com/everhopingandwaiting">
-    <img src="https://avatars3.githubusercontent.com/u/6021724?s=400&v=4" width="45px"></a>
-<a href="https://github.com/mgzu">
-    <img src="https://avatars1.githubusercontent.com/u/29629221?s=400&v=4" width="45px"></a>
-<a href="https://github.com/yuuki80code">
-    <img src="https://avatars0.githubusercontent.com/u/17798853?s=400&v=4" width="45px"></a>
-<a href="https://github.com/cinsin">
-        <img src="https://avatars1.githubusercontent.com/u/12856067?s=400&v=4" width="45px"></a>
-<a href="https://github.com/Minnull">
-    <img src="https://avatars2.githubusercontent.com/u/19608781?s=400&v=4" width="45px"></a>
-<a href="https://github.com/Harrison0x80">
-    <img src="https://avatars2.githubusercontent.com/u/8622915?s=400&v=4" width="45px"></a>
-<a href="https://github.com/notlcry">
-    <img src="https://avatars2.githubusercontent.com/u/1989218?s=400&v=4" width="45px"></a>
-<a href="https://github.com/gelibo">
-    <img src="https://avatars1.githubusercontent.com/u/14520562?s=400&v=4" width="45px"></a>
-<a href="https://github.com/FiseTch">
-    <img src="https://avatars0.githubusercontent.com/u/29654322?s=400&v=4" width="45px"></a>
-
-### 反馈交流
-
-加入QQ群和大家一起~~交流~~吹水：
-
-![qq](screenshot/QQ.jpg)
-
-### 支持作者
-如果该系统对您有帮助的话，请作者喝杯肥宅水吧🍺~
-
----
 
 
-
-<div align="center">
-<img src="https://komarev.com/ghpvc/?username=SAH01&&style=flat-square" align="center" />
-</div><br>   
 <div align="center">
             <a href="https://paypal.me/reliableyang" target="_blank" style="display: inline-block;">
                 <img
@@ -186,5 +206,4 @@ FEBS-Vue | FEBS-Shiro前后端分离版本，前端架构采用Vue全家桶。 |
                 />
             </a></div>
 
-----
 
